@@ -1,0 +1,10 @@
+body {
+  background: black;
+}
+
+.title {
+  color: darkorange;
+  text-align: center;
+  margin-top: 50vh;
+  font-weight: bold;
+}
