@@ -1,0 +1,11 @@
+.list-creator-content {
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+
+  .add-list-block {
+    display: flex;
+    column-gap: 50px;
+    row-gap: 20px;
+  }
+}

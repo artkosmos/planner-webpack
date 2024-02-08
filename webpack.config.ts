@@ -27,6 +27,14 @@ export default () => {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"],
         },
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            "style-loader",
+            "css-loader",
+            "sass-loader",
+          ],
+        },
       ],
     },
     resolve: {
@@ -39,7 +47,6 @@ export default () => {
     },
     plugins: [new HtmlWebpackPlugin({
       title: 'Todolist&Webpack',
-      template: path.resolve(__dirname, 'public', 'template.html'),
       filename: path.resolve(__dirname, 'dist', 'index.html')
     })]
   };

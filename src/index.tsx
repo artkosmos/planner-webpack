@@ -1,10 +1,15 @@
-import {App} from './components/App'
 import {createRoot} from "react-dom/client";
+import {RouterProvider} from "react-router-dom";
+import {router} from "./routes";
+import {Provider} from 'react-redux'
+import {store} from "./store/store";
+import './style/style.scss'
 
-const rootElement = document.getElementById('root');
+const bodyElement = document.querySelector('body');
+const container = createRoot(bodyElement)
 
-const container = createRoot(rootElement)
-
-console.log(container)
-
-container.render(<App />)
+container.render(
+  <Provider store={store}>
+    <RouterProvider router={router}/>
+  </Provider>
+)
