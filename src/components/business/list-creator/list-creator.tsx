@@ -9,7 +9,7 @@ import './style.scss'
 
 export const ListCreator = () => {
   const [inputValue, setInputValue] = useState<string>('')
-  const lists = useSelector((state: RootState) => state.main.lists)
+  const list = useSelector((state: RootState) => state.main.list)
   const dispatch = useDispatch<AppDispatch>()
 
   const inputValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +42,8 @@ export const ListCreator = () => {
         <FilledInput onKeyDown={handleEnterPress} value={inputValue} onChange={inputValueHandler}/>
         <ButtonPrimary title={'Add list'} onClick={createListHandler} disabled={!inputValue}/>
       </div>
-      {lists.length
-        ? <ListTable lists={lists} deleteList={deleteListHandler}/>
+      {list.length
+        ? <ListTable list={list} deleteList={deleteListHandler}/>
         : <InfoTitle title={'No available data'}/>}
     </div>
   );

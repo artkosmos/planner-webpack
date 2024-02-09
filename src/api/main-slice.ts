@@ -4,16 +4,16 @@ import {IList} from "../common";
 const slice = createSlice({
   name: 'main',
   initialState: {
-    lists: [] as IList[]
+    list: [] as IList[]
   },
   reducers: {
     createList: (state, action: PayloadAction<IList>) => {
-      state.lists.unshift({id: action.payload.id, title: action.payload.title, date: action.payload.date})
+      state.list.unshift({id: action.payload.id, title: action.payload.title, date: action.payload.date})
     },
     deleteList: (state, action: PayloadAction<{id: string}>) => {
-      const index = state.lists.findIndex((list) => list.id === action.payload.id)
+      const index = state.list.findIndex((task) => task.id === action.payload.id)
       if (index !== -1) {
-        state.lists.splice(index, 1)
+        state.list.splice(index, 1)
       }
     },
   }
