@@ -1,10 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store/store";
+import {AppDispatch, RootState} from "@/store";
 import moment from "moment/moment";
 import {v4 as uuid} from "uuid";
-import {createList, deleteList} from "../../../api/main-slice";
-import {ButtonPrimary, FilledInput, InfoTitle, ListTable} from "../../shared";
+import {createList, deleteList} from '@/api';
+import {ButtonPrimary, FilledInput, InfoTitle, ListTable} from "@/components/shared";
 import './style.scss'
 
 export const ListCreator = () => {

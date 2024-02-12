@@ -1,7 +1,7 @@
 import './style.scss'
-import {IList} from "../../../common";
+import {IList} from "@/common";
 import clsx from "clsx";
-import {DeleteIcon} from "../delete-icon/delete-icon";
+import {DeleteIcon} from "@/assets/icons";
 import {useMemo} from "react";
 
 type Props = {

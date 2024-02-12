@@ -39,6 +39,9 @@ export default () => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
     },
     devServer: {
       hot: true,
@@ -47,7 +50,8 @@ export default () => {
     },
     plugins: [new HtmlWebpackPlugin({
       title: 'Todolist&Webpack',
-      filename: path.resolve(__dirname, 'dist', 'index.html')
+      filename: path.resolve(__dirname, 'dist', 'index.html'),
+      template: path.resolve(__dirname, 'public', 'template.html')
     })]
   };
 
