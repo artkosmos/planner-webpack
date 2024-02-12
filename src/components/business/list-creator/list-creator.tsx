@@ -43,7 +43,7 @@ export const ListCreator = () => {
         <ButtonPrimary title={'Add list'} onClick={createListHandler} disabled={!inputValue}/>
       </div>
       {list.length
-        ? <ListTable list={list} deleteList={deleteListHandler}/>
+        ? <ListTable list={list} deleteTask={deleteListHandler}/>
         : <InfoTitle title={'No available data'}/>}
     </div>
   );

@@ -3,24 +3,26 @@ import {IList} from "@/common";
 import clsx from "clsx";
 import {DeleteIcon} from "@/assets/icons";
 import {useMemo} from "react";
+import {useNavigate} from "react-router-dom";
+import {TableBodyRow} from "@/components/shared/list-table/table-body-row";
 
 type Props = {
   list: IList[]
   className?: string
-  deleteList?: (id: string) => void
+  deleteTask?: (id: string) => void
 }
 
-export const ListTable = ({list, deleteList, className}: Props) => {
-  const mappedLists = useMemo(() => {
+export const ListTable = ({list, deleteTask, className}: Props) => {
+  const navigate = useNavigate()
+
+  const taskList = useMemo(() => {
     return list.map((task) => {
-      return <tr key={task.id}>
-        <td>{task.id}</td>
-        <td>{task.title}</td>
-        <td>{task.date}</td>
-        <td>
-          <DeleteIcon className={'table-delete-icon'} onClick={() => deleteList(task.id)}/>
-        </td>
-      </tr>
+      return <TableBodyRow
+        onClick={() => navigate(`/task/${task.id}`)}
+        key={task.id}
+        task={task}
+        deleteRow={deleteTask}
+      />
     })
   }, [list])
 
@@ -38,7 +40,7 @@ export const ListTable = ({list, deleteList, className}: Props) => {
         </tr>
         </thead>
         <tbody>
-        {mappedLists}
+        {taskList}
         </tbody>
       </table>
     </div>
