@@ -1,13 +1,12 @@
 import './style.scss'
-import {IList} from "@/common";
+import {ITask} from "@/common";
 import clsx from "clsx";
-import {DeleteIcon} from "@/assets/icons";
 import {useMemo} from "react";
 import {useNavigate} from "react-router-dom";
 import {TableBodyRow} from "@/components/shared/list-table/table-body-row";
 
 type Props = {
-  list: IList[]
+  list: ITask[]
   className?: string
   deleteTask?: (id: string) => void
 }

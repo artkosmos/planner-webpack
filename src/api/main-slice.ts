@@ -1,13 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IList} from "@/common";
+import {ITask} from "@/common";
 
 const slice = createSlice({
   name: 'main',
   initialState: {
-    list: [] as IList[]
+    list: [] as ITask[]
   },
   reducers: {
-    createList: (state, action: PayloadAction<IList>) => {
+    createList: (state, action: PayloadAction<ITask>) => {
       state.list.unshift({id: action.payload.id, title: action.payload.title, date: action.payload.date})
     },
     deleteList: (state, action: PayloadAction<{id: string}>) => {

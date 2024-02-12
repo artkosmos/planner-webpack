@@ -1,15 +1,17 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "@/store";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/store";
 import moment from "moment/moment";
 import {v4 as uuid} from "uuid";
 import {createList, deleteList} from '@/api';
 import {ButtonPrimary, FilledInput, InfoTitle, ListTable} from "@/components/shared";
 import './style.scss'
+import {useAppSelector} from "@/store";
 
 export const ListCreator = () => {
   const [inputValue, setInputValue] = useState<string>('')
-  const list = useSelector((state: RootState) => state.main.list)
+
+  const list = useAppSelector((state) => state.main.list)
   const dispatch = useDispatch<AppDispatch>()
 
   const inputValueHandler = (event: ChangeEvent<HTMLInputElement>) => {

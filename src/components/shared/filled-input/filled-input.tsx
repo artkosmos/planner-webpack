@@ -5,6 +5,7 @@ export const FilledInput = ({...rest}: TextFieldProps) => {
   return (
     <TextField
       aria-autocomplete={'none'}
+      autoComplete={'off'}
       sx={{flex: '3', backgroundColor: '#e5efff'}}
       label={'List name'}
       variant={"filled"}
