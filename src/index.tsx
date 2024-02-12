@@ -1,9 +1,9 @@
 import {createRoot} from "react-dom/client";
 import {RouterProvider} from "react-router-dom";
-import {router} from "./routes";
+import {router} from "@/routes";
 import {Provider} from 'react-redux'
-import {store} from "./store/store";
-import './style/style.scss'
+import {store} from "@/store";
+import '@/style/style.scss'
 
 const bodyElement = document.querySelector('body');
 const container = createRoot(bodyElement)

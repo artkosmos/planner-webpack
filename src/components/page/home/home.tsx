@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListCreator} from "../../business";
+import {ListCreator} from "@/components/business";
 
 const Home = () => {
   return (

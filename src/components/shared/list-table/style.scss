@@ -1,8 +1,9 @@
-@import "../../../style/variables";
+@import "@/style/variables";
 
 .table-container {
   width: 100%;
   border-radius: 20px 20px 0 0;
+  font-size: 20px;
 }
 
 .list-table {
@@ -22,7 +23,8 @@
     border: none;
     padding: 15px;
     background: $soft-blue;
-    font-size: 14px;
+    font-size: 16px;
+    letter-spacing: 1px;
     border-top: 1px solid #ddd;
     flex: 3;
 
@@ -56,7 +58,7 @@
   display: block;
   overflow: auto;
   width: 100%;
-  max-height: calc(100vh - $tableTopOffset - $tableBottomOffset);
+  max-height: calc(100vh - $table-top-offset - $table-bottom-offset);
 
   tr {
     display: flex;
@@ -67,7 +69,7 @@
     text-align: left;
     border: none;
     padding: 10px 15px;
-    font-size: 14px;
+    font-size: 16px;
     vertical-align: middle;
     word-break: break-word;
     flex: 3;
@@ -99,13 +101,22 @@
   border-radius: 0 0 20px 0;
 }
 
-.table-delete-icon {
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
+@media (hover: hover) {
+  .table-delete-icon {
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
 
-    path {
-      fill: red;
+      path {
+        fill: red;
+      }
+    }
+  }
+
+  .list-table tbody tr, .list-table tbody tr:nth-child(even) {
+    &:hover {
+      cursor: pointer;
+      background-color: lighten(#000000, 90%);
     }
   }
 }

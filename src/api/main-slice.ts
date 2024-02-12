@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IList} from "../common";
+import {IList} from "@/common";
 
 const slice = createSlice({
   name: 'main',
