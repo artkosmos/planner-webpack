@@ -5,8 +5,8 @@ import {Provider} from 'react-redux'
 import {store} from "@/store";
 import '@/style/style.scss'
 
-const bodyElement = document.querySelector('body');
-const container = createRoot(bodyElement)
+const rootElement = document.getElementById('root')
+const container = createRoot(rootElement)
 
 container.render(
   <Provider store={store}>
