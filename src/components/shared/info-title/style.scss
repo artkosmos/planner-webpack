@@ -1,0 +1,11 @@
+@import "../../../style/variables";
+@import "../../../style/animations";
+
+.info-title {
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: $info-text;
+  text-align: center;
+  animation: zoom 2s infinite;
+}
