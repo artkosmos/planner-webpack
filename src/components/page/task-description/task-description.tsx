@@ -3,6 +3,7 @@ import {TaskCard} from "@/components/business";
 import {BackButton} from "@/components/shared";
 import {useNavigate} from "react-router-dom";
 import './style.scss'
+import {HOME} from "@/routes";
 
 const TaskDescription = () => {
   const navigate = useNavigate()
@@ -11,7 +12,7 @@ const TaskDescription = () => {
     <div className={'container'}>
       <div className={'task-description'}>
         <BackButton
-          onClick={() => navigate('/')}
+          onClick={() => navigate(HOME)}
           title={'To home'}
           className={'task-description__back-button'}/>
         <TaskCard/>

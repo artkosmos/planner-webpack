@@ -4,6 +4,7 @@ import clsx from "clsx";
 import {useMemo} from "react";
 import {useNavigate} from "react-router-dom";
 import {TableBodyRow} from "@/components/shared/list-table/table-body-row";
+import {TASK} from "@/routes";
 
 type Props = {
   list: ITask[]
@@ -17,7 +18,7 @@ export const ListTable = ({list, deleteTask, className}: Props) => {
   const taskList = useMemo(() => {
     return list.map((task) => {
       return <TableBodyRow
-        onClick={() => navigate(`/task/${task.id}`)}
+        onClick={() => navigate(`${TASK}/${task.id}`)}
         key={task.id}
         task={task}
         deleteRow={deleteTask}
