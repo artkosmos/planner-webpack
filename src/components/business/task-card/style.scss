@@ -1,0 +1,21 @@
+.task-card {
+  &__title {
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 30px;
+  }
+
+  &__point {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    list-style-type: none;
+  }
+}
