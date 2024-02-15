@@ -1,12 +1,20 @@
-.list-creator-content {
+.list-creator {
   display: flex;
   flex-direction: column;
   gap: 70px;
 
-  .add-list-block {
+  .add-task-block {
     display: flex;
     column-gap: 50px;
     row-gap: 20px;
+
+    &__input {
+      flex: 3;
+    }
+
+    &__button {
+      flex: 1;
+    }
 
     @media screen and (max-width: 500px) {
       column-gap: 15px;

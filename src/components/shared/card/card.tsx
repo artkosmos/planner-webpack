@@ -16,9 +16,14 @@ export const Card = ({children, className}: Props) => {
         maxWidth: '700px',
         backgroundColor: '#d7e0ee',
         margin: '0 auto',
-        fontSize: '20px'
+        fontSize: '20px',
+        borderRadius: '15px',
+        boxShadow: '0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)',
       }}>
-      <CardMUIContent>
+      <CardMUIContent sx={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
         {children}
       </CardMUIContent>
     </CardMUI>
