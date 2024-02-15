@@ -28,7 +28,7 @@ export const ListCreator = () => {
   };
 
   const createListHandler = () => {
-    const date = moment().format('MMMM Do YYYY, h:mm:ss')
+    const date = moment().format('DD.MM.YYYY hh:mm:ss')
     const id = uuid().slice(0, 8)
     dispatch(createTask({title: inputValue, date, id}))
     setInputValue('')
