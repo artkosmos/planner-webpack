@@ -7,17 +7,24 @@ const slice = createSlice({
     list: [] as ITask[]
   },
   reducers: {
-    createList: (state, action: PayloadAction<ITask>) => {
+    createTask: (state, action: PayloadAction<ITask>) => {
       state.list.unshift({id: action.payload.id, title: action.payload.title, date: action.payload.date})
     },
-    deleteList: (state, action: PayloadAction<{id: string}>) => {
+    deleteTask: (state, action: PayloadAction<{ id: string }>) => {
       const index = state.list.findIndex((task) => task.id === action.payload.id)
       if (index !== -1) {
         state.list.splice(index, 1)
       }
     },
+    updateTask: (state, action: PayloadAction<ITask>) => {
+      const index = state.list.findIndex((task) => task.id === action.payload.id)
+      if (index !== -1) {
+        state.list[index].title = action.payload.title
+        state.list[index].date = action.payload.date
+      }
+    },
   }
 })
 
-export const {createList, deleteList} = slice.actions
+export const {createTask, deleteTask, updateTask} = slice.actions
 export const mainSlice = slice.reducer
