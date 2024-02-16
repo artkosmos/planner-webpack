@@ -1,0 +1,10 @@
+@import "@/style/variables";
+
+.dialogMUI-title {
+  color: $title-text;
+  background-color: $background;
+}
+
+.dialogMUI-content {
+  background-color: $background;
+}

@@ -47,7 +47,7 @@ export const TaskCard = ({className}: Props) => {
   return (
     <div className={classNames}>
       <Card>
-        <p className={'task-card__title'}>General information</p>
+        <p className={'task-card__title'}>GENERAL INFORMATION</p>
         <ul className={'task-card__list'}>
           <li><span className={'task-card__point'}>Name: </span>{task.title}</li>
           <li><span className={'task-card__point'}>ID: </span>{task.id}</li>

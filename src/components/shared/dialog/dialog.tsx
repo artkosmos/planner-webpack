@@ -2,6 +2,7 @@ import React, {type ReactNode} from 'react';
 import DialogMUI from "@mui/material/Dialog";
 import DialogMUIContent from "@mui/material/DialogContent";
 import DialogMUITitle from "@mui/material/DialogTitle";
+import './style.scss'
 
 type Props = {
   children?: ReactNode,
@@ -35,11 +36,17 @@ export const Dialog = ({...rest}: Props) => {
       }}
     >
       <DialogMUITitle
-        sx={{backgroundColor: '#F5F5F5FF', borderBottom: '1px solid #ddd', fontWeight: 'bold', fontSize: '22px'}}
-      >{title}</DialogMUITitle>
-      <DialogMUIContent
+        className={'dialogMUI-title'}
         sx={{
-          backgroundColor: '#F5F5F5FF',
+          borderBottom: '1px solid #ddd',
+          fontWeight: 'bold',
+          fontSize: '22px'
+      }}>
+        {title}
+      </DialogMUITitle>
+      <DialogMUIContent
+        className={'dialogMUI-content'}
+        sx={{
           paddingTop: '20px !important',
           display: 'flex',
           flexDirection: 'column',
