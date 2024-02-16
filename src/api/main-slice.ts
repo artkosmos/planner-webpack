@@ -17,9 +17,10 @@ const slice = createSlice({
       }
     },
     updateTask: (state, action: PayloadAction<ITask>) => {
-      const index = state.list.findIndex((task) => task.id === action.payload.id)
-      if (index !== -1) {
-       state.list[index] = action.payload
+      const task = state.list.find((task) => task.id === action.payload.id)
+      if (task) {
+       task.title = action.payload.title
+       task.date = action.payload.date
       }
     },
   }
