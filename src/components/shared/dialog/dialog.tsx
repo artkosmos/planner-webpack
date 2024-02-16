@@ -8,11 +8,8 @@ type Props = {
   children?: ReactNode,
   title: string,
   isOpen: boolean,
-  cancelButtonName?: string
-  confirmButtonName?: string
   className?: string
-  oneButton?: boolean
-  setIsOpen?: any
+  onClose?: () => void
 }
 
 export const Dialog = ({...rest}: Props) => {
@@ -20,7 +17,7 @@ export const Dialog = ({...rest}: Props) => {
     children,
     isOpen,
     title,
-    setIsOpen,
+    onClose,
     className
   } = rest
 
@@ -29,7 +26,7 @@ export const Dialog = ({...rest}: Props) => {
       className={className}
       maxWidth={"sm"}
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={onClose}
       fullWidth
       sx={{
         '.MuiPaper-root': {borderRadius: '10px'}

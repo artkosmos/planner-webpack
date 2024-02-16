@@ -4,7 +4,7 @@ import {ITask} from "@/common";
 const slice = createSlice({
   name: 'main',
   initialState: {
-    list: [] as ITask[]
+    list: [] as ITask[],
   },
   reducers: {
     createTask: (state, action: PayloadAction<ITask>) => {
@@ -19,8 +19,7 @@ const slice = createSlice({
     updateTask: (state, action: PayloadAction<ITask>) => {
       const index = state.list.findIndex((task) => task.id === action.payload.id)
       if (index !== -1) {
-        state.list[index].title = action.payload.title
-        state.list[index].date = action.payload.date
+       state.list[index] = action.payload
       }
     },
   }

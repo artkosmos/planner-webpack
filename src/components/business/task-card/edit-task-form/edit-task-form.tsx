@@ -3,16 +3,11 @@ import {ButtonOutlined, ButtonPrimary, FilledInput} from "@/components/shared";
 import {useController, useForm} from "react-hook-form";
 import type {ITask} from "@/common";
 import './style.scss'
-import type {IEditTaskAction} from "../task-card";
+import {EditFormButtons, type EditTaskFormFields, type IEditTaskAction} from "./types";
 
-export enum EditFormButtons {
-  CANCEL = 'cancel',
-  SAVE = 'save'
-}
-
-interface EditTaskFormFields {
-  title: string
-  date: string
+interface IButtonAction {
+  name: EditFormButtons
+  data?: EditTaskFormFields
 }
 
 type Props = {
@@ -39,15 +34,16 @@ export const EditTaskForm = ({task, onAction}: Props) => {
     rules: {required: true}
   });
 
-  const buttonActionHandler = (name: EditFormButtons, data: EditTaskFormFields) => {
+  const buttonActionHandler = ({name, data}: IButtonAction) => {
     switch (name) {
       case EditFormButtons.CANCEL:
         onAction({name})
-        break
+        break;
       case EditFormButtons.SAVE:
         if (data) {
           const {title, date} = data
           onAction({name, model: {date, title, id: task.id}})
+          break;
         }
     }
   }
@@ -56,9 +52,8 @@ export const EditTaskForm = ({task, onAction}: Props) => {
     <form
       className={'task-edit-form'}
       onSubmit={handleSubmit(data => {
-        buttonActionHandler(EditFormButtons.SAVE, data)
+        buttonActionHandler({name: EditFormButtons.SAVE, data})
       })}>
-      <FilledInput label={'ID'} value={task.id} disabled/>
       <FilledInput
         {...taskNameField}
         error={!!errors.title}
@@ -73,7 +68,7 @@ export const EditTaskForm = ({task, onAction}: Props) => {
       />
       <div className={'task-edit-form__button-container'}>
         <ButtonOutlined
-          onClick={() => buttonActionHandler(EditFormButtons.CANCEL, null)}
+          onClick={() => buttonActionHandler({name: EditFormButtons.CANCEL})}
           title={'Cancel'}
         />
         <ButtonPrimary
