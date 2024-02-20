@@ -1,4 +1,6 @@
-.task-edit-form {
+@import "@/style/variables";
+
+.task-form {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -6,14 +8,18 @@
   &__button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 20px;
   }
 
   &__name-input {
     margin-bottom: 30px !important;
   }
 
-  &__date-input {
-    margin-bottom: 5px !important;
+  &__error-message {
+    color: $error-text;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
   }
 }

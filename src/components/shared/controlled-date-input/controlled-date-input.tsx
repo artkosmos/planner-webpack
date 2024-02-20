@@ -16,20 +16,22 @@ export const ControlledDateInput = <T extends FieldValues>({name, control}: Prop
   } = useController({
     name,
     control,
+    rules: {required: true}
   })
 
   const onDatePickerChange = (value: Dayjs) => {
-    onChange(value.toDate())
+    onChange(value.toDate().toISOString())
   }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DateTimePicker']}>
         <DateTimePicker
-          value={dayjs(value)}
+          ampm={false}
+          value={value ? dayjs(value) : null}
           views={['year', 'month', 'day', 'hours', 'minutes', 'seconds']}
-          format={"DD.MM.YYYY h:mm:ss a"}
-          onChange={onDatePickerChange}
+          format={"DD.MM.YYYY HH:mm:ss"}
+          onAccept={onDatePickerChange}
           label="Choose date"
         />
       </DemoContainer>
