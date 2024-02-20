@@ -1,6 +1,7 @@
 import React, {type ComponentPropsWithoutRef, MouseEvent} from 'react';
 import {DeleteIcon} from "@/assets/icons";
 import type {ITask} from "@/common";
+import dayjs from "dayjs";
 
 type Props = {
   task: ITask
@@ -18,7 +19,7 @@ export const TableBodyRow = ({task, deleteRow, ...rest}: Props) => {
     <tr key={task.id} {...rest}>
       <td>{task.id}</td>
       <td>{task.title}</td>
-      <td>{task.date}</td>
+      <td>{dayjs(JSON.parse(task.date)).format('DD.MM.YYYY hh:mm:ss')}</td>
       <td>
         <DeleteIcon className={'table-delete-icon'} onClick={deleteRowHandler}/>
       </td>

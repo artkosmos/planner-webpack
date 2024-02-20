@@ -7,6 +7,7 @@ import {type AppDispatch, useAppSelector} from "@/store";
 import {EditFormButtons, EditTaskForm, type IEditTaskAction} from "./edit-task-form";
 import {useDispatch} from "react-redux";
 import {updateTask} from "@/api";
+import dayjs from "dayjs";
 
 type Props = {
   className?: string
@@ -49,7 +50,7 @@ export const TaskCard = ({className}: Props) => {
         <ul className={'task-card__list'}>
           <li><span className={'task-card__point'}>Name: </span>{task.title}</li>
           <li><span className={'task-card__point'}>ID: </span>{task.id}</li>
-          <li><span className={'task-card__point'}>Created at: </span>{task.date}</li>
+          <li><span className={'task-card__point'}>Date: </span>{dayjs(JSON.parse(task.date)).format('DD.MM.YYYY hh:mm:ss')}</li>
         </ul>
         <ButtonPrimary className={'task-card__edit-button'} onClick={() => setOpenEditDialog(true)} title={'Edit'}/>
         <Dialog
