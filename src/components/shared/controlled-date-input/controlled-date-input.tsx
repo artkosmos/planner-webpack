@@ -29,7 +29,7 @@ export const ControlledDateInput = <T extends FieldValues>({name, control}: Prop
           value={dayjs(value)}
           views={['year', 'month', 'day', 'hours', 'minutes', 'seconds']}
           format={"DD.MM.YYYY h:mm:ss a"}
-          onAccept={onDatePickerChange}
+          onChange={onDatePickerChange}
           label="Choose date"
         />
       </DemoContainer>

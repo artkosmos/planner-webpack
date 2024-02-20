@@ -27,7 +27,7 @@ export const ListCreator = () => {
   };
 
   const createListHandler = () => {
-    const date = JSON.stringify(new Date())
+    const date = new Date().toISOString()
     const id = uuid().slice(0, 8)
     dispatch(createTask({title: inputValue, date, id}))
     setInputValue('')

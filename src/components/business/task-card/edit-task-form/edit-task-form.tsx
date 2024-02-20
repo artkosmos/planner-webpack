@@ -17,7 +17,7 @@ type Props = {
 
 export const EditTaskForm = ({task, onAction}: Props) => {
   const {handleSubmit, control, formState: {errors}} = useForm<EditTaskFormFields>({
-    defaultValues: {title: task.title, date: JSON.parse(task.date)}
+    defaultValues: {title: task.title, date: task.date}
   })
 
   const {field: taskNameField} = useController({
