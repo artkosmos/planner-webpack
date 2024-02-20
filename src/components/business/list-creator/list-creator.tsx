@@ -1,7 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "@/store";
-import moment from "moment/moment";
 import {v4 as uuid} from "uuid";
 import {createTask, deleteTask} from '@/api';
 import {ButtonPrimary, FilledInput, InfoTitle, ListTable} from "@/components/shared";
@@ -28,7 +27,7 @@ export const ListCreator = () => {
   };
 
   const createListHandler = () => {
-    const date = moment().format('DD.MM.YYYY hh:mm:ss')
+    const date = new Date().toISOString()
     const id = uuid().slice(0, 8)
     dispatch(createTask({title: inputValue, date, id}))
     setInputValue('')
