@@ -1,0 +1,11 @@
+.task-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+
+  &__button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+}

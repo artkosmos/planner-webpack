@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import {AppDispatch} from "@/store";
 import moment from "moment/moment";
 import {v4 as uuid} from "uuid";
-import {createList, deleteList} from '@/api';
+import {createTask, deleteTask} from '@/api';
 import {ButtonPrimary, FilledInput, InfoTitle, ListTable} from "@/components/shared";
 import './style.scss'
 import {useAppSelector} from "@/store";
@@ -28,21 +28,30 @@ export const ListCreator = () => {
   };
 
   const createListHandler = () => {
-    const date = moment().format('MMMM Do YYYY, h:mm:ss')
+    const date = moment().format('DD.MM.YYYY hh:mm:ss')
     const id = uuid().slice(0, 8)
-    dispatch(createList({title: inputValue, date, id}))
+    dispatch(createTask({title: inputValue, date, id}))
     setInputValue('')
   }
 
   const deleteListHandler = (id: string) => {
-    dispatch(deleteList({id}))
+    dispatch(deleteTask({id}))
   }
 
   return (
-    <div className={'list-creator-content'}>
-      <div className={'add-list-block'}>
-        <FilledInput onKeyDown={handleEnterPress} value={inputValue} onChange={inputValueHandler}/>
-        <ButtonPrimary title={'Add list'} onClick={createListHandler} disabled={!inputValue}/>
+    <div className={'list-creator'}>
+      <div className={'list-creator__add-task-block add-task-block'}>
+        <FilledInput
+          className={'add-task-block__input'}
+          onKeyDown={handleEnterPress}
+          label={'Write task name'}
+          value={inputValue}
+          onChange={inputValueHandler}/>
+        <ButtonPrimary
+          className={'add-task-block__button'}
+          title={'Add list'}
+          onClick={createListHandler}
+          disabled={!inputValue}/>
       </div>
       {list.length
         ? <ListTable list={list} deleteTask={deleteListHandler}/>

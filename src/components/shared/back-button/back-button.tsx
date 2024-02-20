@@ -7,7 +7,7 @@ export const BackButton = ({title, ...rest}: ButtonProps) => {
     <Button
       sx={{height: 'minimal', display: 'flex', alignItems: 'center'}}
       color={"primary"}
-      size={"medium"}
+      size={"large"}
       variant={'text'}
       startIcon={<ArrowBackIcon/>}
       {...rest}>

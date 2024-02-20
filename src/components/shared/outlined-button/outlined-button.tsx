@@ -1,13 +1,13 @@
 import React from 'react';
 import Button, {ButtonProps} from '@mui/material/Button';
 
-export const ButtonPrimary = ({title,...rest}: ButtonProps) => {
+export const ButtonOutlined = ({title,...rest}: ButtonProps) => {
   return (
     <Button
       sx={{fontWeight: 'bold'}}
-      color={"primary"}
+      color={"error"}
       size={"medium"}
-      variant={'contained'}
+      variant={'outlined'}
       {...rest}>
       {title}
     </Button>
