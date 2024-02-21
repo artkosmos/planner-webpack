@@ -1,6 +1,11 @@
 import React from 'react';
-import {ButtonOutlined, ButtonPrimary, ControlledDateInput, FilledInput} from "@/components/shared";
-import {useController, useForm} from "react-hook-form";
+import {
+  ButtonOutlined,
+  ButtonPrimary,
+  ControlledDateInput,
+  ControlledFilledInput, type ITaskFormConfig,
+} from "@/components/shared";
+import {useForm} from "react-hook-form";
 import type {ITask} from "@/common";
 import './style.scss'
 import {EditFormButtons, type EditTaskFormFields, type IEditTaskAction} from "./types";
@@ -13,26 +18,22 @@ interface IButtonAction {
 type Props = {
   task: ITask
   onAction?: ({model, name}: IEditTaskAction) => void
+  config: ITaskFormConfig
 }
 
-export const EditTaskForm = ({task, onAction}: Props) => {
+export const TaskForm = ({task, onAction, config}: Props) => {
   const {handleSubmit, control, formState: {errors}} = useForm<EditTaskFormFields>({
     defaultValues: {title: task.title, date: task.date}
   })
 
-  const {field: taskNameField} = useController({
-    name: "title",
-    control,
-    defaultValue: task.title,
-    rules: {required: true}
-  });
+  const isError = errors.title || errors.date
 
   const buttonActionHandler = ({name, data}: IButtonAction) => {
     switch (name) {
       case EditFormButtons.CANCEL:
         onAction({name})
         break;
-      case EditFormButtons.SAVE:
+      case EditFormButtons.CONFIRM:
         if (data) {
           const {title, date} = data
           onAction({name, model: {date, title, id: task.id}})
@@ -43,29 +44,31 @@ export const EditTaskForm = ({task, onAction}: Props) => {
 
   return (
     <form
-      className={'task-edit-form'}
+      className={'task-form'}
       onSubmit={handleSubmit(data => {
-        buttonActionHandler({name: EditFormButtons.SAVE, data})
+        console.log(data)
+        buttonActionHandler({name: EditFormButtons.CONFIRM, data})
       })}>
-      <FilledInput
-        className={'task-edit-form__name-input'}
-        {...taskNameField}
-        error={!!errors.title}
-        name={'taskName'}
-        label={errors.title ? 'Specify the name' : 'Task name'}
+      <ControlledFilledInput
+        name={'title'}
+        control={control}
+        className={'task-form__name-input'}
+        label={'Task name'}
       />
       <ControlledDateInput
         name={'date'}
         control={control}
       />
-      <div className={'task-edit-form__button-container'}>
+      {isError &&
+        <span className={'task-form__error-message'}>All fields are required</span>}
+      <div className={'task-form__button-container'}>
         <ButtonOutlined
           onClick={() => buttonActionHandler({name: EditFormButtons.CANCEL})}
-          title={'Cancel'}
+          title={config.cancelButtonTitle}
         />
         <ButtonPrimary
           type={"submit"}
-          title={'Save'}
+          title={config.confirmButtonTitle}
         />
       </div>
     </form>

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {ButtonPrimary, Card, Dialog, InfoTitle} from "@/components/shared";
+import {ButtonPrimary, Card, Dialog, InfoTitle, type ITaskFormConfig} from "@/components/shared";
 import {useParams} from "react-router-dom";
 import './style.scss'
 import clsx from "clsx";
 import {type AppDispatch, useAppSelector} from "@/store";
-import {EditFormButtons, EditTaskForm, type IEditTaskAction} from "./edit-task-form";
+import {EditFormButtons, TaskForm, type IEditTaskAction} from "@/components/shared";
 import {useDispatch} from "react-redux";
 import {updateTask} from "@/api";
 import dayjs from "dayjs";
@@ -12,6 +12,11 @@ import dayjs from "dayjs";
 type Props = {
   className?: string
 }
+
+const updateTaskFormConfig: ITaskFormConfig = {
+  cancelButtonTitle: 'cancel',
+  confirmButtonTitle: 'save'
+} as const
 
 export const TaskCard = ({className}: Props) => {
   const {id} = useParams<string>()
@@ -27,21 +32,21 @@ export const TaskCard = ({className}: Props) => {
   }
 
   const onEditFormAction = ({name, model}: IEditTaskAction) => {
-   switch (name) {
-     case EditFormButtons.CANCEL:
-       setOpenEditDialog(false)
-       break;
-     case EditFormButtons.SAVE:
-      const {title, date} = model
-       dispatch(updateTask({id, date, title}))
-       setOpenEditDialog(false)
-       break;
-   }
+    switch (name) {
+      case EditFormButtons.CANCEL:
+        setOpenEditDialog(false)
+        break;
+      case EditFormButtons.CONFIRM:
+        const {title, date} = model
+        dispatch(updateTask({id, date, title}))
+        setOpenEditDialog(false)
+        break;
+    }
   }
+
   const dialogCloseHandler = () => {
     setOpenEditDialog(false)
   }
-
 
   return (
     <div className={classNames}>
@@ -50,7 +55,7 @@ export const TaskCard = ({className}: Props) => {
         <ul className={'task-card__list'}>
           <li><span className={'task-card__point'}>Name: </span>{task.title}</li>
           <li><span className={'task-card__point'}>ID: </span>{task.id}</li>
-          <li><span className={'task-card__point'}>Date: </span>{dayjs(task.date).format('DD.MM.YYYY hh:mm:ss')}</li>
+          <li><span className={'task-card__point'}>Date: </span>{dayjs(task.date).format('DD.MM.YYYY HH:mm:ss')}</li>
         </ul>
         <ButtonPrimary className={'task-card__edit-button'} onClick={() => setOpenEditDialog(true)} title={'Edit'}/>
         <Dialog
@@ -58,7 +63,7 @@ export const TaskCard = ({className}: Props) => {
           isOpen={openEditDialog}
           onClose={dialogCloseHandler}
         >
-          <EditTaskForm onAction={onEditFormAction} task={task}/>
+          <TaskForm config={updateTaskFormConfig} onAction={onEditFormAction} task={task}/>
         </Dialog>
       </Card>
     </div>
