@@ -46,7 +46,6 @@ export const TaskForm = ({task, onAction, config}: Props) => {
     <form
       className={'task-form'}
       onSubmit={handleSubmit(data => {
-        console.log(data)
         buttonActionHandler({name: EditFormButtons.CONFIRM, data})
       })}>
       <ControlledFilledInput
