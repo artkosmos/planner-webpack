@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
-import {ButtonPrimary, Card, Dialog, InfoTitle, type ITaskFormConfig} from "@/components/shared";
+import React, {useEffect, useState} from 'react';
+import {ButtonPrimary, Card, Dialog, type ITaskFormConfig} from "@/components/shared";
 import {useParams} from "react-router-dom";
 import './style.scss'
 import clsx from "clsx";
 import {type AppDispatch, useAppSelector} from "@/store";
 import {EditFormButtons, TaskForm, type IEditTaskAction} from "@/components/shared";
+import CircularProgress from '@mui/material/CircularProgress';
 import {useDispatch} from "react-redux";
-import {updateTask} from "@/api";
 import dayjs from "dayjs";
+import {mainThunk} from "@/api";
 
 type Props = {
   className?: string
@@ -23,13 +24,14 @@ export const TaskCard = ({className}: Props) => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
 
-  const task = useAppSelector(state => state.main.list.find(task => task.id === id));
+  const currentTask = useAppSelector(state => state.main.currentTask)
+  const isLoading = useAppSelector((state) => state.main.isLoading)
+
+  useEffect(() => {
+    dispatch(mainThunk.getTask(id))
+  }, []);
 
   const classNames = clsx(className, 'task-card')
-
-  if (!task) {
-    return <InfoTitle title={'Specified card is not found'}/>
-  }
 
   const onEditFormAction = ({name, model}: IEditTaskAction) => {
     switch (name) {
@@ -38,7 +40,7 @@ export const TaskCard = ({className}: Props) => {
         break;
       case EditFormButtons.CONFIRM:
         const {title, date} = model
-        dispatch(updateTask({id, date, title}))
+        dispatch(mainThunk.updateTask({title, date, id}))
         setOpenEditDialog(false)
         break;
     }
@@ -48,14 +50,19 @@ export const TaskCard = ({className}: Props) => {
     setOpenEditDialog(false)
   }
 
+  if (!currentTask || isLoading) {
+    return <CircularProgress className={'task-card__loader'}/>
+  }
+
   return (
     <div className={classNames}>
       <Card>
         <p className={'task-card__title'}>GENERAL INFORMATION</p>
         <ul className={'task-card__list'}>
-          <li><span className={'task-card__point'}>Name: </span>{task.title}</li>
-          <li><span className={'task-card__point'}>ID: </span>{task.id}</li>
-          <li><span className={'task-card__point'}>Date: </span>{dayjs(task.date).format('DD.MM.YYYY HH:mm:ss')}</li>
+          <li><span className={'task-card__point'}>Name: </span>{currentTask.title}</li>
+          <li><span className={'task-card__point'}>ID: </span>{currentTask.id}</li>
+          <li><span className={'task-card__point'}>Date: </span>{dayjs(currentTask.date).format('DD.MM.YYYY HH:mm:ss')}
+          </li>
         </ul>
         <ButtonPrimary className={'task-card__edit-button'} onClick={() => setOpenEditDialog(true)} title={'Edit'}/>
         <Dialog
@@ -63,7 +70,7 @@ export const TaskCard = ({className}: Props) => {
           isOpen={openEditDialog}
           onClose={dialogCloseHandler}
         >
-          <TaskForm config={updateTaskFormConfig} onAction={onEditFormAction} task={task}/>
+          <TaskForm config={updateTaskFormConfig} onAction={onEditFormAction} task={currentTask}/>
         </Dialog>
       </Card>
     </div>

@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {AppDispatch} from "@/store";
+import {AppDispatch, useAppSelector} from "@/store";
 import {v4 as uuid} from "uuid";
-import {createTask, deleteTask} from '@/api';
+import {mainThunk} from '@/api';
 import {
   ButtonPrimary,
   Dialog, EditFormButtons,
@@ -11,8 +11,8 @@ import {
   ListTable,
   TaskForm
 } from "@/components/shared";
+import CircularProgress from '@mui/material/CircularProgress';
 import './style.scss'
-import {useAppSelector} from "@/store";
 
 const createTaskFormConfig: ITaskFormConfig = {
   cancelButtonTitle: 'cancel',
@@ -21,9 +21,14 @@ const createTaskFormConfig: ITaskFormConfig = {
 
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false)
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(mainThunk.getTaskList())
+  }, []);
 
   const list = useAppSelector((state) => state.main.list)
-  const dispatch = useDispatch<AppDispatch>()
+  const isLoading = useAppSelector((state) => state.main.isLoading)
 
   const onCreateFormAction = ({name, model}: IEditTaskAction) => {
     switch (name) {
@@ -34,14 +39,14 @@ export const ListCreator = () => {
         const date = model.date
         const title = model.title
         const id = uuid().slice(0, 8)
-        dispatch(createTask({title, date, id}))
+        dispatch(mainThunk.createTask({date, title, id}))
         setOpenEditDialog(false)
         break;
     }
   }
 
   const deleteListHandler = (id: string) => {
-    dispatch(deleteTask({id}))
+    dispatch(mainThunk.deleteTask(id))
   }
 
   return (
@@ -64,9 +69,13 @@ export const ListCreator = () => {
           onClick={() => setOpenEditDialog(true)}
         />
       </div>
-      {list.length
-        ? <ListTable list={list} deleteTask={deleteListHandler}/>
-        : <InfoTitle title={'No available data'}/>}
+      <div className={'list-creator__loader'}>
+        {isLoading && <CircularProgress/>}
+      </div>
+      <div className={'list-creator__table-block'}>
+        {!!list.length && <ListTable list={list} deleteTask={deleteListHandler}/>}
+        {!list.length && <InfoTitle title={'No available data'}/>}
+      </div>
     </div>
   );
 };
