@@ -1,13 +1,8 @@
 import {ITask} from "@/common";
 
-const initialState: ITask[] = [
-  {id: 'da08a866', title: 'Project deadline', date: '2024-03-31T09:00:00.000Z'},
-  {id: '2bc96e10', title: 'Meeting with friends at a cafe', date: '2024-02-24T16:10:00.000Z'},
-  {id: '4daf2fc4', title: 'Go shopping', date: '2024-02-23T11:25:30.000Z'}
-]
-
 const taskService = (() => {
-  let taskList = initialState
+  const taskList: ITask[] = []
+  const timeoutDelay = 500
 
   const getTask = (id: string) => {
     return new Promise<ITask>((resolve, reject) => {
@@ -18,7 +13,7 @@ const taskService = (() => {
         } else {
           reject(new Error('Specified task wasn\'t found'))
         }
-      }, 500)
+      }, timeoutDelay)
     })
   }
 
@@ -26,7 +21,7 @@ const taskService = (() => {
     return new Promise<ITask[]>((resolve) => {
       setTimeout(() => {
         resolve([...taskList])
-      }, 500)
+      }, timeoutDelay)
     })
   }
 
@@ -36,7 +31,7 @@ const taskService = (() => {
         const newTask = {id, title, date}
         taskList.unshift(newTask)
         resolve('Task was created successfully')
-      }, 500)
+      }, timeoutDelay)
     })
   }
 
@@ -50,7 +45,7 @@ const taskService = (() => {
         } else {
           reject(new Error('Specified task wasn\'t found'))
         }
-      }, 500)
+      }, timeoutDelay)
     })
   }
 
@@ -64,7 +59,7 @@ const taskService = (() => {
         } else {
           reject(new Error('Specified task wasn\'t found'))
         }
-      }, 500)
+      }, timeoutDelay)
     })
   }
 

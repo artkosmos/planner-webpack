@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ButtonPrimary, Card, Dialog, type ITaskFormConfig} from "@/components/shared";
+import {ButtonPrimary, Card, Dialog, InfoTitle, type ITaskFormConfig} from "@/components/shared";
 import {useParams} from "react-router-dom";
 import './style.scss'
 import clsx from "clsx";
@@ -26,6 +26,7 @@ export const TaskCard = ({className}: Props) => {
 
   const currentTask = useAppSelector(state => state.main.currentTask)
   const isLoading = useAppSelector((state) => state.main.isLoading)
+  const error = useAppSelector((state) => state.main.error)
 
   useEffect(() => {
     dispatch(mainThunk.getTask(id))
@@ -50,8 +51,12 @@ export const TaskCard = ({className}: Props) => {
     setOpenEditDialog(false)
   }
 
-  if (!currentTask || isLoading) {
+  if (isLoading) {
     return <CircularProgress className={'task-card__loader'}/>
+  }
+
+  if (!currentTask) {
+    return <InfoTitle title={error}/>
   }
 
   return (

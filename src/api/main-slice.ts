@@ -1,6 +1,7 @@
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {ITask} from "@/common";
 import taskService from "@/api";
+import {createAppAsyncThunk} from "@/utils";
 
 const slice = createSlice({
   name: 'main',
@@ -8,7 +9,7 @@ const slice = createSlice({
     list: [] as ITask[],
     currentTask: null as ITask | null,
     error: null as null | string,
-    isLoading: false as boolean
+    isLoading: false as boolean,
   },
   reducers: {
     setError: (state, action: PayloadAction<string | null>) => {
@@ -20,14 +21,11 @@ const slice = createSlice({
       .addCase(getTaskList.fulfilled, (state, action) => {
         state.list = action.payload
       })
-      .addCase(createTask.fulfilled, (state, action) => {
-        state.list = action.payload
-      })
-      .addCase(deleteTask.fulfilled, (state, action) => {
-        state.list = action.payload
-      })
       .addCase(getTask.fulfilled, (state, action) => {
         state.currentTask = action.payload
+      })
+      .addCase(getTask.rejected, (state, action) => {
+        state.error = action.payload
       })
       .addMatcher(isPending, (state) => {
         state.isLoading = true
@@ -41,7 +39,7 @@ const slice = createSlice({
   }
 })
 
-const getTask = createAsyncThunk(
+const getTask = createAppAsyncThunk(
   'main/getTask',
   async (id: string, {rejectWithValue}) => {
     try {
@@ -52,7 +50,7 @@ const getTask = createAsyncThunk(
   },
 )
 
-const getTaskList = createAsyncThunk(
+const getTaskList = createAppAsyncThunk(
   'main/getTaskList',
   async (_, {rejectWithValue}) => {
     try {
@@ -63,13 +61,13 @@ const getTaskList = createAsyncThunk(
   },
 )
 
-const createTask = createAsyncThunk(
+const createTask = createAppAsyncThunk(
   'main/createTask',
-  async (data: ITask, {rejectWithValue}) => {
+  async (data: ITask, {rejectWithValue, dispatch}) => {
     try {
       const response = await taskService.createTask(data)
       if (response) {
-        return await taskService.getTaskList()
+        return dispatch(getTaskList())
       }
     } catch (error) {
       return rejectWithValue(error.message)
@@ -77,13 +75,13 @@ const createTask = createAsyncThunk(
   },
 )
 
-const deleteTask = createAsyncThunk(
+const deleteTask = createAppAsyncThunk(
   'main/deleteTask',
-  async (id: string, {rejectWithValue}) => {
+  async (id: string, {rejectWithValue, dispatch}) => {
     try {
       const response = await taskService.deleteTask(id)
       if (response) {
-        return await taskService.getTaskList()
+        return dispatch(getTaskList())
       }
     } catch (error) {
       return rejectWithValue(error.message)
@@ -91,13 +89,13 @@ const deleteTask = createAsyncThunk(
   },
 )
 
-const updateTask = createAsyncThunk(
+const updateTask = createAppAsyncThunk(
   'main/updateTask',
   async (task: ITask, {rejectWithValue, dispatch}) => {
     try {
       const response = await taskService.updateTask(task)
       if (response) {
-        dispatch(getTask(task.id))
+        return dispatch(getTask(task.id))
       }
     } catch (error) {
       return rejectWithValue(error.message)
