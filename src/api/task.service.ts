@@ -1,7 +1,8 @@
 import {ITask} from "@/common";
 
-export const taskService = (() => {
+const taskService = (() => {
   const taskList: ITask[] = []
+  const timeoutDelay = 500
 
   const getTask = (id: string) => {
     return new Promise<ITask>((resolve, reject) => {
@@ -12,15 +13,15 @@ export const taskService = (() => {
         } else {
           reject(new Error('Specified task wasn\'t found'))
         }
-      }, 1500)
+      }, timeoutDelay)
     })
   }
 
   const getTaskList = () => {
     return new Promise<ITask[]>((resolve) => {
       setTimeout(() => {
-        resolve(taskList)
-      }, 2500)
+        resolve([...taskList])
+      }, timeoutDelay)
     })
   }
 
@@ -30,7 +31,7 @@ export const taskService = (() => {
         const newTask = {id, title, date}
         taskList.unshift(newTask)
         resolve('Task was created successfully')
-      }, 1500)
+      }, timeoutDelay)
     })
   }
 
@@ -44,22 +45,21 @@ export const taskService = (() => {
         } else {
           reject(new Error('Specified task wasn\'t found'))
         }
-      }, 1500)
+      }, timeoutDelay)
     })
   }
 
   const updateTask = ({id, title, date}: ITask) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
-        const task = taskList.find((item) => item.id === id)
-        if (task) {
-          task.title = title
-          task.date = date
+        const index = taskList.findIndex((item) => item.id === id)
+        if (index !== -1) {
+          taskList[index] = {id, title, date}
           resolve('Task was updated successfully')
         } else {
           reject(new Error('Specified task wasn\'t found'))
         }
-      }, 1500)
+      }, timeoutDelay)
     })
   }
 
