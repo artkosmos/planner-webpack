@@ -32,16 +32,18 @@ export const ListCreator = () => {
 
   const onCreateFormAction = ({name, model}: IEditTaskAction) => {
     switch (name) {
-      case EditFormButtons.CANCEL:
+      case EditFormButtons.CANCEL: {
         setOpenEditDialog(false)
         break;
-      case EditFormButtons.CONFIRM:
+      }
+      case EditFormButtons.CONFIRM: {
         const date = model.date
         const title = model.title
         const id = uuid().slice(0, 8)
         dispatch(mainThunk.createTask({date, title, id}))
         setOpenEditDialog(false)
         break;
+      }
     }
   }
 

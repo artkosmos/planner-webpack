@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "build": "webpack",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js}"
   },
   "author": "Artem",
   "license": "ISC",
@@ -18,8 +19,13 @@
     "@types/react-dom": "18.2.18",
     "@types/uuid": "9.0.8",
     "@types/webpack": "5.28.5",
+    "@typescript-eslint/eslint-plugin": "7.0.2",
     "babel-loader": "9.1.3",
     "css-loader": "6.10.0",
+    "eslint": "8.57.0",
+    "eslint-plugin": "1.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-webpack-plugin": "4.0.1",
     "html-webpack-plugin": "5.6.0",
     "sass": "1.70.0",
     "sass-loader": "14.1.0",

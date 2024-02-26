@@ -36,14 +36,16 @@ export const TaskCard = ({className}: Props) => {
 
   const onEditFormAction = ({name, model}: IEditTaskAction) => {
     switch (name) {
-      case EditFormButtons.CANCEL:
+      case EditFormButtons.CANCEL: {
         setOpenEditDialog(false)
         break;
-      case EditFormButtons.CONFIRM:
+      }
+      case EditFormButtons.CONFIRM: {
         const {title, date} = model
         dispatch(mainThunk.updateTask({title, date, id}))
         setOpenEditDialog(false)
         break;
+      }
     }
   }
 

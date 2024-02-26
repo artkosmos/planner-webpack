@@ -30,15 +30,17 @@ export const TaskForm = ({task, onAction, config}: Props) => {
 
   const buttonActionHandler = ({name, data}: IButtonAction) => {
     switch (name) {
-      case EditFormButtons.CANCEL:
+      case EditFormButtons.CANCEL: {
         onAction({name})
         break;
-      case EditFormButtons.CONFIRM:
+      }
+      case EditFormButtons.CONFIRM: {
         if (data) {
           const {title, date} = data
           onAction({name, model: {date, title, id: task.id}})
           break;
         }
+      }
     }
   }
 
