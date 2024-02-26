@@ -1,21 +1,21 @@
-import type {ITask} from "@/common";
+import type { ITask } from '@/common';
 
 export enum EditFormButtons {
   CANCEL = 'cancel',
-  CONFIRM = 'confirm'
+  CONFIRM = 'confirm',
 }
 
 export interface IEditTaskAction {
-  model?: ITask
-  name: EditFormButtons
+  model?: ITask;
+  name: EditFormButtons;
 }
 
 export interface EditTaskFormFields {
-  title: string
-  date: string
+  title: string;
+  date: string;
 }
 
 export interface ITaskFormConfig {
-  cancelButtonTitle: string
-  confirmButtonTitle: string
+  cancelButtonTitle: string;
+  confirmButtonTitle: string;
 }

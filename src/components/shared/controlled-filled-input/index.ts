@@ -1,1 +1,1 @@
-export {ControlledFilledInput} from './controlled-filled-input'
+export { ControlledFilledInput } from './controlled-filled-input';

@@ -1,13 +1,13 @@
-import React, {type ReactNode} from 'react';
-import CardMUIContent from "@mui/material/CardContent";
-import CardMUI from "@mui/material/Card";
+import React, { type ReactNode } from 'react';
+import CardMUIContent from '@mui/material/CardContent';
+import CardMUI from '@mui/material/Card';
 
 type Props = {
-  children?: ReactNode
-  className?: string
-}
+  children?: ReactNode;
+  className?: string;
+};
 
-export const Card = ({children, className}: Props) => {
+export const Card = ({ children, className }: Props) => {
   return (
     <CardMUI
       className={className}
@@ -19,11 +19,14 @@ export const Card = ({children, className}: Props) => {
         fontSize: '20px',
         borderRadius: '15px',
         boxShadow: '0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)',
-      }}>
-      <CardMUIContent sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}>
+      }}
+    >
+      <CardMUIContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         {children}
       </CardMUIContent>
     </CardMUI>

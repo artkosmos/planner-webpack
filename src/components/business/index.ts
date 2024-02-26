@@ -1,2 +1,2 @@
-export {ListCreator} from './list-creator'
-export {TaskCard} from './task-card'
+export { ListCreator } from './list-creator';
+export { TaskCard } from './task-card';

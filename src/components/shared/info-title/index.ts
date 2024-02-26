@@ -1,1 +1,1 @@
-export {InfoTitle} from './info-title'
+export { InfoTitle } from './info-title';

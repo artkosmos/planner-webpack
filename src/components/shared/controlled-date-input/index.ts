@@ -1,1 +1,1 @@
-export {ControlledDateInput} from './controlled-date-input'
+export { ControlledDateInput } from './controlled-date-input';

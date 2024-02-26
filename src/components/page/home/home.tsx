@@ -1,12 +1,12 @@
 import React from 'react';
-import {ListCreator} from "@/components/business";
+import { ListCreator } from '@/components/business';
 
 const Home = () => {
   return (
     <div className={'container'}>
-      <ListCreator/>
+      <ListCreator />
     </div>
-  )
+  );
 };
 
-export default Home
+export default Home;

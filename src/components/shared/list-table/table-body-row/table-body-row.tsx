@@ -1,19 +1,18 @@
-import React, {type ComponentPropsWithoutRef, MouseEvent} from 'react';
-import {DeleteIcon} from "@/assets/icons";
-import type {ITask} from "@/common";
-import dayjs from "dayjs";
+import React, { type ComponentPropsWithoutRef, MouseEvent } from 'react';
+import { DeleteIcon } from '@/assets/icons';
+import type { ITask } from '@/common';
+import dayjs from 'dayjs';
 
 type Props = {
-  task: ITask
-  deleteRow: (id: string) => void
-} & ComponentPropsWithoutRef<'tr'>
+  task: ITask;
+  deleteRow: (id: string) => void;
+} & ComponentPropsWithoutRef<'tr'>;
 
-export const TableBodyRow = ({task, deleteRow, ...rest}: Props) => {
-
+export const TableBodyRow = ({ task, deleteRow, ...rest }: Props) => {
   const deleteRowHandler = (event: MouseEvent<SVGSVGElement>) => {
-    event.stopPropagation()
-    deleteRow(task.id)
-  }
+    event.stopPropagation();
+    deleteRow(task.id);
+  };
 
   return (
     <tr key={task.id} {...rest}>
@@ -21,7 +20,10 @@ export const TableBodyRow = ({task, deleteRow, ...rest}: Props) => {
       <td>{task.title}</td>
       <td>{dayjs(task.date).format('DD.MM.YYYY HH:mm:ss')}</td>
       <td>
-        <DeleteIcon className={'table-delete-icon'} onClick={deleteRowHandler}/>
+        <DeleteIcon
+          className={'table-delete-icon'}
+          onClick={deleteRowHandler}
+        />
       </td>
     </tr>
   );

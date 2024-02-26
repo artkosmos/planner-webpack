@@ -1,1 +1,1 @@
-export {FilledInput} from './filled-input'
+export { FilledInput } from './filled-input';
