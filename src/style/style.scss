@@ -1,5 +1,5 @@
-@import "./variables";
-@import "./mixixns";
+@import './variables';
+@import './mixixns';
 
 body {
   background-color: $background;
@@ -15,7 +15,7 @@ body {
   @include layout;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (width <= 500px) {
   .container {
     padding: 10px;
   }

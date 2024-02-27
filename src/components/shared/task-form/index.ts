@@ -1,2 +1,2 @@
-export {TaskForm} from './task-form'
-export * from './types'
+export { TaskForm } from './task-form';
+export * from './types';

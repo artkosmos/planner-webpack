@@ -1,4 +1,5 @@
-@import "@/style/variables";
+@use 'sass:color';
+@import '@/style/variables';
 
 .table-container {
   width: 100%;
@@ -41,22 +42,6 @@
   }
 }
 
-.list-table tr th:first-child, .list-table tr td:first-child {
-  border-left: 1px solid #ddd;
-}
-
-.list-table tr th:last-child, .list-table tr td:last-child {
-  border-right: 1px solid #ddd;
-}
-
-.list-table thead tr th:first-child {
-  border-radius: 20px 0 0 0;
-}
-
-.list-table thead tr th:last-child {
-  border-radius: 0 20px 0 0;
-}
-
 .list-table tbody {
   display: block;
   overflow: auto;
@@ -89,12 +74,30 @@
   }
 }
 
+.list-table tr th:first-child,
+.list-table tr td:first-child {
+  border-left: 1px solid #ddd;
+}
+
+.list-table tr th:last-child,
+.list-table tr td:last-child {
+  border-right: 1px solid #ddd;
+}
+
+.list-table thead tr th:first-child {
+  border-radius: 20px 0 0;
+}
+
+.list-table thead tr th:last-child {
+  border-radius: 0 20px 0 0;
+}
+
 .list-table tbody tr:last-child td:first-child {
   border-radius: 0 0 0 20px;
 }
 
 .list-table tbody tr:last-child td:last-child {
-  border-radius: 0 0 20px 0;
+  border-radius: 0 0 20px;
 }
 
 @media (hover: hover) {
@@ -109,10 +112,11 @@
     }
   }
 
-  .list-table tbody tr, .list-table tbody tr:nth-child(even) {
+  .list-table tbody tr,
+  .list-table tbody tr:nth-child(even) {
     &:hover {
       cursor: pointer;
-      background-color: lighten(#000000, 90%);
+      background-color: color.adjust(#000, $lightness: 90%);
     }
   }
 }

@@ -1,1 +1,1 @@
-export type Mode = 'development' | 'production' | 'none'
+export type Mode = 'development' | 'production' | 'none';

@@ -1,6 +1,6 @@
-import { SVGProps } from 'react'
+import { SVGProps } from 'react';
 
-type Props = SVGProps<SVGSVGElement>
+type Props = SVGProps<SVGSVGElement>;
 export const DeleteIcon = ({ ...rest }: Props) => {
   return (
     <svg
@@ -23,5 +23,5 @@ export const DeleteIcon = ({ ...rest }: Props) => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};

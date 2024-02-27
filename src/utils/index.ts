@@ -1,1 +1,1 @@
-export {createAppAsyncThunk} from './pretyped-async-thunk'
+export { createAppAsyncThunk } from './pretyped-async-thunk';

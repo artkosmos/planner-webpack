@@ -1,2 +1,2 @@
-export * from './main-slice'
-export {default} from './task.service'
+export * from './main-slice';
+export { default } from './task.service';

@@ -1,17 +1,16 @@
 import React from 'react';
-import TextField, {TextFieldProps} from "@mui/material/TextField";
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 
-export const FilledInput = ({label, ...rest}: TextFieldProps) => {
+export const FilledInput = ({ label, ...rest }: TextFieldProps) => {
   return (
     <TextField
       aria-autocomplete={'none'}
       autoComplete={'off'}
-      sx={{backgroundColor: '#e5efff'}}
+      sx={{ backgroundColor: '#e5efff' }}
       label={label}
-      variant={"filled"}
-      color={"primary"}
+      variant={'filled'}
+      color={'primary'}
       {...rest}
     />
   );
-}
-
+};
