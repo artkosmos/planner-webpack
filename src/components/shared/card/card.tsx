@@ -1,6 +1,6 @@
-import React, { type ReactNode } from 'react';
-import CardMUIContent from '@mui/material/CardContent';
+import { type ReactNode } from 'react';
 import CardMUI from '@mui/material/Card';
+import CardMUIContent from '@mui/material/CardContent';
 
 type Props = {
   children?: ReactNode;

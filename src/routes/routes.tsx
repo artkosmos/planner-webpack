@@ -1,5 +1,6 @@
-import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+
 import { HOME, TASK } from './constants';
 
 const LazyHome = lazy(() => import('@/components/page/home/home'));

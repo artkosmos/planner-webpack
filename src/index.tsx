@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
-import { router } from '@/routes';
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+
+import { router } from '@/routes';
 import { store } from '@/store';
+
 import '@/style/style.scss';
 
 const rootElement = document.getElementById('root');

@@ -1,10 +1,12 @@
-import './style.scss';
-import { ITask } from '@/common';
-import clsx from 'clsx';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+
+import { ITask } from '@/common';
 import { TableBodyRow } from '@/components/shared/list-table/table-body-row';
 import { TASK } from '@/routes';
+
+import './style.scss';
 
 type Props = {
   list: ITask[];

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ListCreator } from '@/components/business';
 
 const Home = () => {

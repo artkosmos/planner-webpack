@@ -1,4 +1,6 @@
-import React from 'react';
+import { useForm } from 'react-hook-form';
+
+import type { ITask } from '@/common';
 import {
   ButtonOutlined,
   ButtonPrimary,
@@ -6,14 +8,14 @@ import {
   ControlledFilledInput,
   type ITaskFormConfig,
 } from '@/components/shared';
-import { useForm } from 'react-hook-form';
-import type { ITask } from '@/common';
-import './style.scss';
+
 import {
   EditFormButtons,
   type EditTaskFormFields,
   type IEditTaskAction,
 } from './types';
+
+import './style.scss';
 
 interface IButtonAction {
   name: EditFormButtons;

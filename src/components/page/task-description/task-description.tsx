@@ -1,9 +1,10 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { TaskCard } from '@/components/business';
 import { BackButton } from '@/components/shared';
-import { useNavigate } from 'react-router-dom';
-import './style.scss';
 import { HOME } from '@/routes';
+
+import './style.scss';
 
 const TaskDescription = () => {
   const navigate = useNavigate();

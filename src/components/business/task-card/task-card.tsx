@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import clsx from 'clsx';
+import dayjs from 'dayjs';
+
+import { mainThunk } from '@/api';
 import {
   ButtonPrimary,
   Card,
   Dialog,
+  EditFormButtons,
+  type IEditTaskAction,
   InfoTitle,
   type ITaskFormConfig,
-} from '@/components/shared';
-import { useParams } from 'react-router-dom';
-import './style.scss';
-import clsx from 'clsx';
-import { type AppDispatch, useAppSelector } from '@/store';
-import {
-  EditFormButtons,
   TaskForm,
-  type IEditTaskAction,
 } from '@/components/shared';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useDispatch } from 'react-redux';
-import dayjs from 'dayjs';
-import { mainThunk } from '@/api';
+import { type AppDispatch, useAppSelector } from '@/store';
+
+import './style.scss';
 
 type Props = {
   className?: string;

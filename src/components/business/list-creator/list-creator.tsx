@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch, useAppSelector } from '@/store';
+import CircularProgress from '@mui/material/CircularProgress';
 import { v4 as uuid } from 'uuid';
+
 import { mainThunk } from '@/api';
 import {
   ButtonPrimary,
@@ -13,7 +14,8 @@ import {
   ListTable,
   TaskForm,
 } from '@/components/shared';
-import CircularProgress from '@mui/material/CircularProgress';
+import { AppDispatch, useAppSelector } from '@/store';
+
 import './style.scss';
 
 const createTaskFormConfig: ITaskFormConfig = {
@@ -39,9 +41,10 @@ export const ListCreator = () => {
         break;
       }
       case EditFormButtons.CONFIRM: {
+        const idLength = 8;
         const date = model.date;
         const title = model.title;
-        const id = uuid().slice(0, 8);
+        const id = uuid().slice(0, idLength);
         dispatch(mainThunk.createTask({ date, title, id }));
         setOpenEditDialog(false);
         break;
