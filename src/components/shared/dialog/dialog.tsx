@@ -30,7 +30,7 @@ export const Dialog = ({ ...rest }: Props) => {
       }}
     >
       <DialogMUITitle
-        className={'dialogMUI-title'}
+        className={'dialog-mui-title'}
         sx={{
           borderBottom: '1px solid #ddd',
           fontWeight: 'bold',
@@ -40,7 +40,7 @@ export const Dialog = ({ ...rest }: Props) => {
         {title}
       </DialogMUITitle>
       <DialogMUIContent
-        className={'dialogMUI-content'}
+        className={'dialog-mui-content'}
         sx={{
           paddingTop: '20px !important',
           display: 'flex',

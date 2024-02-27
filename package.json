@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "serve": "webpack serve",
-    "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js}"
+    "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js} && stylelint --fix src/**/*.{scss,css}"
   },
   "author": "Artem",
   "license": "ISC",
@@ -34,6 +34,10 @@
     "sass": "1.70.0",
     "sass-loader": "14.1.0",
     "style-loader": "3.3.4",
+    "stylelint": "16.2.1",
+    "stylelint-config-standard-scss": "13.0.0",
+    "stylelint-prettier": "^5.0.0",
+    "stylelint-webpack-plugin": "5.0.0",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
     "typescript": "5.3.3",

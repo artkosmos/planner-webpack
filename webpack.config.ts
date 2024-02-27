@@ -54,6 +54,7 @@ export default () => {
       new ESLintPlugin({
         extensions: ['js', 'jsx', 'ts', 'tsx'],
       }),
+      new StylelintPlugin(),
     ],
   };
 

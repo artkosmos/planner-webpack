@@ -15,10 +15,9 @@
       flex: 1;
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (width <= 500px) {
       column-gap: 15px;
     }
-
   }
 
   &__table-block {
@@ -32,4 +31,3 @@
     align-items: center;
   }
 }
-
