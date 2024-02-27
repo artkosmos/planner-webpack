@@ -2,12 +2,14 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
     "react",
+    "react-hooks",
     "prettier"
   ],
   "rules": {
@@ -15,7 +17,7 @@
     "no-undef": "off",
     "no-unused-vars": "off",
     "arrow-parens": ["warn", "as-needed"],
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["warn"]
   },
   "settings": {
     "react": {

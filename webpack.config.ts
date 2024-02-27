@@ -51,7 +51,9 @@ export default () => {
         filename: path.resolve(__dirname, 'dist', 'index.html'),
         template: path.resolve(__dirname, 'public', 'template.html'),
       }),
-      new ESLintPlugin(),
+      new ESLintPlugin({
+        extensions: ['js', 'jsx', 'ts', 'tsx'],
+      }),
     ],
   };
 
