@@ -1,14 +1,21 @@
 import path from 'path';
+import type { Mode } from './types';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import StylelintPlugin from 'stylelint-webpack-plugin';
-import type { Mode } from './types';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 require('dotenv').config();
 
-export default () => {
+interface envVariables {
+  analyzer: boolean;
+}
+
+export default (env: envVariables) => {
+  const isAnalyzerEnabled = env.analyzer;
+
   const config: Configuration & DevServerConfiguration = {
     mode: process.env.MODE as Mode,
     entry: './src/index.tsx',
@@ -57,6 +64,10 @@ export default () => {
       new StylelintPlugin(),
     ],
   };
+
+  if (isAnalyzerEnabled) {
+    config.plugins.push(new BundleAnalyzerPlugin());
+  }
 
   return config;
 };
