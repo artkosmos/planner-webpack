@@ -38,7 +38,16 @@
       "ignoreArrayIndexes": true,
       "ignore": [-1, 0, 1]
     }],
-    "simple-import-sort/imports": "error",
+    "simple-import-sort/imports": ["error", {
+      "groups": [
+        ["^react", "^@?\\w"],
+        ["^(@|components)(/.*|$)"],
+        ["^\\u0000"],
+        ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+        ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+        ["^.+\\.?(css)$"]
+      ]
+    }],
     "simple-import-sort/exports": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
@@ -49,26 +58,6 @@
     "react": {
       "version": "detect"
     }
-  },
-  "overrides": [
-    {
-      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
-      "rules": {
-        "simple-import-sort/imports": [
-          "error",
-          {
-            "groups": [
-              ["^react", "^@?\\w"],
-              ["^(@|components)(/.*|$)"],
-              ["^\\u0000"],
-              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-              ["^.+\\.?(css)$"]
-            ]
-          }
-        ]
-      }
-    }
-  ]
+  }
 }
 
