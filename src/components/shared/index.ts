@@ -6,6 +6,7 @@ export { Dialog } from './dialog';
 export { FilledInput } from './filled-input';
 export { InfoTitle } from './info-title';
 export { ListTable } from './list-table';
+export { NotFound } from './not-found';
 export { ButtonOutlined } from './outlined-button';
 export { ButtonPrimary } from './primary-button';
 export * from './task-form';

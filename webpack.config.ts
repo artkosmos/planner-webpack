@@ -1,7 +1,7 @@
 import path from 'path';
 import type { Mode } from './types';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
-import type { Configuration } from 'webpack';
+import { type Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import StylelintPlugin from 'stylelint-webpack-plugin';
@@ -18,11 +18,15 @@ export default (env: envVariables) => {
 
   const config: Configuration & DevServerConfiguration = {
     mode: process.env.MODE as Mode,
-    entry: './src/index.tsx',
+    entry: {
+      index: './src/index.tsx',
+    },
     output: {
-      filename: 'bundle.js',
+      filename: '[name].[contenthash].bundle.js',
+      chunkFilename: '[name].[contenthash].chunk.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
+      publicPath: '/',
     },
     module: {
       rules: [
@@ -39,6 +43,18 @@ export default (env: envVariables) => {
           test: /\.s[ac]ss$/i,
           use: ['style-loader', 'css-loader', 'sass-loader'],
         },
+        {
+          test: /\.(png|jpe?g)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'images',
+              },
+            },
+          ],
+        },
       ],
     },
     resolve: {
@@ -47,10 +63,14 @@ export default (env: envVariables) => {
         '@': path.resolve(__dirname, 'src'),
       },
     },
+    optimization: {
+      splitChunks: false,
+    },
     devServer: {
       hot: true,
       compress: true,
       port: 7000,
+      historyApiFallback: true,
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -59,7 +79,7 @@ export default (env: envVariables) => {
         template: path.resolve(__dirname, 'public', 'template.html'),
       }),
       new ESLintPlugin({
-        extensions: ['js', 'jsx', 'ts', 'tsx'],
+        extensions: ['js', 'ts', 'tsx'],
       }),
       new StylelintPlugin(),
     ],
