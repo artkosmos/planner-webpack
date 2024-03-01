@@ -43,6 +43,18 @@ export default (env: envVariables) => {
           test: /\.s[ac]ss$/i,
           use: ['style-loader', 'css-loader', 'sass-loader'],
         },
+        {
+          test: /\.(png|jpe?g)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'images',
+              },
+            },
+          ],
+        },
       ],
     },
     resolve: {
