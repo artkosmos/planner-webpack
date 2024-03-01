@@ -26,6 +26,7 @@ export default (env: envVariables) => {
       chunkFilename: '[name].[contenthash].chunk.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
+      publicPath: '/',
     },
     module: {
       rules: [
@@ -57,6 +58,7 @@ export default (env: envVariables) => {
       hot: true,
       compress: true,
       port: 7000,
+      historyApiFallback: true,
     },
     plugins: [
       new HtmlWebpackPlugin({
