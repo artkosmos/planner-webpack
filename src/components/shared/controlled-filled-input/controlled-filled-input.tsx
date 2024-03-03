@@ -20,7 +20,7 @@ export const ControlledFilledInput = <T extends FieldValues>({
   } = useController({
     name,
     control,
-    rules: { required: true },
+    rules: { required: 'Field is required' },
   });
 
   return <FilledInput value={value} onChange={onChange} {...rest} />;

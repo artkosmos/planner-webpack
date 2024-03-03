@@ -32,12 +32,12 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
   const {
     handleSubmit,
     control,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm<EditTaskFormFields>({
     defaultValues: { title: task.title, date: task.date },
   });
-
-  const isError = errors.title || errors.date;
 
   const buttonActionHandler = ({ name, data }: IButtonAction) => {
     switch (name) {
@@ -59,21 +59,24 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
     <form
       className={'task-form'}
       onSubmit={handleSubmit(data => {
-        buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
+        if (!Object.keys(errors).length) {
+          buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
+        }
       })}
     >
       <ControlledFilledInput
         name={'title'}
         control={control}
         className={'task-form__name-input'}
-        label={'Task name'}
+        label={errors.title ? errors.title.message : 'Task name'}
+        error={!!errors.title}
       />
-      <ControlledDateInput name={'date'} control={control} />
-      {isError && (
-        <span className={'task-form__error-message'}>
-          All fields are required
-        </span>
-      )}
+      <ControlledDateInput
+        name={'date'}
+        control={control}
+        setError={setError}
+        clearErrors={clearErrors}
+      />
       <div className={'task-form__button-container'}>
         <ButtonOutlined
           onClick={() => buttonActionHandler({ name: EditFormButtons.CANCEL })}
