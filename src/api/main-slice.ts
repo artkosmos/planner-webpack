@@ -76,7 +76,7 @@ const updateTask = createAppAsyncThunk(
 const slice = createSlice({
   name: 'main',
   initialState: {
-    list: [] as ITask[],
+    list: null as ITask[],
     currentTask: null as ITask | null,
     error: null as null | string,
     isLoading: false as boolean,

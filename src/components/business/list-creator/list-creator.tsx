@@ -25,10 +25,13 @@ const createTaskFormConfig: ITaskFormConfig = {
 
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
+  const [dataInitialization, setDataInitialization] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(mainThunk.getTaskList());
+    dispatch(mainThunk.getTaskList()).finally(() =>
+      setDataInitialization(false),
+    );
   }, []);
 
   const list = useAppSelector(state => state.main.list);
@@ -76,15 +79,18 @@ export const ListCreator = () => {
           onClick={() => setOpenEditDialog(true)}
         />
       </div>
-      <div className={'list-creator__loader'}>
-        {isLoading && <CircularProgress />}
-      </div>
-      <div className={'list-creator__table-block'}>
-        {!!list.length && (
-          <ListTable list={list} deleteTask={deleteListHandler} />
-        )}
-        {!list.length && <InfoTitle title={'No available data'} />}
-      </div>
+      {isLoading || dataInitialization ? (
+        <div className={'list-creator__loader'}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <div className={'list-creator__table-block'}>
+          {!!list.length && (
+            <ListTable list={list} deleteTask={deleteListHandler} />
+          )}
+          {!list.length && <InfoTitle title={'No available data'} />}
+        </div>
+      )}
     </div>
   );
 };
