@@ -31,9 +31,13 @@ const taskService = (() => {
   };
 
   const getTaskList = () => {
-    return new Promise<ITask[]>(resolve => {
+    return new Promise<ITask[]>((resolve, reject) => {
       setTimeout(() => {
-        resolve([...taskList]);
+        if (taskList) {
+          resolve([...taskList]);
+        } else {
+          reject(new Error('Request error. Data not received'));
+        }
       }, timeoutDelay);
     });
   };

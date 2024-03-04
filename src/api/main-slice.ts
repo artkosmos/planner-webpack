@@ -93,6 +93,9 @@ const slice = createSlice({
       .addCase(getTask.rejected, (state, action) => {
         state.error = action.payload;
       })
+      .addCase(getTaskList.rejected, (state, action) => {
+        state.error = action.payload;
+      })
       .addMatcher(isPending, state => {
         state.isLoading = true;
       })

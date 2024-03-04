@@ -36,6 +36,7 @@ export const ListCreator = () => {
 
   const list = useAppSelector(state => state.main.list);
   const isLoading = useAppSelector(state => state.main.isLoading);
+  const error = useAppSelector(state => state.main.error);
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -58,6 +59,10 @@ export const ListCreator = () => {
   const deleteListHandler = (id: string) => {
     dispatch(mainThunk.deleteTask(id));
   };
+
+  if (!list) {
+    return <InfoTitle title={error} />;
+  }
 
   return (
     <div className={'list-creator'}>
