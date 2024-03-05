@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-import { TaskCard } from '@/components/business';
-import { BackButton } from '@/components/shared';
+import { TaskCard } from '@/components/business/task-card';
+import { BackButton } from '@/components/shared/back-button';
 import { HOME } from '@/routes';
 
 import './style.scss';

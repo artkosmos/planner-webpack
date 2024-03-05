@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import { HomeLazy, TaskDescriptionLazy } from '@/components/page';
-import { NotFound } from '@/components/shared';
+import { HomeLazy } from '@/components/page/home';
+import { TaskDescriptionLazy } from '@/components/page/task-description';
+import { NotFound } from '@/components/shared/not-found';
 
 import { HOME, TASK } from './constants';
 

@@ -1,4 +1,4 @@
-import { ITask } from '@/common';
+import { ITask } from '@/common/types';
 
 const taskService = (() => {
   const taskList: ITask[] = [];
