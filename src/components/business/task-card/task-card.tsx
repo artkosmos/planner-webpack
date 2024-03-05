@@ -6,16 +6,16 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 
 import { mainThunk } from '@/api';
+import { Card } from '@/components/shared/card';
+import { Dialog } from '@/components/shared/dialog';
+import { InfoTitle } from '@/components/shared/info-title';
+import { ButtonPrimary } from '@/components/shared/primary-button';
 import {
-  ButtonPrimary,
-  Card,
-  Dialog,
   EditFormButtons,
   type IEditTaskAction,
-  InfoTitle,
   type ITaskFormConfig,
   TaskForm,
-} from '@/components/shared';
+} from '@/components/shared/task-form';
 import { type AppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';

@@ -26,6 +26,18 @@ export default (env: envVariables) => {
       clean: true,
       publicPath: '/',
     },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          nodeModulesVendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'node_modules',
+            chunks: 'all',
+          },
+          default: false,
+        },
+      },
+    },
     module: {
       rules: [
         {
@@ -60,9 +72,6 @@ export default (env: envVariables) => {
       alias: {
         '@': path.resolve(__dirname, 'src'),
       },
-    },
-    optimization: {
-      splitChunks: false,
     },
     devServer: {
       hot: true,

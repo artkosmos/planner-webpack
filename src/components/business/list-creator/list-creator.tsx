@@ -4,16 +4,16 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { v4 as uuid } from 'uuid';
 
 import { mainThunk } from '@/api';
+import { Dialog } from '@/components/shared/dialog';
+import { InfoTitle } from '@/components/shared/info-title';
+import { ListTable } from '@/components/shared/list-table';
+import { ButtonPrimary } from '@/components/shared/primary-button';
 import {
-  ButtonPrimary,
-  Dialog,
   EditFormButtons,
   type IEditTaskAction,
-  InfoTitle,
   type ITaskFormConfig,
-  ListTable,
   TaskForm,
-} from '@/components/shared';
+} from '@/components/shared/task-form';
 import { AppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';

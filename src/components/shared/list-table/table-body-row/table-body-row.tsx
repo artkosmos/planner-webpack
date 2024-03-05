@@ -2,7 +2,7 @@ import { type ComponentPropsWithoutRef, MouseEvent } from 'react';
 import dayjs from 'dayjs';
 
 import { DeleteIcon } from '@/assets/icons';
-import type { ITask } from '@/common';
+import type { ITask } from '@/common/types';
 
 type Props = {
   task: ITask;

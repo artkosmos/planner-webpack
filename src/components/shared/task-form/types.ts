@@ -1,4 +1,4 @@
-import type { ITask } from '@/common';
+import type { ITask } from '@/common/types';
 
 export enum EditFormButtons {
   CANCEL = 'cancel',

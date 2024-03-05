@@ -1,4 +1,4 @@
-import { ListCreator } from '@/components/business';
+import { ListCreator } from '@/components/business/list-creator';
 
 const Home = () => {
   return (

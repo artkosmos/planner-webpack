@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import taskService from '@/api';
-import { ITask } from '@/common';
+import { ITask } from '@/common/types';
 import { createAppAsyncThunk } from '@/utils';
 
 const getTaskList = createAppAsyncThunk(
