@@ -1,18 +1,16 @@
 import { useForm } from 'react-hook-form';
 
-import type { ITask } from '@/common';
-import {
-  ButtonOutlined,
-  ButtonPrimary,
-  ControlledDateInput,
-  ControlledFilledInput,
-  type ITaskFormConfig,
-} from '@/components/shared';
+import type { ITask } from '@/common/types';
+import { ControlledDateInput } from '@/components/shared/controlled-date-input';
+import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
+import { ButtonOutlined } from '@/components/shared/outlined-button';
+import { ButtonPrimary } from '@/components/shared/primary-button';
 
 import {
   EditFormButtons,
   type EditTaskFormFields,
   type IEditTaskAction,
+  type ITaskFormConfig,
 } from './types';
 
 import './style.scss';

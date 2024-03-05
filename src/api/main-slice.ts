@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import taskService from '@/api';
-import { ITask } from '@/common';
+import { ITask } from '@/common/types';
 import { createAppAsyncThunk } from '@/utils';
 
 const getTaskList = createAppAsyncThunk(
@@ -76,7 +76,7 @@ const updateTask = createAppAsyncThunk(
 const slice = createSlice({
   name: 'main',
   initialState: {
-    list: [] as ITask[],
+    list: null as ITask[],
     currentTask: null as ITask | null,
     error: null as null | string,
     isLoading: false as boolean,
@@ -91,6 +91,9 @@ const slice = createSlice({
         state.currentTask = action.payload;
       })
       .addCase(getTask.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(getTaskList.rejected, (state, action) => {
         state.error = action.payload;
       })
       .addMatcher(isPending, state => {

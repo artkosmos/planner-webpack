@@ -5,7 +5,7 @@ import {
 } from 'react-hook-form';
 import type { TextFieldProps } from '@mui/material/TextField';
 
-import { FilledInput } from '@/components/shared';
+import { FilledInput } from '@/components/shared/filled-input';
 
 type Props<T extends FieldValues> = UseControllerProps<T> &
   Omit<TextFieldProps, 'onChange' | 'value' | 'variant'>;

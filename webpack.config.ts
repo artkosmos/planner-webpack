@@ -3,8 +3,6 @@ import type { Mode } from './types';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import { type Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ESLintPlugin from 'eslint-webpack-plugin';
-import StylelintPlugin from 'stylelint-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 require('dotenv').config();
@@ -27,6 +25,18 @@ export default (env: envVariables) => {
       path: path.resolve(__dirname, 'dist'),
       clean: true,
       publicPath: '/',
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          nodeModulesVendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'node_modules',
+            chunks: 'all',
+          },
+          default: false,
+        },
+      },
     },
     module: {
       rules: [
@@ -63,9 +73,6 @@ export default (env: envVariables) => {
         '@': path.resolve(__dirname, 'src'),
       },
     },
-    optimization: {
-      splitChunks: false,
-    },
     devServer: {
       hot: true,
       compress: true,
@@ -78,10 +85,6 @@ export default (env: envVariables) => {
         filename: path.resolve(__dirname, 'dist', 'index.html'),
         template: path.resolve(__dirname, 'public', 'template.html'),
       }),
-      new ESLintPlugin({
-        extensions: ['js', 'ts', 'tsx'],
-      }),
-      new StylelintPlugin(),
     ],
   };
 
