@@ -1,0 +1,39 @@
+@import '@/style/variables';
+
+.datepicker {
+  width: 100%;
+  outline: none;
+  height: 53px;
+  background-color: #d7e0ee;
+  padding: 15px 10px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #7c828a;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+
+  &:focus {
+    border-bottom: 2px solid #1975d1;
+  }
+
+  &__error {
+    border-bottom: 1px solid #d22f2f;
+
+    &:focus {
+      border-bottom: 2px solid #d22f2f;
+    }
+  }
+
+  &__label {
+    font-weight: 600;
+    color: $title-text;
+    margin-bottom: 5px;
+  }
+
+  &__label-error {
+    color: $error-text;
+  }
+}
