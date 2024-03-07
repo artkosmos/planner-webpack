@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 
 import type { ITask } from '@/common/types';
-import { ControlledDateInput } from '@/components/shared/controlled-date-input';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
+import { DateInput } from '@/components/shared/date-input';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
 import { ButtonPrimary } from '@/components/shared/primary-button';
 
@@ -28,10 +28,9 @@ type Props = {
 
 export const TaskForm = ({ task, onAction, config }: Props) => {
   const {
+    register,
     handleSubmit,
     control,
-    setError,
-    clearErrors,
     formState: { errors },
   } = useForm<EditTaskFormFields>({
     defaultValues: { title: task.title, date: task.date },
@@ -46,7 +45,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       case EditFormButtons.CONFIRM: {
         if (data) {
           const { title, date } = data;
-          onAction({ name, model: { date, title, id: task.id } });
+          onAction({
+            name,
+            model: { date, title, id: task.id },
+          });
           break;
         }
       }
@@ -57,9 +59,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
     <form
       className={'task-form'}
       onSubmit={handleSubmit(data => {
-        if (!Object.keys(errors).length) {
-          buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
-        }
+        buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
       })}
     >
       <ControlledFilledInput
@@ -68,12 +68,11 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         className={'task-form__name-input'}
         label={errors.title ? errors.title.message : 'Task name'}
         error={!!errors.title}
+        autoFocus
       />
-      <ControlledDateInput
-        name={'date'}
-        control={control}
-        setError={setError}
-        clearErrors={clearErrors}
+      <DateInput
+        {...register('date', { required: 'Enter valid date' })}
+        error={errors.date ? errors.date.message : null}
       />
       <div className={'task-form__button-container'}>
         <ButtonOutlined

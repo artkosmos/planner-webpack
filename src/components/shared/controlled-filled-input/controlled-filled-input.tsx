@@ -13,6 +13,7 @@ type Props<T extends FieldValues> = UseControllerProps<T> &
 export const ControlledFilledInput = <T extends FieldValues>({
   name,
   control,
+  ref,
   ...rest
 }: Props<T>) => {
   const {
@@ -23,5 +24,7 @@ export const ControlledFilledInput = <T extends FieldValues>({
     rules: { required: 'Field is required' },
   });
 
-  return <FilledInput value={value} onChange={onChange} {...rest} />;
+  return (
+    <FilledInput inputRef={ref} value={value} onChange={onChange} {...rest} />
+  );
 };
