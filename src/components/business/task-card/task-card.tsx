@@ -87,7 +87,7 @@ export const TaskCard = ({ className }: Props) => {
           </li>
           <li>
             <span className={'task-card__point'}>Date: </span>
-            {dayjs(currentTask.date).format('DD.MM.YYYY HH:mm:ss')}
+            {dayjs(currentTask.date).format('DD.MM.YYYY hh:mm:ss a')}
           </li>
         </ul>
         <ButtonPrimary

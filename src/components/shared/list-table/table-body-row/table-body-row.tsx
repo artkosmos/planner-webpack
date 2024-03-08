@@ -20,7 +20,7 @@ export const TableBodyRow = ({ task, deleteRow, ...rest }: Props) => {
     <tr key={task.id} {...rest}>
       <td>{task.id}</td>
       <td>{task.title}</td>
-      <td>{dayjs(task.date).format('DD.MM.YYYY HH:mm:ss')}</td>
+      <td>{dayjs(task.date).format('DD.MM.YYYY hh:mm:ss a')}</td>
       <td>
         <DeleteIcon
           className={'table-delete-icon'}
