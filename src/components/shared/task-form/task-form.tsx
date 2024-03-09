@@ -68,6 +68,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         className={'task-form__name-input'}
         label={errors.title ? errors.title.message : 'Task name'}
         error={!!errors.title}
+        regExp={config.nameFieldRegExp}
         autoFocus
       />
       <DateInput

@@ -22,6 +22,7 @@ import './style.scss';
 const createTaskFormConfig: ITaskFormConfig = {
   cancelButtonTitle: 'cancel',
   confirmButtonTitle: 'add',
+  nameFieldRegExp: '[a-z0-9а-я\\s]+$',
 } as const;
 
 export const ListCreator = () => {

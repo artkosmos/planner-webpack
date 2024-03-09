@@ -18,4 +18,5 @@ export interface EditTaskFormFields {
 export interface ITaskFormConfig {
   cancelButtonTitle: string;
   confirmButtonTitle: string;
+  nameFieldRegExp?: string;
 }
