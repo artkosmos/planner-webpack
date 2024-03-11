@@ -1,0 +1,14 @@
+{
+  "create_button": "Добавить задачу",
+  "table_column_1": "ID",
+  "table_column_2": "Название",
+  "table_column_3": "Дата",
+  "dialog_title": "Создать задачу",
+  "no_data": "Нет доступных даннных",
+  "create_form_config": {
+    "name_label": "Название",
+    "date_label": "Дата",
+    "add_button": "Добавить",
+    "cancel_button": "Отмена"
+  }
+}

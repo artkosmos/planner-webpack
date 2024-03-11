@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -25,15 +26,11 @@ type Props = {
   className?: string;
 };
 
-const updateTaskFormConfig: ITaskFormConfig = {
-  cancelButtonTitle: 'cancel',
-  confirmButtonTitle: 'save',
-} as const;
-
 export const TaskCard = ({ className }: Props) => {
   const { id } = useParams<string>();
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation('task');
 
   const currentTask = useAppSelector(state => state.main.currentTask);
   const isLoading = useAppSelector(state => state.main.isLoading);
@@ -43,7 +40,16 @@ export const TaskCard = ({ className }: Props) => {
     dispatch(mainThunk.getTask(id));
   }, []);
 
-  const classNames = clsx(className, 'task-card');
+  const updateTaskFormConfig: ITaskFormConfig = useMemo(
+    () =>
+      ({
+        cancelButtonTitle: t('edit_form_config.cancel_button'),
+        confirmButtonTitle: t('edit_form_config.edit_button'),
+        dateFieldLabel: t('edit_form_config.date_label'),
+        nameFieldLabel: t('edit_form_config.name_label'),
+      }) as const,
+    [t],
+  );
 
   const onEditFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -72,31 +78,33 @@ export const TaskCard = ({ className }: Props) => {
     return <InfoTitle title={error} />;
   }
 
+  const classNames = clsx(className, 'task-card');
+
   return (
     <div className={classNames}>
       <Card>
-        <p className={'task-card__title'}>GENERAL INFORMATION</p>
+        <p className={'task-card__title'}>{t('card_title')}</p>
         <ul className={'task-card__list'}>
           <li>
-            <span className={'task-card__point'}>Name: </span>
-            {currentTask.title}
-          </li>
-          <li>
-            <span className={'task-card__point'}>ID: </span>
+            <span className={'task-card__point'}>{t('id')}: </span>
             {currentTask.id}
           </li>
           <li>
-            <span className={'task-card__point'}>Date: </span>
+            <span className={'task-card__point'}>{t('name')}: </span>
+            {currentTask.title}
+          </li>
+          <li>
+            <span className={'task-card__point'}>{t('date')}: </span>
             {dayjs(currentTask.date).format('DD.MM.YYYY hh:mm:ss a')}
           </li>
         </ul>
         <ButtonPrimary
           className={'task-card__edit-button'}
           onClick={() => setOpenEditDialog(true)}
-          title={'Edit'}
+          title={t('edit_button')}
         />
         <Dialog
-          title={'Edit task information'}
+          title={t('dialog_title')}
           isOpen={openEditDialog}
           onClose={dialogCloseHandler}
         >

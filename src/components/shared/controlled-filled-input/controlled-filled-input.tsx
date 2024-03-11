@@ -7,13 +7,16 @@ import type { TextFieldProps } from '@mui/material/TextField';
 
 import { FilledInput } from '@/components/shared/filled-input';
 
-type Props<T extends FieldValues> = UseControllerProps<T> &
+type Props<T extends FieldValues> = {
+  validationMessage?: string;
+} & UseControllerProps<T> &
   Omit<TextFieldProps, 'onChange' | 'value' | 'variant'>;
 
 export const ControlledFilledInput = <T extends FieldValues>({
   name,
   control,
   ref,
+  validationMessage,
   ...rest
 }: Props<T>) => {
   const {
@@ -21,7 +24,7 @@ export const ControlledFilledInput = <T extends FieldValues>({
   } = useController({
     name,
     control,
-    rules: { required: 'Field is required' },
+    rules: { required: validationMessage },
   });
 
   return (
