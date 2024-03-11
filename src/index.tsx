@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 
+import { Header } from '@/components/business/header';
 import { router } from '@/routes';
 import { store } from '@/store';
 
@@ -14,6 +15,7 @@ const container = createRoot(rootElement);
 
 container.render(
   <Provider store={store}>
+    <Header />
     <RouterProvider router={router} />
   </Provider>,
 );

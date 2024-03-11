@@ -36,16 +36,14 @@ export const ListCreator = () => {
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
 
-  const createTaskFormConfig: ITaskFormConfig = useMemo(
-    () =>
-      ({
-        cancelButtonTitle: t('create_form_config.cancel_button'),
-        confirmButtonTitle: t('create_form_config.add_button'),
-        nameFieldLabel: t('create_form_config.name_label'),
-        dateFieldLabel: t('create_form_config.date_label'),
-      }) as const,
-    [t],
-  );
+  const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
+    return {
+      cancelButtonTitle: t('create_form_config.cancel_button'),
+      confirmButtonTitle: t('create_form_config.add_button'),
+      nameFieldLabel: t('create_form_config.name_label'),
+      dateFieldLabel: t('create_form_config.date_label'),
+    } as const;
+  }, [t]);
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {

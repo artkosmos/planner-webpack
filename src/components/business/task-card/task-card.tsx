@@ -40,16 +40,14 @@ export const TaskCard = ({ className }: Props) => {
     dispatch(mainThunk.getTask(id));
   }, []);
 
-  const updateTaskFormConfig: ITaskFormConfig = useMemo(
-    () =>
-      ({
-        cancelButtonTitle: t('edit_form_config.cancel_button'),
-        confirmButtonTitle: t('edit_form_config.edit_button'),
-        dateFieldLabel: t('edit_form_config.date_label'),
-        nameFieldLabel: t('edit_form_config.name_label'),
-      }) as const,
-    [t],
-  );
+  const updateTaskFormConfig: ITaskFormConfig = useMemo(() => {
+    return {
+      cancelButtonTitle: t('edit_form_config.cancel_button'),
+      confirmButtonTitle: t('edit_form_config.edit_button'),
+      dateFieldLabel: t('edit_form_config.date_label'),
+      nameFieldLabel: t('edit_form_config.name_label'),
+    } as const;
+  }, [t]);
 
   const onEditFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
