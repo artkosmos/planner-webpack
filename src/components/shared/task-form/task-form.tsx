@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 import type { ITask } from '@/common/types';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
@@ -28,8 +27,6 @@ type Props = {
 };
 
 export const TaskForm = ({ task, onAction, config }: Props) => {
-  const { t } = useTranslation('task-form');
-
   const {
     register,
     handleSubmit,
@@ -72,11 +69,11 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         label={errors.title ? errors.title.message : config.nameFieldLabel}
         error={!!errors.title}
         regExp={config.nameFieldRegExp}
-        validationMessage={t('name_validation')}
+        validationMessage={config.nameRequiredValidationMsg}
         autoFocus
       />
       <DateInput
-        {...register('date', { required: t('date_validation') })}
+        {...register('date', { required: config.dateRequiredValidationMsg })}
         error={errors.date ? errors.date.message : null}
         label={config.dateFieldLabel}
       />

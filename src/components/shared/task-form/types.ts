@@ -19,6 +19,8 @@ export interface ITaskFormConfig {
   cancelButtonTitle: string;
   confirmButtonTitle: string;
   nameFieldLabel?: string;
+  nameRequiredValidationMsg?: string;
+  dateRequiredValidationMsg?: string;
   dateFieldLabel?: string;
   nameFieldRegExp?: string;
 }

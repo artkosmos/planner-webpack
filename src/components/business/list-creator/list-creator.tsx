@@ -42,6 +42,8 @@ export const ListCreator = () => {
       confirmButtonTitle: t('create_form_config.add_button'),
       nameFieldLabel: t('create_form_config.name_label'),
       dateFieldLabel: t('create_form_config.date_label'),
+      dateRequiredValidationMsg: t('create_form_config.date_validation'),
+      nameRequiredValidationMsg: t('create_form_config.name_validation'),
       nameFieldRegExp: '[a-z0-9а-я\\s]+$',
     } as const;
   }, [t]);
@@ -68,7 +70,7 @@ export const ListCreator = () => {
     dispatch(mainThunk.deleteTask(id));
   };
 
-  if (!list) {
+  if (!list && error) {
     return <InfoTitle title={error} />;
   }
 
@@ -90,6 +92,7 @@ export const ListCreator = () => {
           className={'add-task-block__button'}
           title={t('create_button')}
           onClick={() => setOpenEditDialog(true)}
+          disabled={dataInitialization}
         />
       </div>
       {isLoading || dataInitialization ? (

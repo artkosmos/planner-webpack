@@ -14,7 +14,6 @@ const i18n = i18next
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
-    react: { useSuspense: false },
   });
 
 export default i18n;
