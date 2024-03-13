@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import type { ITask } from '@/common/types';
@@ -35,6 +36,17 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
   } = useForm<EditTaskFormFields>({
     defaultValues: { title: task.title, date: task.date },
   });
+
+  useEffect(() => {
+    const handleEnterPress = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        (event.target as HTMLElement).blur();
+      }
+    };
+    document.addEventListener('keyup', handleEnterPress);
+
+    return () => document.removeEventListener('keyup', handleEnterPress);
+  }, []);
 
   const buttonActionHandler = ({ name, data }: IButtonAction) => {
     switch (name) {
