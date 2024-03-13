@@ -28,6 +28,7 @@ type Props = {
 const updateTaskFormConfig: ITaskFormConfig = {
   cancelButtonTitle: 'cancel',
   confirmButtonTitle: 'save',
+  nameFieldRegExp: '[a-z0-9а-я\\s]+$',
 } as const;
 
 export const TaskCard = ({ className }: Props) => {

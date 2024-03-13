@@ -16,14 +16,16 @@
   font-family: Arial, sans-serif;
 
   &:focus {
-    border-bottom: 2px solid #1975d1;
+    box-shadow: 0 1px 0 0 $blue;
+    border-bottom-color: $blue;
   }
 
   &__error {
-    border-bottom: 1px solid #d22f2f;
+    border-bottom-color: $error-text;
 
     &:focus {
-      border-bottom: 2px solid #d22f2f;
+      box-shadow: 0 1px 0 0 $error-text;
+      border-bottom-color: $error-text;
     }
   }
 
