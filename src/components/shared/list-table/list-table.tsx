@@ -1,10 +1,14 @@
-import './style.scss';
-import { ITask } from '@/common';
-import clsx from 'clsx';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { TableBodyRow } from '@/components/shared/list-table/table-body-row';
+
+import clsx from 'clsx';
+
+import { ITask } from '@/common/types';
+import { TableBodyRow } from '@/components/shared/list-table';
 import { TASK } from '@/routes';
+
+import './style.scss';
 
 type Props = {
   list: ITask[];
@@ -14,6 +18,7 @@ type Props = {
 
 export const ListTable = ({ list, deleteTask, className }: Props) => {
   const navigate = useNavigate();
+  const { t } = useTranslation('home');
 
   const taskList = useMemo(() => {
     return list.map(task => {
@@ -35,9 +40,9 @@ export const ListTable = ({ list, deleteTask, className }: Props) => {
       <table className={'list-table'} cellSpacing={0}>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Date</th>
+            <th>{t('table_column_1')}</th>
+            <th>{t('table_column_2')}</th>
+            <th>{t('table_column_3')}</th>
             <th></th>
           </tr>
         </thead>

@@ -1,27 +1,31 @@
+import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
-import { HOME, TASK } from './constants';
 
-const LazyHome = lazy(() => import('@/components/page/home/home'));
-const LazyTaskDescription = lazy(
-  () => import('@/components/page/task-description/task-description'),
-);
+import { HomeLazy } from '@/components/page/home';
+import { TaskDescriptionLazy } from '@/components/page/task-description';
+import { NotFound } from '@/components/shared/not-found';
+
+import { HOME, TASK } from './constants';
 
 export const router = createBrowserRouter([
   {
     path: HOME,
     element: (
-      <Suspense fallback={'Loading...'}>
-        <LazyHome />
+      <Suspense>
+        <HomeLazy />
       </Suspense>
     ),
   },
   {
     path: `${TASK}/:id`,
     element: (
-      <Suspense fallback={'Loading...'}>
-        <LazyTaskDescription />
+      <Suspense>
+        <TaskDescriptionLazy />
       </Suspense>
     ),
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);

@@ -24,6 +24,10 @@
     flex-direction: column;
     gap: 5px;
     list-style-type: none;
+
+    & li:first-child {
+      margin-bottom: 10px;
+    }
   }
 
   &__edit-button {

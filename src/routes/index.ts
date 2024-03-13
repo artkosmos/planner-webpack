@@ -1,2 +1,2 @@
-export { router } from './routes';
 export * from './constants';
+export { router } from './routes';

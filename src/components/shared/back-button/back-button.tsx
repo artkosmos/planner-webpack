@@ -1,6 +1,5 @@
-import React from 'react';
-import Button, { ButtonProps } from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Button, { ButtonProps } from '@mui/material/Button';
 
 export const BackButton = ({ title, ...rest }: ButtonProps) => {
   return (

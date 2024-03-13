@@ -1,4 +1,3 @@
-import React from 'react';
 import Button, { ButtonProps } from '@mui/material/Button';
 
 export const ButtonPrimary = ({ title, ...rest }: ButtonProps) => {

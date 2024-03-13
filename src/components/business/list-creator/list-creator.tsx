@@ -1,36 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { AppDispatch, useAppSelector } from '@/store';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import { v4 as uuid } from 'uuid';
+
 import { mainThunk } from '@/api';
+import { Dialog } from '@/components/shared/dialog';
+import { InfoTitle } from '@/components/shared/info-title';
+import { ListTable } from '@/components/shared/list-table';
+import { ButtonPrimary } from '@/components/shared/primary-button';
 import {
-  ButtonPrimary,
-  Dialog,
   EditFormButtons,
   type IEditTaskAction,
-  InfoTitle,
   type ITaskFormConfig,
-  ListTable,
   TaskForm,
-} from '@/components/shared';
-import CircularProgress from '@mui/material/CircularProgress';
-import './style.scss';
+} from '@/components/shared/task-form';
+import { AppDispatch, useAppSelector } from '@/store';
 
-const createTaskFormConfig: ITaskFormConfig = {
-  cancelButtonTitle: 'cancel',
-  confirmButtonTitle: 'add',
-} as const;
+import './style.scss';
 
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
+  const [dataInitialization, setDataInitialization] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation('home');
 
   useEffect(() => {
-    dispatch(mainThunk.getTaskList());
+    dispatch(mainThunk.getTaskList()).finally(() =>
+      setDataInitialization(false),
+    );
   }, []);
 
   const list = useAppSelector(state => state.main.list);
   const isLoading = useAppSelector(state => state.main.isLoading);
+  const error = useAppSelector(state => state.main.error);
+
+  const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
+    return {
+      cancelButtonTitle: t('create_form_config.cancel_button'),
+      confirmButtonTitle: t('create_form_config.add_button'),
+      nameFieldLabel: t('create_form_config.name_label'),
+      dateFieldLabel: t('create_form_config.date_label'),
+      dateRequiredValidationMsg: t('create_form_config.date_validation'),
+      nameRequiredValidationMsg: t('create_form_config.name_validation'),
+      nameFieldRegExp: '[a-z0-9а-я\\s]+$',
+    } as const;
+  }, [t]);
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -39,9 +55,10 @@ export const ListCreator = () => {
         break;
       }
       case EditFormButtons.CONFIRM: {
+        const idLength = 8;
         const date = model.date;
         const title = model.title;
-        const id = uuid().slice(0, 8);
+        const id = uuid().slice(0, idLength);
         dispatch(mainThunk.createTask({ date, title, id }));
         setOpenEditDialog(false);
         break;
@@ -53,11 +70,15 @@ export const ListCreator = () => {
     dispatch(mainThunk.deleteTask(id));
   };
 
+  if (!list && error) {
+    return <InfoTitle title={error} />;
+  }
+
   return (
     <div className={'list-creator'}>
       <div className={'list-creator__add-task-block add-task-block'}>
         <Dialog
-          title={'Create task'}
+          title={t('dialog_title')}
           isOpen={openEditDialog}
           onClose={() => setOpenEditDialog(false)}
         >
@@ -69,19 +90,23 @@ export const ListCreator = () => {
         </Dialog>
         <ButtonPrimary
           className={'add-task-block__button'}
-          title={'Add task'}
+          title={t('create_button')}
           onClick={() => setOpenEditDialog(true)}
+          disabled={dataInitialization}
         />
       </div>
-      <div className={'list-creator__loader'}>
-        {isLoading && <CircularProgress />}
-      </div>
-      <div className={'list-creator__table-block'}>
-        {!!list.length && (
-          <ListTable list={list} deleteTask={deleteListHandler} />
-        )}
-        {!list.length && <InfoTitle title={'No available data'} />}
-      </div>
+      {isLoading || dataInitialization ? (
+        <div className={'list-creator__loader'}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <div className={'list-creator__table-block'}>
+          {!!list.length && (
+            <ListTable list={list} deleteTask={deleteListHandler} />
+          )}
+          {!list.length && <InfoTitle title={t('no_data')} />}
+        </div>
+      )}
     </div>
   );
 };

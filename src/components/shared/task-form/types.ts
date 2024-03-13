@@ -1,4 +1,4 @@
-import type { ITask } from '@/common';
+import type { ITask } from '@/common/types';
 
 export enum EditFormButtons {
   CANCEL = 'cancel',
@@ -18,4 +18,9 @@ export interface EditTaskFormFields {
 export interface ITaskFormConfig {
   cancelButtonTitle: string;
   confirmButtonTitle: string;
+  nameFieldLabel?: string;
+  nameRequiredValidationMsg?: string;
+  dateRequiredValidationMsg?: string;
+  dateFieldLabel?: string;
+  nameFieldRegExp?: string;
 }

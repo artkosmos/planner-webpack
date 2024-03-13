@@ -1,7 +1,8 @@
-import React, { type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import DialogMUI from '@mui/material/Dialog';
 import DialogMUIContent from '@mui/material/DialogContent';
 import DialogMUITitle from '@mui/material/DialogTitle';
+
 import './style.scss';
 
 type Props = {
