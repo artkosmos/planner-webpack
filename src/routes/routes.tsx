@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
   {
     path: HOME,
     element: (
-      <Suspense fallback={'Loading...'}>
+      <Suspense>
         <HomeLazy />
       </Suspense>
     ),
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
   {
     path: `${TASK}/:id`,
     element: (
-      <Suspense fallback={'Loading...'}>
+      <Suspense>
         <TaskDescriptionLazy />
       </Suspense>
     ),

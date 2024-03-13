@@ -1,0 +1,15 @@
+{
+  "card_title": "ОСНОВНАЯ ИНФОРМАЦИЯ",
+  "id": "ID",
+  "name": "Название",
+  "date": "Дата",
+  "edit_button": "Редактировать",
+  "back_button": "На главную",
+  "dialog_title": "Редактировать данные",
+  "edit_form_config": {
+    "name_label": "Название",
+    "date_label": "Дата",
+    "edit_button": "Изменить",
+    "cancel_button": "Отмена"
+  }
+}

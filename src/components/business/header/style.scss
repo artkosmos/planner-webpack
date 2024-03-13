@@ -1,0 +1,21 @@
+@import '@/style/variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  height: 65px;
+  background-color: $soft-blue;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 50%);
+
+  &__select {
+    width: 150px;
+  }
+
+  &__title {
+    font-size: 23px;
+    font-weight: bold;
+    color: $title-text;
+  }
+}

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -19,16 +20,11 @@ import { AppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
 
-const createTaskFormConfig: ITaskFormConfig = {
-  cancelButtonTitle: 'cancel',
-  confirmButtonTitle: 'add',
-  nameFieldRegExp: '[a-z0-9а-я\\s]+$',
-} as const;
-
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const [dataInitialization, setDataInitialization] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation('home');
 
   useEffect(() => {
     dispatch(mainThunk.getTaskList()).finally(() =>
@@ -39,6 +35,16 @@ export const ListCreator = () => {
   const list = useAppSelector(state => state.main.list);
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
+
+  const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
+    return {
+      cancelButtonTitle: t('create_form_config.cancel_button'),
+      confirmButtonTitle: t('create_form_config.add_button'),
+      nameFieldLabel: t('create_form_config.name_label'),
+      dateFieldLabel: t('create_form_config.date_label'),
+      nameFieldRegExp: '[a-z0-9а-я\\s]+$',
+    } as const;
+  }, [t]);
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -70,7 +76,7 @@ export const ListCreator = () => {
     <div className={'list-creator'}>
       <div className={'list-creator__add-task-block add-task-block'}>
         <Dialog
-          title={'Create task'}
+          title={t('dialog_title')}
           isOpen={openEditDialog}
           onClose={() => setOpenEditDialog(false)}
         >
@@ -82,7 +88,7 @@ export const ListCreator = () => {
         </Dialog>
         <ButtonPrimary
           className={'add-task-block__button'}
-          title={'Add task'}
+          title={t('create_button')}
           onClick={() => setOpenEditDialog(true)}
         />
       </div>
@@ -95,7 +101,7 @@ export const ListCreator = () => {
           {!!list.length && (
             <ListTable list={list} deleteTask={deleteListHandler} />
           )}
-          {!list.length && <InfoTitle title={'No available data'} />}
+          {!list.length && <InfoTitle title={t('no_data')} />}
         </div>
       )}
     </div>

@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import type { ITask } from '@/common/types';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
@@ -27,6 +28,8 @@ type Props = {
 };
 
 export const TaskForm = ({ task, onAction, config }: Props) => {
+  const { t } = useTranslation('task-form');
+
   const {
     register,
     handleSubmit,
@@ -66,14 +69,16 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         name={'title'}
         control={control}
         className={'task-form__name-input'}
-        label={errors.title ? errors.title.message : 'Task name'}
+        label={errors.title ? errors.title.message : config.nameFieldLabel}
         error={!!errors.title}
         regExp={config.nameFieldRegExp}
+        validationMessage={t('name_validation')}
         autoFocus
       />
       <DateInput
-        {...register('date', { required: 'Enter valid date' })}
+        {...register('date', { required: t('date_validation') })}
         error={errors.date ? errors.date.message : null}
+        label={config.dateFieldLabel}
       />
       <div className={'task-form__button-container'}>
         <ButtonOutlined

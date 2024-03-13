@@ -10,6 +10,7 @@ import { FilledInput } from '@/components/shared/filled-input';
 
 type Props<T extends FieldValues> = {
   regExp?: string;
+  validationMessage?: string;
 } & UseControllerProps<T> &
   Omit<TextFieldProps, 'onChange' | 'value' | 'variant'>;
 
@@ -18,6 +19,7 @@ export const ControlledFilledInput = <T extends FieldValues>({
   control,
   ref,
   regExp,
+  validationMessage,
   ...rest
 }: Props<T>) => {
   const {
@@ -25,7 +27,7 @@ export const ControlledFilledInput = <T extends FieldValues>({
   } = useController({
     name,
     control,
-    rules: { required: 'Field is required' },
+    rules: { required: validationMessage },
   });
 
   const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
