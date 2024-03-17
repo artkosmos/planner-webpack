@@ -3,24 +3,21 @@ import { ITask } from '@/common/types';
 const taskService = (() => {
   const timeoutDelay = 500;
   const localStorageKey = 'taskList';
-  const storedList = localStorage.getItem(localStorageKey);
-  let taskList: ITask[];
 
-  const updateLocalStorage = () => {
-    localStorage.setItem(localStorageKey, JSON.stringify(taskList));
+  const getListFromLS = () => {
+    const storedList = localStorage.getItem(localStorageKey);
+    return JSON.parse(storedList) as ITask[];
   };
 
-  if (storedList) {
-    taskList = JSON.parse(storedList);
-  } else {
-    taskList = [];
-    updateLocalStorage();
-  }
+  const setListToLS = (list: ITask[]) => {
+    localStorage.setItem(localStorageKey, JSON.stringify(list));
+  };
 
   const getTask = (id: string) => {
     return new Promise<ITask>((resolve, reject) => {
       setTimeout(() => {
-        const task = taskList.find(item => item.id === id);
+        const list = getListFromLS();
+        const task = list.find(item => item.id === id);
         if (task) {
           resolve(task);
         } else {
@@ -31,12 +28,14 @@ const taskService = (() => {
   };
 
   const getTaskList = () => {
-    return new Promise<ITask[]>((resolve, reject) => {
+    return new Promise<ITask[]>(resolve => {
       setTimeout(() => {
-        if (taskList) {
-          resolve([...taskList]);
+        const list = getListFromLS();
+        if (list) {
+          resolve([...list]);
         } else {
-          reject(new Error('Request error. Data not received'));
+          setListToLS([]);
+          resolve([]);
         }
       }, timeoutDelay);
     });
@@ -46,8 +45,9 @@ const taskService = (() => {
     return new Promise<string>(resolve => {
       setTimeout(() => {
         const newTask = { id, title, date };
-        taskList.unshift(newTask);
-        updateLocalStorage();
+        const list = getListFromLS();
+        list.unshift(newTask);
+        setListToLS(list);
         resolve('Task was created successfully');
       }, timeoutDelay);
     });
@@ -56,10 +56,11 @@ const taskService = (() => {
   const deleteTask = (id: string) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
-        const index = taskList.findIndex(item => item.id === id);
+        const list = getListFromLS();
+        const index = list.findIndex(item => item.id === id);
         if (index !== -1) {
-          taskList.splice(index, 1);
-          updateLocalStorage();
+          list.splice(index, 1);
+          setListToLS(list);
           resolve('Task was deleted successfully');
         } else {
           reject(new Error("Specified task wasn't found"));
@@ -71,10 +72,11 @@ const taskService = (() => {
   const updateTask = ({ id, title, date }: ITask) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
-        const index = taskList.findIndex(item => item.id === id);
+        const list = getListFromLS();
+        const index = list.findIndex(item => item.id === id);
         if (index !== -1) {
-          taskList[index] = { id, title, date };
-          updateLocalStorage();
+          list[index] = { id, title, date };
+          setListToLS(list);
           resolve('Task was updated successfully');
         } else {
           reject(new Error("Specified task wasn't found"));
