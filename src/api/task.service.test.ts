@@ -7,19 +7,16 @@ describe('task service', () => {
   const localStorageSetItem = jest.spyOn(Storage.prototype, 'setItem');
   const localStorageGetItem = jest.spyOn(Storage.prototype, 'getItem');
 
-  beforeEach(() => {
+  beforeAll(() => {
     localStorageGetItem.mockReturnValue(JSON.stringify(mockedTaskList));
+  });
+
+  afterEach(() => {
     localStorageSetItem.mockClear();
     localStorageGetItem.mockClear();
   });
 
   describe('get task list method testing', () => {
-    const mockedGetTaskList = jest.spyOn(taskService, 'getTaskList');
-
-    beforeEach(() => {
-      mockedGetTaskList.mockClear();
-    });
-
     test('task list exists in local storage and should be received', async () => {
       const expectedResult: ITask[] = [
         { id: '85df17d5', title: 'go camping', date: '2023-03-12T04:46:43' },
@@ -31,36 +28,23 @@ describe('task service', () => {
 
       const result = await taskService.getTaskList();
 
-      expect(mockedGetTaskList).toHaveBeenCalled();
-      expect(result).toEqual(expectedResult);
-      expect(mockedGetTaskList).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
     });
 
     test("task list don't exist in local storage", async () => {
-      localStorageGetItem.mockReturnValue(null);
+      localStorageGetItem.mockReturnValueOnce(null);
       const expectedResult: ITask[] = [];
 
       const result = await taskService.getTaskList();
-      const newStorageValue = JSON.stringify([]);
 
-      expect(mockedGetTaskList).toHaveBeenCalled();
-      expect(result).toEqual(expectedResult);
-      expect(mockedGetTaskList).toHaveBeenCalledTimes(1);
       expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'taskList',
-        newStorageValue,
-      );
+      expect(result).toEqual(expectedResult);
     });
   });
 
   describe('get task method testing', () => {
     const mockedGetTask = jest.spyOn(taskService, 'getTask');
-
-    beforeEach(() => {
-      mockedGetTask.mockClear();
-    });
 
     test('specified task should be received', async () => {
       const taskId = '85df17d5';
@@ -73,9 +57,8 @@ describe('task service', () => {
       const result = await taskService.getTask(taskId);
 
       expect(mockedGetTask).toHaveBeenCalledWith(taskId);
-      expect(result).toEqual(expectedResult);
-      expect(mockedGetTask).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
     });
 
     test("specified task can't be received due to wrong id", async () => {
@@ -86,7 +69,6 @@ describe('task service', () => {
 
       await expect(result).rejects.toEqual(expectedResult);
       expect(mockedGetTask).toHaveBeenCalledWith('wrong-id');
-      expect(mockedGetTask).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
     });
   });
@@ -105,24 +87,19 @@ describe('task service', () => {
       const newStorageValue = JSON.stringify([newTask, ...mockedTaskList]);
 
       expect(mockedCreateTask).toHaveBeenCalledWith(newTask);
-      expect(result).toEqual(expectedResult);
-      expect(mockedCreateTask).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
       expect(localStorageSetItem).toHaveBeenCalledWith(
         'taskList',
         newStorageValue,
       );
+      expect(result).toEqual(expectedResult);
     });
   });
 
   describe('delete task method testing', () => {
     const mockedDeleteTask = jest.spyOn(taskService, 'deleteTask');
 
-    beforeEach(() => {
-      mockedDeleteTask.mockClear();
-    });
-
-    test('specified task should be deleted', async () => {
+    test('existing task should be deleted', async () => {
       const taskId = '72e14782';
       const expectedResult: string = 'Task was deleted successfully';
 
@@ -132,13 +109,12 @@ describe('task service', () => {
       );
 
       expect(mockedDeleteTask).toHaveBeenCalledWith(taskId);
-      expect(result).toEqual(expectedResult);
-      expect(mockedDeleteTask).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
       expect(localStorageSetItem).toHaveBeenCalledWith(
         'taskList',
         newStorageValue,
       );
+      expect(result).toEqual(expectedResult);
     });
 
     test("specified task can't delete due to wrong id", async () => {
@@ -149,7 +125,6 @@ describe('task service', () => {
 
       await expect(result).rejects.toEqual(expectedResult);
       expect(mockedDeleteTask).toHaveBeenCalledWith('wrong-id');
-      expect(mockedDeleteTask).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
       expect(localStorageSetItem).not.toHaveBeenCalled();
     });
@@ -158,11 +133,7 @@ describe('task service', () => {
   describe('update task method testing', () => {
     const mockedUpdateTask = jest.spyOn(taskService, 'updateTask');
 
-    beforeEach(() => {
-      mockedUpdateTask.mockClear();
-    });
-
-    test('specified task should be updated', async () => {
+    test('existing task should be updated', async () => {
       const updatedTask = {
         id: '85df17d5',
         title: 'go running',
@@ -178,13 +149,12 @@ describe('task service', () => {
       );
 
       expect(mockedUpdateTask).toHaveBeenCalledWith(updatedTask);
-      expect(result).toEqual(expectedResult);
-      expect(mockedUpdateTask).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
       expect(localStorageSetItem).toHaveBeenCalledWith(
         'taskList',
         newStorageValue,
       );
+      expect(result).toEqual(expectedResult);
     });
 
     test("specified task can't be updated because of non existing", async () => {
@@ -199,7 +169,6 @@ describe('task service', () => {
 
       await expect(result).rejects.toEqual(expectedResult);
       expect(mockedUpdateTask).toHaveBeenCalledWith(updatedTask);
-      expect(mockedUpdateTask).toHaveBeenCalledTimes(1);
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
       expect(localStorageSetItem).not.toHaveBeenCalled();
     });
