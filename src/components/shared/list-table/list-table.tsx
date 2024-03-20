@@ -24,6 +24,7 @@ export const ListTable = ({ list, deleteTask, className }: Props) => {
     return list.map(task => {
       return (
         <TableBodyRow
+          data-testid={`table-row-${task.id}`}
           onClick={() => navigate(`${TASK}/${task.id}`)}
           key={task.id}
           task={task}
