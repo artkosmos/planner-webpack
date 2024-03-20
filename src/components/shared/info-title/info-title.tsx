@@ -12,7 +12,7 @@ export const InfoTitle = ({ title, className, ...rest }: Props) => {
   const classNames = clsx('info-title', className);
 
   return (
-    <p className={classNames} {...rest}>
+    <p data-testid={'info-title'} className={classNames} {...rest}>
       {title}
     </p>
   );
