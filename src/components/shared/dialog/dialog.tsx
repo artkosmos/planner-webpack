@@ -18,6 +18,7 @@ export const Dialog = ({ ...rest }: Props) => {
 
   return (
     <DialogMUI
+      data-testid={'dialog'}
       className={className}
       maxWidth={'sm'}
       open={isOpen}

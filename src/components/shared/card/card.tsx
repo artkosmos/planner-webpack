@@ -11,6 +11,7 @@ export const Card = ({ children, className }: Props) => {
   return (
     <CardMUI
       className={className}
+      data-testid={'card'}
       sx={{
         width: '100%',
         maxWidth: '700px',
