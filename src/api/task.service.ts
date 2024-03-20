@@ -17,8 +17,7 @@ const taskService = (() => {
     return new Promise<ITask>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
-        if (!list) return;
-        const task = list.find(item => item.id === id);
+        const task = list?.find(item => item.id === id);
         if (task) {
           resolve(task);
         } else {
@@ -61,8 +60,7 @@ const taskService = (() => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
-        if (!list) return;
-        const index = list.findIndex(item => item.id === id);
+        const index = list?.findIndex(item => item.id === id);
         if (index !== -1) {
           list.splice(index, 1);
           setListToLS(list);
@@ -78,8 +76,7 @@ const taskService = (() => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
-        if (!list) return;
-        const index = list.findIndex((item: ITask) => item.id === id);
+        const index = list?.findIndex((item: ITask) => item.id === id);
         if (index !== -1) {
           list[index] = { id, title, date };
           setListToLS(list);
