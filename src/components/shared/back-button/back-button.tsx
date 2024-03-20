@@ -9,6 +9,7 @@ export const BackButton = ({ title, ...rest }: ButtonProps) => {
       size={'large'}
       variant={'text'}
       startIcon={<ArrowBackIcon />}
+      data-testid={'back-button'}
       {...rest}
     >
       {title}
