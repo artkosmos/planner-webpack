@@ -16,6 +16,7 @@ export const FilledInput = ({ label, error, ...rest }: TextFieldProps) => {
         {label}
       </label>
       <TextField
+        data-testid={'filled-input'}
         id={'task-name'}
         aria-autocomplete={'none'}
         autoComplete={'off'}
