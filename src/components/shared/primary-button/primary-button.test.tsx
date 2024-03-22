@@ -5,14 +5,13 @@ import { ButtonPrimary } from './primary-button';
 import '@testing-library/jest-dom';
 
 describe('testing of primary button component', () => {
-  test('should render a button with the given title', () => {
+  test('should render with the passed title', () => {
     const title = 'Primary button';
 
     render(<ButtonPrimary title={title} />);
 
     const buttonElement = screen.getByTestId('primary-button');
 
-    expect(buttonElement).toBeInTheDocument();
     expect(buttonElement).toHaveTextContent(title);
   });
 
@@ -23,8 +22,8 @@ describe('testing of primary button component', () => {
 
     const buttonElement = screen.getByTestId('primary-button');
 
-    expect(buttonElement).toBeInTheDocument();
     fireEvent.click(buttonElement);
+
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

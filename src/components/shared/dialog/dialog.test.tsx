@@ -1,44 +1,51 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Dialog } from './dialog';
 
 import '@testing-library/jest-dom';
 
 describe('testing of dialog component', () => {
-  const title = 'Test tile';
   const children = <h1>Test content</h1>;
 
-  test('should render dialog with title and content when isOpen is true', () => {
-    const isOpen = true;
-
+  test('should render with title and content if isOpen is true', () => {
     render(
-      <Dialog title={title} isOpen={isOpen}>
+      <Dialog title={'Test tile'} isOpen={true}>
         {children}
       </Dialog>,
     );
 
-    const dialogElement = screen.getByTestId('dialog');
-    const dialogContent = dialogElement.querySelector(children.type);
+    const dialog = screen.getByTestId('dialog');
+    const title = screen.getByText(/test tile/i);
+    const content = screen.getByText(/test content/i);
 
-    expect(dialogElement).toBeInTheDocument();
-    expect(dialogContent).toBeInTheDocument();
-    expect(screen.getByText(title)).toBeInTheDocument();
-    expect(screen.getByText(children.props.children)).toBeInTheDocument();
+    expect(dialog).toContainElement(content);
+    expect(dialog).toContainElement(title);
   });
 
-  test('should render nothing when isOpen is false', () => {
-    const isOpen = false;
+  test('should render nothing if isOpen is false', () => {
+    render(<Dialog isOpen={false}>{children}</Dialog>);
 
+    const dialog = screen.queryByTestId('dialog');
+    const content = screen.queryByText(/test content/i);
+
+    expect(dialog).not.toBeInTheDocument();
+    expect(content).not.toBeInTheDocument();
+  });
+
+  test('should call close callback if Esc is pressed', () => {
+    const onClose = jest.fn();
     render(
-      <Dialog title={title} isOpen={isOpen}>
+      <Dialog isOpen={true} onClose={onClose}>
         {children}
       </Dialog>,
     );
 
-    const dialogElement = screen.queryByTestId('dialog');
+    const dialog = screen.queryByTestId('dialog');
 
-    expect(dialogElement).not.toBeInTheDocument();
-    expect(screen.queryByText(title)).not.toBeInTheDocument();
-    expect(screen.queryByText(children.props.children)).not.toBeInTheDocument();
+    expect(dialog).toBeInTheDocument();
+
+    fireEvent.keyDown(dialog, { key: 'Escape' });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

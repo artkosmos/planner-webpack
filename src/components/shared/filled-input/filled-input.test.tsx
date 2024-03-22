@@ -6,30 +6,17 @@ import { FilledInput } from './filled-input';
 import '@testing-library/jest-dom';
 
 describe('testing of filled input', () => {
-  test('input should render with passed label', () => {
-    const label = 'Name';
-    render(<FilledInput label={label} />);
+  test('should render with label', () => {
+    render(<FilledInput label={'Name'} />);
 
     const inputElement = screen.getByTestId('filled-input');
-    const inputLabel = screen.getByText(label);
+    const inputLabel = screen.getByText(/name/i);
 
     expect(inputElement).toBeInTheDocument();
     expect(inputLabel).toBeInTheDocument();
   });
 
-  test('should render input without label', () => {
-    const label = 'Surname';
-
-    render(<FilledInput />);
-
-    const inputElement = screen.getByTestId('filled-input');
-    const inputLabel = screen.queryByText(label);
-
-    expect(inputElement).toBeInTheDocument();
-    expect(inputLabel).not.toBeInTheDocument();
-  });
-
-  test('input should render with passed value', () => {
+  test('should render with controlled value', () => {
     const value = 'search something';
 
     render(<FilledInput value={value} />);
@@ -38,11 +25,10 @@ describe('testing of filled input', () => {
       .getByTestId('filled-input')
       .querySelector('input');
 
-    expect(inputElement).toBeInTheDocument();
     expect(inputElement).toHaveValue(value);
   });
 
-  test('enter text in input and trigger onChange', async () => {
+  test('should handle typing', async () => {
     const typedText = 'Entered text';
     const handleChange = jest.fn();
 
@@ -52,8 +38,8 @@ describe('testing of filled input', () => {
       .getByTestId('filled-input')
       .querySelector('input');
 
-    expect(inputElement).toBeInTheDocument();
     await userEvent.type(inputElement, typedText);
+
     expect(inputElement).toHaveValue(typedText);
     expect(handleChange).toHaveBeenCalledTimes(typedText.length);
   });

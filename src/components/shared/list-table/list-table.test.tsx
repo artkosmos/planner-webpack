@@ -36,9 +36,12 @@ describe('testing of table component', () => {
       <ListTable list={list} />,
     );
 
-    expect(getByRole('table')).toBeInTheDocument();
-    expect(getByTestId('table-row-1')).toBeInTheDocument();
-    expect(getByTestId('table-row-2')).toBeInTheDocument();
+    const table = getByRole('table');
+    const row1 = getByTestId('table-row-1');
+    const row2 = getByTestId('table-row-2');
+
+    expect(table).toContainElement(row1);
+    expect(table).toContainElement(row2);
   });
 
   test('should render with an empty task list', () => {
@@ -54,32 +57,26 @@ describe('testing of table component', () => {
   });
 
   test('should trigger navigate when a row is clicked', () => {
-    const { getByRole, getByTestId } = renderWithRouter(
-      <ListTable list={list} />,
-    );
+    const { getByTestId } = renderWithRouter(<ListTable list={list} />);
 
-    const table = getByRole('table');
     const row = getByTestId('table-row-2');
 
-    expect(table).toBeInTheDocument();
-    expect(row).toBeInTheDocument();
     fireEvent.click(row);
+
     expect(mockedNavigate).toHaveBeenCalled();
   });
 
   test('should execute callback when a delete icon is clicked', () => {
     const deleteTask = jest.fn();
-    const { getByRole, getByTestId } = renderWithRouter(
+    const { getByTestId } = renderWithRouter(
       <ListTable list={list} deleteTask={deleteTask} />,
     );
 
-    const table = getByRole('table');
     const row = getByTestId('table-row-2');
-
-    expect(table).toBeInTheDocument();
-    expect(row).toBeInTheDocument();
     const deleteIcon = row.querySelector('svg');
+
     fireEvent.click(deleteIcon);
-    expect(deleteTask).toHaveBeenCalledWith(list[1].id);
+
+    expect(deleteTask).toHaveBeenCalledWith('2');
   });
 });

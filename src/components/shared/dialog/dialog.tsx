@@ -7,7 +7,7 @@ import './style.scss';
 
 type Props = {
   children?: ReactNode;
-  title: string;
+  title?: string;
   isOpen: boolean;
   className?: string;
   onClose?: () => void;

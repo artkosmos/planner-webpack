@@ -5,14 +5,14 @@ import { Card } from './card';
 import '@testing-library/jest-dom';
 
 describe('testing of card component', () => {
-  const child = <h1>It's my card</h1>;
+  const content = <h1>It's my card</h1>;
 
-  test('card should render with children', () => {
-    render(<Card>{child}</Card>);
+  test('card should render with content', () => {
+    render(<Card>{content}</Card>);
 
     const cardElement = screen.getByTestId('card');
+    const cardContent = screen.getByText(/it's my card/i);
 
-    expect(cardElement).toBeInTheDocument();
-    expect(screen.getByText(/It's my card/)).toBeInTheDocument();
+    expect(cardElement).toContainElement(cardContent);
   });
 });
