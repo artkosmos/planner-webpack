@@ -19,7 +19,11 @@ export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   return (
     <>
-      <label className={classNames.label} htmlFor={'date'}>
+      <label
+        className={classNames.label}
+        htmlFor={'date'}
+        data-testid={'date-label'}
+      >
         {error || label}
       </label>
       <input
@@ -31,6 +35,7 @@ export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
         min="0001-06-01T00:00"
         max="9999-06-30T00:00"
         step={'1'}
+        data-testid={'date'}
         {...rest}
       />
     </>
