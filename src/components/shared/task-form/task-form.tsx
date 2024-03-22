@@ -69,6 +69,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
 
   return (
     <form
+      role="form"
       className={'task-form'}
       onSubmit={handleSubmit(data => {
         buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
