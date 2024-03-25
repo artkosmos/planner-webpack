@@ -77,11 +77,7 @@ export const ListCreator = () => {
   return (
     <div className={'list-creator'}>
       <div className={'list-creator__add-task-block add-task-block'}>
-        <Dialog
-          title={t('dialog_title')}
-          isOpen={openEditDialog}
-          onClose={() => setOpenEditDialog(false)}
-        >
+        <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
           <TaskForm
             onAction={onCreateFormAction}
             task={{ id: '', title: '', date: '' }}

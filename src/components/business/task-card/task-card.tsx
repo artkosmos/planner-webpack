@@ -67,10 +67,6 @@ export const TaskCard = ({ className }: Props) => {
     }
   };
 
-  const dialogCloseHandler = () => {
-    setOpenEditDialog(false);
-  };
-
   if (isLoading) {
     return <CircularProgress className={'task-card__loader'} />;
   }
@@ -104,11 +100,7 @@ export const TaskCard = ({ className }: Props) => {
           onClick={() => setOpenEditDialog(true)}
           title={t('edit_button')}
         />
-        <Dialog
-          title={t('dialog_title')}
-          isOpen={openEditDialog}
-          onClose={dialogCloseHandler}
-        >
+        <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
           <TaskForm
             config={updateTaskFormConfig}
             onAction={onEditFormAction}
