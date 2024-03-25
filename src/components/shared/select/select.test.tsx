@@ -56,6 +56,6 @@ describe('testing of select component', () => {
     fireEvent.click(firstOption);
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    waitFor(() => expect(select).toHaveTextContent('Hello'));
+    await waitFor(() => expect(select).toHaveTextContent('Hello'));
   });
 });
