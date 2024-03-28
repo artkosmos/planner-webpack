@@ -1,4 +1,5 @@
 import {
+  act,
   fireEvent,
   render,
   screen,
@@ -53,9 +54,9 @@ describe('testing of select component', () => {
     expect(selectOptions.length).toBe(options.length);
 
     const firstOption = selectOptions[0];
-    fireEvent.click(firstOption);
+    await act(() => fireEvent.click(firstOption));
 
     expect(onChange).toHaveBeenCalledTimes(1);
-    await waitFor(() => expect(select).toHaveTextContent('Hello'));
+    waitFor(() => expect(select).toHaveTextContent('Hello'));
   });
 });
