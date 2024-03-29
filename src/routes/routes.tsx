@@ -7,7 +7,7 @@ import { NotFound } from '@/components/shared/not-found';
 
 import { HOME, TASK } from './constants';
 
-export const router = createBrowserRouter([
+export const routerConfig = [
   {
     path: HOME,
     element: (
@@ -28,4 +28,6 @@ export const router = createBrowserRouter([
     path: '*',
     element: <NotFound />,
   },
-]);
+];
+
+export const router = createBrowserRouter(routerConfig);
