@@ -43,7 +43,7 @@ export default (env: envVariables) => {
         {
           test: /\.tsx?$/,
           use: 'ts-loader',
-          exclude: [/node_modules/, /\.test\.tsx?$/],
+          exclude: [/node_modules/],
         },
         {
           test: /\.css$/i,
