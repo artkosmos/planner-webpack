@@ -153,4 +153,15 @@ describe('testing of task form component', () => {
 
     expect(nameField).toHaveValue('test string 123');
   });
+
+  it('should trigger blur when form is submitted on Enter', () => {
+    const { getByLabelText } = render(
+      <TaskForm task={newTask} onAction={onAction} config={config} />,
+    );
+
+    const nameField = getByLabelText(config.nameFieldLabel);
+    fireEvent.keyUp(nameField, { key: 'Enter' });
+
+    expect(document.activeElement).not.toBe(nameField);
+  });
 });
