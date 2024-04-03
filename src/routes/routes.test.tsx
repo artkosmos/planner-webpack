@@ -1,7 +1,7 @@
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import { mockedTaskList } from '@/api/mocks';
+import { mockedTaskList } from '@/__mocks__';
 import { HomeLazy } from '@/components/page/home';
 import { TaskDescriptionLazy } from '@/components/page/task-description';
 import { NotFound } from '@/components/shared/not-found';

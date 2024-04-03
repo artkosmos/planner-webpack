@@ -1,6 +1,7 @@
 import { act, fireEvent, waitFor } from '@testing-library/react';
 
 import { mockedTaskList, renderWithProviders } from '@/__mocks__';
+import taskService from '@/api';
 import { ListCreator } from '@/components/business/list-creator';
 
 import '@testing-library/jest-dom';
@@ -151,6 +152,24 @@ describe('testing of list creator component', () => {
     const updatedTasks = getAllByTestId(/table-row/);
 
     expect(updatedTasks).toHaveLength(mockedTaskList.length - 1);
+  });
+
+  test("should appear an error if task being deleted wasn't found in DB", async () => {
+    localStorageGetItem.mockReturnValueOnce(JSON.stringify(mockedTaskList));
+    jest
+      .spyOn(taskService, 'deleteTask')
+      .mockRejectedValueOnce(new Error("Specified task wasn't found"));
+
+    const { findByTestId } = renderWithProviders(<ListCreator />);
+
+    const taskToDelete = await findByTestId(
+      `table-row-${mockedTaskList[0].id}`,
+    );
+    const deleteIcon = taskToDelete.querySelector('svg');
+    fireEvent.click(deleteIcon);
+    const error = await findByTestId('info-title');
+
+    expect(error).toHaveTextContent("Specified task wasn't found");
   });
 
   test('should trigger navigate if task row is clicked', async () => {
