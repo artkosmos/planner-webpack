@@ -1,21 +1,11 @@
 import path from 'path';
-import type { Mode } from './types';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import { type Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-require('dotenv').config();
-
-interface envVariables {
-  analyzer: boolean;
-}
-
-export default (env: envVariables) => {
-  const isAnalyzerEnabled = env.analyzer;
-
+export default (() => {
   const config: Configuration & DevServerConfiguration = {
-    mode: process.env.MODE as Mode,
     entry: {
       index: './src/index.tsx',
     },
@@ -26,18 +16,6 @@ export default (env: envVariables) => {
       clean: true,
       publicPath: '/',
     },
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          nodeModulesVendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'node_modules',
-            chunks: 'all',
-          },
-          default: false,
-        },
-      },
-    },
     module: {
       rules: [
         {
@@ -46,12 +24,8 @@ export default (env: envVariables) => {
           exclude: [/node_modules/],
         },
         {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
-        },
-        {
           test: /\.s[ac]ss$/i,
-          use: ['style-loader', 'css-loader', 'sass-loader'],
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
         },
         {
           test: /\.(png|jpe?g)$/i,
@@ -73,24 +47,15 @@ export default (env: envVariables) => {
         '@': path.resolve(__dirname, 'src'),
       },
     },
-    devServer: {
-      hot: true,
-      compress: true,
-      port: 7000,
-      historyApiFallback: true,
-    },
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Todolist&Webpack',
         filename: path.resolve(__dirname, 'dist', 'index.html'),
         template: path.resolve(__dirname, 'public', 'template.html'),
       }),
+      new MiniCssExtractPlugin(),
     ],
   };
 
-  if (isAnalyzerEnabled) {
-    config.plugins.push(new BundleAnalyzerPlugin());
-  }
-
   return config;
-};
+})();
