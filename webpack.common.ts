@@ -2,9 +2,7 @@ import path from 'path';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import { type Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-
-require('dotenv').config();
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default (() => {
   const config: Configuration & DevServerConfiguration = {
@@ -26,12 +24,8 @@ export default (() => {
           exclude: [/node_modules/],
         },
         {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
-        },
-        {
           test: /\.s[ac]ss$/i,
-          use: ['style-loader', 'css-loader', 'sass-loader'],
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
         },
         {
           test: /\.(png|jpe?g)$/i,
@@ -59,6 +53,7 @@ export default (() => {
         filename: path.resolve(__dirname, 'dist', 'index.html'),
         template: path.resolve(__dirname, 'public', 'template.html'),
       }),
+      new MiniCssExtractPlugin(),
     ],
   };
 
