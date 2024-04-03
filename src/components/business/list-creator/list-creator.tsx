@@ -77,7 +77,7 @@ export const ListCreator = () => {
     navigate(`${TASK}/${taskId}`);
   };
 
-  if (!list && error) {
+  if (error) {
     return <InfoTitle title={error} />;
   }
 

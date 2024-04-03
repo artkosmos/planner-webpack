@@ -9,16 +9,9 @@ import taskService from '@/api';
 import { ITask } from '@/common/types';
 import { createAppAsyncThunk } from '@/utils';
 
-const getTaskList = createAppAsyncThunk(
-  'main/getTaskList',
-  async (_, { rejectWithValue }) => {
-    try {
-      return await taskService.getTaskList();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
-);
+const getTaskList = createAppAsyncThunk('main/getTaskList', async () => {
+  return await taskService.getTaskList();
+});
 
 const getTask = createAppAsyncThunk(
   'main/getTask',
@@ -33,14 +26,10 @@ const getTask = createAppAsyncThunk(
 
 const createTask = createAppAsyncThunk(
   'main/createTask',
-  async (data: ITask, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await taskService.createTask(data);
-      if (response) {
-        return dispatch(getTaskList());
-      }
-    } catch (error) {
-      return rejectWithValue(error.message);
+  async (data: ITask, { dispatch }) => {
+    const response = await taskService.createTask(data);
+    if (response) {
+      return dispatch(getTaskList());
     }
   },
 );
@@ -93,7 +82,10 @@ const slice = createSlice({
       .addCase(getTask.rejected, (state, action) => {
         state.error = action.payload;
       })
-      .addCase(getTaskList.rejected, (state, action) => {
+      .addCase(deleteTask.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(updateTask.rejected, (state, action) => {
         state.error = action.payload;
       })
       .addMatcher(isPending, state => {

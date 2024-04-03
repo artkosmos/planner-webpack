@@ -2,6 +2,7 @@ import * as router from 'react-router-dom';
 import { act, fireEvent, waitFor, within } from '@testing-library/react';
 
 import { mockedTaskList, renderWithProviders } from '@/__mocks__';
+import taskService from '@/api';
 import { TaskCard } from '@/components/business/task-card';
 
 import '@testing-library/jest-dom';
@@ -39,7 +40,7 @@ describe('testing of task-card component', () => {
     expect(card).toHaveTextContent('04.02.2018 03:06:46 pm');
   });
 
-  test("should appear message if a specified task wasn't found", async () => {
+  test("should appear message if a task wasn't found due to wrong id", async () => {
     mockedUseParams.mockReturnValueOnce({ id: 'wrong id' });
 
     const { queryByTestId, findByTestId } = renderWithProviders(<TaskCard />);
@@ -126,5 +127,25 @@ describe('testing of task-card component', () => {
     fireEvent.click(cancelButton);
 
     await waitFor(() => expect(dialog).not.toBeInTheDocument());
+  });
+
+  test("should appears an error if task being updated wasn't found in DB", async () => {
+    jest
+      .spyOn(taskService, 'updateTask')
+      .mockRejectedValueOnce(new Error("Specified task wasn't found"));
+
+    const { findByText, getByRole, findByTestId } = renderWithProviders(
+      <TaskCard />,
+    );
+
+    const editCardButton = await findByText('Edit');
+    fireEvent.click(editCardButton);
+    const form = getByRole('form');
+    const confirmButton = within(form).getByText('Edit');
+    fireEvent.click(confirmButton);
+
+    const error = await findByTestId('info-title');
+
+    expect(error).toHaveTextContent("Specified task wasn't found");
   });
 });
