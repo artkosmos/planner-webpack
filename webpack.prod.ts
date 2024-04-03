@@ -4,6 +4,7 @@ import { merge } from 'webpack-merge';
 import common from './webpack.common';
 import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
 
 interface prodEnvVariables {
   analyzer: boolean;
@@ -26,7 +27,19 @@ export default (env: prodEnvVariables) => {
         },
       },
       minimize: true,
-      minimizer: [`...`, new HtmlMinimizerPlugin(), new CssMinimizerPlugin()],
+      minimizer: [
+        `...`,
+        new HtmlMinimizerPlugin(),
+        new CssMinimizerPlugin(),
+        new ImageMinimizerPlugin({
+          minimizer: {
+            implementation: ImageMinimizerPlugin.imageminMinify,
+            options: {
+              plugins: ['imagemin-optipng'],
+            },
+          },
+        }),
+      ],
     },
     plugins: [
       new CompressionPlugin({
