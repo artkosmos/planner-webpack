@@ -1,5 +1,4 @@
 import path from 'path';
-import type { Mode } from './types';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import { type Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -7,15 +6,8 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 require('dotenv').config();
 
-interface envVariables {
-  analyzer: boolean;
-}
-
-export default (env: envVariables) => {
-  const isAnalyzerEnabled = env.analyzer;
-
+export default (() => {
   const config: Configuration & DevServerConfiguration = {
-    mode: process.env.MODE as Mode,
     entry: {
       index: './src/index.tsx',
     },
@@ -25,18 +17,6 @@ export default (env: envVariables) => {
       path: path.resolve(__dirname, 'dist'),
       clean: true,
       publicPath: '/',
-    },
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          nodeModulesVendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'node_modules',
-            chunks: 'all',
-          },
-          default: false,
-        },
-      },
     },
     module: {
       rules: [
@@ -73,12 +53,6 @@ export default (env: envVariables) => {
         '@': path.resolve(__dirname, 'src'),
       },
     },
-    devServer: {
-      hot: true,
-      compress: true,
-      port: 7000,
-      historyApiFallback: true,
-    },
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Todolist&Webpack',
@@ -88,9 +62,5 @@ export default (env: envVariables) => {
     ],
   };
 
-  if (isAnalyzerEnabled) {
-    config.plugins.push(new BundleAnalyzerPlugin());
-  }
-
   return config;
-};
+})();
