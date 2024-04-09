@@ -16,7 +16,6 @@
   &__point {
     font-size: 22px;
     font-weight: bold;
-    letter-spacing: 0.5px;
   }
 
   &__list {
@@ -26,7 +25,7 @@
     list-style-type: none;
 
     & li:first-child {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
   }
 

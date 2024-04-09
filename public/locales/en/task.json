@@ -1,6 +1,8 @@
 {
   "card_title": "GENERAL INFORMATION",
   "id": "ID",
+  "name": "Name",
+  "date": "Date",
   "back_button": "To home",
   "dialog_title": "Edit task information",
   "edit_button": "Edit",
