@@ -99,7 +99,9 @@ describe('testing of task-card component', () => {
     const loader = getByTestId('loader');
 
     expect(loader).toBeInTheDocument();
-    await waitFor(() => expect(loader).not.toBeInTheDocument());
+    await waitFor(() => expect(loader).not.toBeInTheDocument(), {
+      timeout: 1200,
+    });
 
     const updatedCard = await findByTestId('card');
 

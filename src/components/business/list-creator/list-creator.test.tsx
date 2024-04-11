@@ -1,4 +1,4 @@
-import { act, fireEvent, waitFor } from '@testing-library/react';
+import { act, fireEvent, waitFor, within } from '@testing-library/react';
 
 import { mockedTaskList, renderWithProviders } from '@/__mocks__';
 import taskService from '@/api';
@@ -126,7 +126,10 @@ describe('testing of list creator component', () => {
   test('task should be removed from a table when icon is clicked', async () => {
     localStorageGetItem
       .mockReturnValueOnce(JSON.stringify(mockedTaskList))
-      .mockReturnValueOnce(JSON.stringify(mockedTaskList));
+      .mockReturnValueOnce(JSON.stringify(mockedTaskList))
+      .mockReturnValueOnce(
+        JSON.stringify(mockedTaskList.slice(1, mockedTaskList.length)),
+      );
 
     const { getAllByTestId, findByRole, getByTestId } = renderWithProviders(
       <ListCreator />,
@@ -141,17 +144,20 @@ describe('testing of list creator component', () => {
     expect(tasks).toHaveLength(mockedTaskList.length);
 
     const taskToDelete = tasks[0];
+    const taskName = within(taskToDelete).getByText('go camping');
     const deleteIcon = taskToDelete.querySelector('svg');
-
     fireEvent.click(deleteIcon);
     const loader = getByTestId('loader');
 
     expect(loader).toBeInTheDocument();
-    await waitFor(() => expect(loader).not.toBeInTheDocument());
+    await waitFor(() => expect(loader).not.toBeInTheDocument(), {
+      timeout: 1200,
+    });
 
     const updatedTasks = getAllByTestId(/table-row/);
 
     expect(updatedTasks).toHaveLength(mockedTaskList.length - 1);
+    expect(taskName).not.toBeInTheDocument();
   });
 
   test("should appear an error if task being deleted wasn't found in DB", async () => {
