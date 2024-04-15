@@ -13,15 +13,6 @@
   overflow: hidden;
 }
 
-.list-table_dark thead {
-  color: $title-text-dark;
-
-  th {
-    background: $soft-dark;
-    border-top-color: $soft-dark;
-  }
-}
-
 .list-table thead {
   color: $title-text;
 
@@ -51,11 +42,12 @@
   }
 }
 
-.list-table_dark tbody {
+.list-table_dark thead {
   color: $title-text-dark;
 
-  td {
-    border-bottom-color: $soft-dark;
+  th {
+    background: $soft-dark;
+    border-top-color: $soft-dark;
   }
 }
 
@@ -88,6 +80,14 @@
     &:first-child {
       flex: 1;
     }
+  }
+}
+
+.list-table_dark tbody {
+  color: $title-text-dark;
+
+  td {
+    border-bottom-color: $soft-dark;
   }
 }
 
