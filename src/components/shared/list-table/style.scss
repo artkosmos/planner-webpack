@@ -27,7 +27,7 @@
     border: none;
     padding: 15px;
     background: $soft-blue;
-    font-size: 16px;
+    font-size: 18px;
     letter-spacing: 1px;
     border-top: 1px solid #ddd;
     flex: 3;
@@ -39,6 +39,15 @@
     &:first-child {
       flex: 1;
     }
+  }
+}
+
+.list-table_dark thead {
+  color: $title-text-dark;
+
+  th {
+    background: $soft-dark;
+    border-top-color: $soft-dark;
   }
 }
 
@@ -74,14 +83,32 @@
   }
 }
 
+.list-table_dark tbody {
+  color: $title-text-dark;
+
+  td {
+    border-bottom-color: $soft-dark;
+  }
+}
+
 .list-table tr th:first-child,
 .list-table tr td:first-child {
   border-left: 1px solid #ddd;
 }
 
+.list-table_dark tr th:first-child,
+.list-table_dark tr td:first-child {
+  border-left-color: $soft-dark;
+}
+
 .list-table tr th:last-child,
 .list-table tr td:last-child {
   border-right: 1px solid #ddd;
+}
+
+.list-table_dark tr th:last-child,
+.list-table_dark tr td:last-child {
+  border-right-color: $soft-dark;
 }
 
 .list-table thead tr th:first-child {
@@ -100,6 +127,12 @@
   border-radius: 0 0 20px;
 }
 
+.list-table_dark .table-delete-icon {
+  path {
+    fill: $title-text-dark;
+  }
+}
+
 @media (hover: hover) {
   .table-delete-icon {
     &:hover {
@@ -112,11 +145,21 @@
     }
   }
 
-  .list-table tbody tr,
-  .list-table tbody tr:nth-child(even) {
-    &:hover {
-      cursor: pointer;
-      background-color: color.adjust(#000, $lightness: 90%);
+  .list-table {
+    tbody tr {
+      &:hover {
+        cursor: pointer;
+        background-color: color.adjust(#000, $lightness: 90%);
+      }
+    }
+
+    &.list-table_dark {
+      tbody tr {
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(#000, 0.15);
+        }
+      }
     }
   }
 }

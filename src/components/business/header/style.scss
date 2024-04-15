@@ -9,6 +9,16 @@
   background-color: $soft-blue;
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 50%);
 
+  &_dark {
+    background-color: $header-dark;
+  }
+
+  &__settings {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+  }
+
   &__select {
     width: 150px;
   }
@@ -17,5 +27,9 @@
     font-size: 23px;
     font-weight: bold;
     color: $title-text;
+
+    &_dark {
+      color: $title-text-dark;
+    }
   }
 }

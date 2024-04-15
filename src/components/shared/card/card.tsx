@@ -13,12 +13,7 @@ export const Card = ({ children, className }: Props) => {
       className={className}
       data-testid={'card'}
       sx={{
-        width: '100%',
-        maxWidth: '700px',
-        backgroundColor: '#d7e0ee',
-        margin: '0 auto',
-        fontSize: '20px',
-        borderRadius: '15px',
+        borderRadius: '20px',
         boxShadow: '0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)',
       }}
     >

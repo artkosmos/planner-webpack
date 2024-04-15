@@ -3,6 +3,7 @@ import {
   isFulfilled,
   isPending,
   isRejected,
+  PayloadAction,
 } from '@reduxjs/toolkit';
 
 import taskService from '@/api';
@@ -69,8 +70,13 @@ const slice = createSlice({
     currentTask: null as ITask | null,
     error: null as null | string,
     isLoading: false as boolean,
+    darkTheme: false as boolean,
   },
-  reducers: {},
+  reducers: {
+    changeAppTheme: (state, action: PayloadAction<boolean>) => {
+      state.darkTheme = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getTaskList.fulfilled, (state, action) => {
@@ -101,6 +107,7 @@ const slice = createSlice({
 });
 
 export const mainSlice = slice.reducer;
+export const appActions = slice.actions;
 export const mainThunk = {
   createTask,
   deleteTask,

@@ -35,6 +35,7 @@ export const TaskCard = ({ className }: Props) => {
   const currentTask = useAppSelector(state => state.main.currentTask);
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   useEffect(() => {
     dispatch(mainThunk.getTask(id));
@@ -80,39 +81,41 @@ export const TaskCard = ({ className }: Props) => {
     return <InfoTitle title={error} />;
   }
 
-  const classNames = clsx(className, 'task-card');
+  const classNames = {
+    card: clsx('task-card', isDarkTheme && 'task-card_dark', className),
+    title: clsx('task-card__title', isDarkTheme && 'task-card__title_dark'),
+    list: clsx('task-card__list', isDarkTheme && 'task-card__list_dark'),
+  };
 
   return (
-    <div className={classNames}>
-      <Card>
-        <p className={'task-card__title'}>{t('card_title')}</p>
-        <ul className={'task-card__list'}>
-          <li>
-            <span className={'task-card__point'}>{t('id')}: </span>
-            {currentTask.id}
-          </li>
-          <li>
-            <span className={'task-card__point'}>{t('name')}: </span>
-            {currentTask.title}
-          </li>
-          <li>
-            <span className={'task-card__point'}>{t('date')}: </span>
-            {dayjs(currentTask.date).format('DD.MM.YYYY hh:mm:ss a')}
-          </li>
-        </ul>
-        <ButtonPrimary
-          className={'task-card__edit-button'}
-          onClick={() => setOpenEditDialog(true)}
-          title={t('edit_button')}
+    <Card className={classNames.card}>
+      <p className={classNames.title}>{t('card_title')}</p>
+      <ul className={classNames.list}>
+        <li>
+          <span className={'task-card__point'}>{t('id')}: </span>
+          <span className={'task-id'}>{currentTask.id}</span>
+        </li>
+        <li>
+          <span className={'task-card__point'}>{t('name')}:&nbsp;&nbsp;</span>
+          {currentTask.title}
+        </li>
+        <li>
+          <span className={'task-card__point'}>{t('date')}:&nbsp;&nbsp;</span>
+          {dayjs(currentTask.date).format('DD.MM.YYYY hh:mm:ss a')}
+        </li>
+      </ul>
+      <ButtonPrimary
+        className={'task-card__edit-button'}
+        onClick={() => setOpenEditDialog(true)}
+        title={t('edit_button')}
+      />
+      <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
+        <TaskForm
+          config={updateTaskFormConfig}
+          onAction={onEditFormAction}
+          task={currentTask}
         />
-        <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
-          <TaskForm
-            config={updateTaskFormConfig}
-            onAction={onEditFormAction}
-            task={currentTask}
-          />
-        </Dialog>
-      </Card>
-    </div>
+      </Dialog>
+    </Card>
   );
 };

@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { ITask } from '@/common/types';
 import { TableBodyRow } from '@/components/shared/list-table';
+import { useAppSelector } from '@/store';
 
 import './style.scss';
 
@@ -23,6 +24,8 @@ export const ListTable = ({
 }: Props) => {
   const { t } = useTranslation('home');
 
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+
   const taskList = useMemo(() => {
     return list.map(task => {
       return (
@@ -37,11 +40,14 @@ export const ListTable = ({
     });
   }, [list]);
 
-  const classNames = clsx('table-container', className);
+  const classNames = {
+    container: clsx('table-container', className),
+    table: clsx('list-table', isDarkTheme && 'list-table_dark'),
+  };
 
   return (
-    <div className={classNames}>
-      <table className={'list-table'} cellSpacing={0}>
+    <div className={classNames.container}>
+      <table className={classNames.table} cellSpacing={0}>
         <thead>
           <tr>
             <th>{t('table_column_1')}</th>
