@@ -3,6 +3,15 @@
 .task-card {
   display: flex;
   flex-direction: column;
+  background-color: $soft-blue !important;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 20px;
+
+  &_dark {
+    background-color: $soft-dark !important;
+  }
 
   &__title {
     text-align: center;
@@ -11,22 +20,33 @@
     margin-bottom: 10px;
     font-size: 30px;
     color: $title-text;
-  }
 
-  &__point {
-    font-size: 22px;
-    font-weight: bold;
+    &_dark {
+      color: $title-text-dark;
+    }
   }
 
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     list-style-type: none;
+    margin-top: 0;
 
-    & li:first-child {
-      margin-bottom: 20px;
+    &_dark li {
+      color: $title-text-dark;
     }
+
+    li:first-child {
+      margin-bottom: 30px;
+      opacity: 0.5;
+      font-size: 16px;
+    }
+  }
+
+  &__point {
+    font-size: 20px;
+    font-weight: bold;
   }
 
   &__edit-button {
