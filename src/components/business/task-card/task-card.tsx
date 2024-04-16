@@ -45,6 +45,7 @@ export const TaskCard = ({ className }: Props) => {
     return {
       cancelButtonTitle: t('edit_form_config.cancel_button'),
       confirmButtonTitle: t('edit_form_config.edit_button'),
+      imageButtonTitle: t('edit_form_config.image_button_text'),
       dateFieldLabel: t('edit_form_config.date_label'),
       nameFieldLabel: t('edit_form_config.name_label'),
       dateRequiredValidationMsg: t('date_validation'),

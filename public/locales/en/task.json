@@ -10,6 +10,7 @@
     "name_label": "Name",
     "date_label": "Date",
     "edit_button": "Edit",
-    "cancel_button": "Cancel"
+    "cancel_button": "Cancel",
+    "image_button_text": "Change image"
   }
 }

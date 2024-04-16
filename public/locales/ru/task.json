@@ -10,6 +10,7 @@
     "name_label": "Название",
     "date_label": "Дата",
     "edit_button": "Изменить",
-    "cancel_button": "Отмена"
+    "cancel_button": "Отмена",
+    "image_button_text": "Изменить изображение"
   }
 }

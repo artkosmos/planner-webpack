@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import type { ITask } from '@/common/types';
+import { ControlledFileInput } from '@/components/shared/controlled-file-input';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
 import { DateInput } from '@/components/shared/date-input';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
@@ -32,9 +33,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<EditTaskFormFields>({
-    defaultValues: { title: task.title, date: task.date },
+    defaultValues: { title: task.title, date: task.date, image: task.image },
   });
 
   useEffect(() => {
@@ -47,6 +49,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
 
     return () => document.removeEventListener('keyup', handleEnterPress);
   }, []);
+
+  const fileClearHandler = () => {
+    setValue('image', null);
+  };
 
   const buttonActionHandler = ({ name, data }: IButtonAction) => {
     switch (name) {
@@ -75,6 +81,13 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
       })}
     >
+      <ControlledFileInput
+        name={'image'}
+        control={control}
+        buttonText={config.imageButtonTitle}
+        className={'task-form__file-input'}
+        clearInput={fileClearHandler}
+      />
       <ControlledFilledInput
         name={'title'}
         control={control}

@@ -17,6 +17,7 @@ describe('testing of task form component', () => {
     dateRequiredValidationMsg: 'Date is required',
     cancelButtonTitle: 'Cancel',
     confirmButtonTitle: 'Confirm',
+    imageButtonTitle: 'Choose image',
   };
   const newTask: ITask = {
     id: '',
