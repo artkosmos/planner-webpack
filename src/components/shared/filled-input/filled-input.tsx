@@ -4,12 +4,12 @@ import clsx from 'clsx';
 
 import './style.scss';
 
-export type FilledInputProps = { darkTheme?: boolean } & TextFieldProps;
+export type FilledInputProps = { isDarkTheme?: boolean } & TextFieldProps;
 
 export const FilledInput = ({
   label,
   error,
-  darkTheme,
+  isDarkTheme: isDarkTheme,
   className,
   ...rest
 }: FilledInputProps) => {
@@ -17,7 +17,7 @@ export const FilledInput = ({
     label: clsx(
       'filled-input__label',
       error && 'filled-input__label-error',
-      darkTheme && 'filled-input__label_dark',
+      isDarkTheme && 'filled-input__label_dark',
     ),
     input: clsx('filled-input', className),
   };
@@ -34,7 +34,7 @@ export const FilledInput = ({
         autoComplete={'off'}
         className={classNames.input}
         sx={{
-          backgroundColor: darkTheme ? '#F5F5F57F' : '#e5efff',
+          backgroundColor: isDarkTheme ? '#F5F5F57F' : '#e5efff',
           '.MuiFilledInput-input': {
             padding: '15px 10px',
           },

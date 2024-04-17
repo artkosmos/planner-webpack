@@ -85,13 +85,13 @@ export const TaskForm = ({ task, onAction, config, darkTheme }: Props) => {
         regExp={config.nameFieldRegExp}
         validationMessage={config.nameRequiredValidationMsg}
         autoFocus
-        darkTheme={darkTheme}
+        isDarkTheme={darkTheme}
       />
       <DateInput
         {...register('date', { required: config.dateRequiredValidationMsg })}
         error={errors.date ? errors.date.message : null}
         label={config.dateFieldLabel}
-        darkTheme={darkTheme}
+        isDarkTheme={darkTheme}
       />
       <div className={'task-form__button-container'}>
         <ButtonOutlined
