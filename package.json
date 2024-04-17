@@ -72,6 +72,7 @@
     "@mui/material": "5.15.7",
     "@reduxjs/toolkit": "2.1.0",
     "clsx": "2.1.0",
+    "compressorjs": "1.2.1",
     "dayjs": "1.11.10",
     "dotenv": "16.4.1",
     "i18next": "23.10.1",

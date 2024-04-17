@@ -17,7 +17,7 @@
     text-align: center;
     font-weight: bold;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    margin: 20px 0;
     font-size: 30px;
     color: $title-text;
 
@@ -55,5 +55,22 @@
 
   &__loader {
     margin: 0 auto;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+
+  &__image {
+    max-width: 300px;
+    max-height: 250px;
+    margin: 8px 40px 0 20px;
+    border-radius: 20px;
+    box-shadow:
+      -10px 2px 13px -7px #000,
+      10px 2px 13px -7px #000,
+      5px 5px 15px 5px rgb(0 0 0 / 0%);
   }
 }

@@ -13,11 +13,13 @@ export interface IEditTaskAction {
 export interface EditTaskFormFields {
   title: string;
   date: string;
+  image?: string | null;
 }
 
 export interface ITaskFormConfig {
   cancelButtonTitle: string;
   confirmButtonTitle: string;
+  imageButtonTitle: string;
   nameFieldLabel?: string;
   nameRequiredValidationMsg?: string;
   dateRequiredValidationMsg?: string;

@@ -7,6 +7,7 @@ import { DateInput } from '@/components/shared/date-input';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
 import { ButtonPrimary } from '@/components/shared/primary-button';
 
+import { ImageUploader } from '../image-uploader';
 import {
   EditFormButtons,
   type EditTaskFormFields,
@@ -32,9 +33,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<EditTaskFormFields>({
-    defaultValues: { title: task.title, date: task.date },
+    defaultValues: { title: task.title, date: task.date, image: task.image },
   });
 
   useEffect(() => {
@@ -48,6 +50,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
     return () => document.removeEventListener('keyup', handleEnterPress);
   }, []);
 
+  const fileClearHandler = () => {
+    setValue('image', task.image);
+  };
+
   const buttonActionHandler = ({ name, data }: IButtonAction) => {
     switch (name) {
       case EditFormButtons.CANCEL: {
@@ -56,10 +62,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       }
       case EditFormButtons.CONFIRM: {
         if (data) {
-          const { title, date } = data;
+          const { title, date, image } = data;
           onAction({
             name,
-            model: { date, title, id: task.id },
+            model: { date, title, image, id: task.id },
           });
           break;
         }
@@ -75,6 +81,14 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
       })}
     >
+      <ImageUploader
+        name={'image'}
+        control={control}
+        buttonText={config.imageButtonTitle}
+        className={'task-form__file-input'}
+        clearInput={fileClearHandler}
+        isDarkTheme={darkTheme}
+      />
       <ControlledFilledInput
         name={'title'}
         control={control}

@@ -1,0 +1,51 @@
+@import '@/style/variables';
+
+.file-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  &__input {
+    display: none;
+    width: 0;
+  }
+
+  &__preview {
+    width: auto;
+    max-width: 80px;
+    height: auto;
+    max-height: 100px;
+    margin-right: 20px;
+  }
+
+  &__label {
+    width: 100%;
+  }
+
+  &__delete {
+    margin-left: 15px;
+    margin-right: 5px;
+    width: 28px;
+    height: 28px;
+
+    &_dark {
+      path {
+        fill: $title-text-dark;
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .file-input__delete {
+    &:hover {
+      cursor: pointer;
+
+      path {
+        fill: red;
+      }
+    }
+  }
+}

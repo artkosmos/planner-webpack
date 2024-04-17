@@ -43,6 +43,7 @@ export const ListCreator = () => {
     return {
       cancelButtonTitle: t('create_form_config.cancel_button'),
       confirmButtonTitle: t('create_form_config.add_button'),
+      imageButtonTitle: t('create_form_config.image_button_text'),
       nameFieldLabel: t('create_form_config.name_label'),
       dateFieldLabel: t('create_form_config.date_label'),
       dateRequiredValidationMsg: t('create_form_config.date_validation'),
@@ -61,8 +62,9 @@ export const ListCreator = () => {
         const idLength = 8;
         const date = model.date;
         const title = model.title;
+        const image = model.image;
         const id = uuid().slice(0, idLength);
-        dispatch(mainThunk.createTask({ date, title, id }));
+        dispatch(mainThunk.createTask({ date, title, image, id }));
         setOpenEditDialog(false);
         break;
       }
@@ -87,7 +89,7 @@ export const ListCreator = () => {
         <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
           <TaskForm
             onAction={onCreateFormAction}
-            task={{ id: '', title: '', date: '' }}
+            task={{ id: '', title: '', date: '', image: null }}
             config={createTaskFormConfig}
           />
         </Dialog>
