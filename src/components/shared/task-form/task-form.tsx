@@ -52,7 +52,7 @@ export const TaskForm = ({ task, onAction, config, darkTheme }: Props) => {
   }, []);
 
   const fileClearHandler = () => {
-    setValue('image', null);
+    setValue('image', task.image);
   };
 
   const buttonActionHandler = ({ name, data }: IButtonAction) => {
@@ -63,10 +63,10 @@ export const TaskForm = ({ task, onAction, config, darkTheme }: Props) => {
       }
       case EditFormButtons.CONFIRM: {
         if (data) {
-          const { title, date } = data;
+          const { title, date, image } = data;
           onAction({
             name,
-            model: { date, title, id: task.id },
+            model: { date, title, image, id: task.id },
           });
           break;
         }
@@ -88,6 +88,7 @@ export const TaskForm = ({ task, onAction, config, darkTheme }: Props) => {
         buttonText={config.imageButtonTitle}
         className={'task-form__file-input'}
         clearInput={fileClearHandler}
+        isDarkTheme={darkTheme}
       />
       <ControlledFilledInput
         name={'title'}

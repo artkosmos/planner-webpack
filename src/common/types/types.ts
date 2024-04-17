@@ -2,5 +2,5 @@ export interface ITask {
   id: string;
   date: string;
   title: string;
-  image?: File | null;
+  image?: string | null;
 }

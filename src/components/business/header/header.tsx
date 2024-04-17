@@ -6,9 +6,9 @@ import clsx from 'clsx';
 
 import { appActions } from '@/api';
 import { Select, type SelectItem } from '@/components/shared/select';
-import { SwitchTheme } from '@/components/shared/switch-theme/switch-theme';
+import { SwitchTheme } from '@/components/shared/switch-theme';
 import { AppDispatch, useAppSelector } from '@/store';
-import { useDarkTheme } from '@/utils/use-dark-theme';
+import { useDarkTheme } from '@/utils';
 
 import './style.scss';
 

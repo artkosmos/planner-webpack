@@ -63,8 +63,9 @@ export const ListCreator = () => {
         const idLength = 8;
         const date = model.date;
         const title = model.title;
+        const image = model.image;
         const id = uuid().slice(0, idLength);
-        dispatch(mainThunk.createTask({ date, title, id }));
+        dispatch(mainThunk.createTask({ date, title, image, id }));
         setOpenEditDialog(false);
         break;
       }

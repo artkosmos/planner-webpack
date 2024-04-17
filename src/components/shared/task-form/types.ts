@@ -13,7 +13,7 @@ export interface IEditTaskAction {
 export interface EditTaskFormFields {
   title: string;
   date: string;
-  image?: File | null;
+  image?: string | null;
 }
 
 export interface ITaskFormConfig {

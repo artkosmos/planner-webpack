@@ -1,3 +1,5 @@
+@import '@/style/variables';
+
 .file-input {
   display: flex;
   flex-direction: row;
@@ -27,6 +29,12 @@
     margin-right: 5px;
     width: 28px;
     height: 28px;
+
+    &_dark {
+      path {
+        fill: $title-text-dark;
+      }
+    }
   }
 }
 

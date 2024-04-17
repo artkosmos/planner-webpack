@@ -17,10 +17,19 @@ type Props<T extends FieldValues> = {
   buttonText?: string;
   className?: string;
   clearInput?: () => void;
+  isDarkTheme?: boolean;
 } & UseControllerProps<T>;
 
 export const ControlledFileInput = <T extends FieldValues>(props: Props<T>) => {
-  const { control, name, buttonText, className, clearInput, ...rest } = props;
+  const {
+    control,
+    name,
+    buttonText,
+    className,
+    clearInput,
+    isDarkTheme,
+    ...rest
+  } = props;
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -34,11 +43,15 @@ export const ControlledFileInput = <T extends FieldValues>(props: Props<T>) => {
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
+      const reader = new FileReader();
 
-      setSelectedImage(imageUrl);
+      reader.onload = () => {
+        const imageUrl = reader.result as string;
+        setSelectedImage(imageUrl);
+        onChange(imageUrl);
+      };
 
-      onChange(file);
+      reader.readAsDataURL(file);
     }
   };
 
@@ -58,7 +71,10 @@ export const ControlledFileInput = <T extends FieldValues>(props: Props<T>) => {
     preview: clsx('file-input__preview'),
     input: clsx('file-input__input'),
     label: clsx('file-input__label'),
-    delete: clsx('file-input__delete'),
+    delete: clsx(
+      'file-input__delete',
+      isDarkTheme && 'file-input__delete_dark',
+    ),
   };
 
   return (
@@ -77,6 +93,7 @@ export const ControlledFileInput = <T extends FieldValues>(props: Props<T>) => {
         onChange={uploadHandler}
         name={name}
         id={'task-image'}
+        accept="image/png, image/jpeg, image/webp"
         {...rest}
       />
       <label
