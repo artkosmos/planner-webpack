@@ -38,7 +38,6 @@ export const ListCreator = () => {
   const list = useAppSelector(state => state.main.list);
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
-  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
     return {
@@ -85,13 +84,8 @@ export const ListCreator = () => {
   return (
     <div className={'list-creator'}>
       <div className={'list-creator__add-task-block add-task-block'}>
-        <Dialog
-          title={t('dialog_title')}
-          isOpen={openEditDialog}
-          darkTheme={isDarkTheme}
-        >
+        <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
           <TaskForm
-            darkTheme={isDarkTheme}
             onAction={onCreateFormAction}
             task={{ id: '', title: '', date: '' }}
             config={createTaskFormConfig}

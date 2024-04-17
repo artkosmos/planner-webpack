@@ -5,6 +5,8 @@ import DialogMUITitle from '@mui/material/DialogTitle';
 
 import clsx from 'clsx';
 
+import { useAppSelector } from '@/store';
+
 import './style.scss';
 
 type Props = {
@@ -13,15 +15,19 @@ type Props = {
   isOpen: boolean;
   className?: string;
   onClose?: () => void;
-  darkTheme?: boolean;
 };
 
 export const Dialog = ({ ...rest }: Props) => {
-  const { children, isOpen, title, onClose, className, darkTheme } = rest;
+  const { children, isOpen, title, onClose, className } = rest;
+
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   const classNames = {
-    title: clsx('dialog-mui-title', darkTheme && 'dialog-mui-title_dark'),
-    content: clsx('dialog-mui-content', darkTheme && 'dialog-mui-content_dark'),
+    title: clsx('dialog-mui-title', isDarkTheme && 'dialog-mui-title_dark'),
+    content: clsx(
+      'dialog-mui-content',
+      isDarkTheme && 'dialog-mui-content_dark',
+    ),
     dialog: clsx(className),
   };
 

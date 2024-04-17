@@ -109,16 +109,11 @@ export const TaskCard = ({ className }: Props) => {
         onClick={() => setOpenEditDialog(true)}
         title={t('edit_button')}
       />
-      <Dialog
-        title={t('dialog_title')}
-        isOpen={openEditDialog}
-        darkTheme={isDarkTheme}
-      >
+      <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
         <TaskForm
           config={updateTaskFormConfig}
           onAction={onEditFormAction}
           task={currentTask}
-          darkTheme={isDarkTheme}
         />
       </Dialog>
     </Card>

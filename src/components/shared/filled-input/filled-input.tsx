@@ -2,17 +2,20 @@ import TextField, { TextFieldProps } from '@mui/material/TextField';
 
 import clsx from 'clsx';
 
+import { useAppSelector } from '@/store';
+
 import './style.scss';
 
-export type FilledInputProps = { isDarkTheme?: boolean } & TextFieldProps;
+export type FilledInputProps = TextFieldProps;
 
 export const FilledInput = ({
   label,
   error,
-  isDarkTheme: isDarkTheme,
   className,
   ...rest
 }: FilledInputProps) => {
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+
   const classNames = {
     label: clsx(
       'filled-input__label',

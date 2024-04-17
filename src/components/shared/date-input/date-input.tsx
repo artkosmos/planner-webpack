@@ -2,16 +2,19 @@ import { type ComponentPropsWithoutRef, forwardRef } from 'react';
 
 import clsx from 'clsx';
 
+import { useAppSelector } from '@/store';
+
 import './style.scss';
 
 type Props = ComponentPropsWithoutRef<'input'> & {
   error?: string | null;
   label?: string;
-  isDarkTheme?: boolean;
 };
 
 export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { className, error, label, isDarkTheme, ...rest } = props;
+  const { className, error, label, ...rest } = props;
+
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   const classNames = {
     datepicker: clsx(
