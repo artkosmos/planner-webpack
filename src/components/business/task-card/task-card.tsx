@@ -48,8 +48,8 @@ export const TaskCard = ({ className }: Props) => {
       imageButtonTitle: t('edit_form_config.image_button_text'),
       dateFieldLabel: t('edit_form_config.date_label'),
       nameFieldLabel: t('edit_form_config.name_label'),
-      dateRequiredValidationMsg: t('date_validation'),
-      nameRequiredValidationMsg: t('name_validation'),
+      dateRequiredValidationMsg: t('edit_form_config.date_validation'),
+      nameRequiredValidationMsg: t('edit_form_config.name_validation'),
       nameFieldRegExp: '[a-z0-9а-я\\s]+$',
     } as const;
   }, [t]);
@@ -110,11 +110,16 @@ export const TaskCard = ({ className }: Props) => {
         onClick={() => setOpenEditDialog(true)}
         title={t('edit_button')}
       />
-      <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
+      <Dialog
+        title={t('dialog_title')}
+        isOpen={openEditDialog}
+        darkTheme={isDarkTheme}
+      >
         <TaskForm
           config={updateTaskFormConfig}
           onAction={onEditFormAction}
           task={currentTask}
+          darkTheme={isDarkTheme}
         />
       </Dialog>
     </Card>

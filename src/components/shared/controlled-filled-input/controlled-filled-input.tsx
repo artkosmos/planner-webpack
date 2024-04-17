@@ -4,15 +4,15 @@ import {
   useController,
   UseControllerProps,
 } from 'react-hook-form';
-import type { TextFieldProps } from '@mui/material/TextField';
 
 import { FilledInput } from '@/components/shared/filled-input';
+import { FilledInputProps } from '@/components/shared/filled-input/filled-input';
 
 type Props<T extends FieldValues> = {
   regExp?: string;
   validationMessage?: string;
 } & UseControllerProps<T> &
-  Omit<TextFieldProps, 'onChange' | 'value' | 'variant'>;
+  Omit<FilledInputProps, 'onChange' | 'value' | 'variant'>;
 
 export const ControlledFilledInput = <T extends FieldValues>({
   name,

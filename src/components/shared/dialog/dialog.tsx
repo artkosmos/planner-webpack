@@ -3,6 +3,8 @@ import DialogMUI from '@mui/material/Dialog';
 import DialogMUIContent from '@mui/material/DialogContent';
 import DialogMUITitle from '@mui/material/DialogTitle';
 
+import clsx from 'clsx';
+
 import './style.scss';
 
 type Props = {
@@ -11,15 +13,22 @@ type Props = {
   isOpen: boolean;
   className?: string;
   onClose?: () => void;
+  darkTheme?: boolean;
 };
 
 export const Dialog = ({ ...rest }: Props) => {
-  const { children, isOpen, title, onClose, className } = rest;
+  const { children, isOpen, title, onClose, className, darkTheme } = rest;
+
+  const classNames = {
+    title: clsx('dialog-mui-title', darkTheme && 'dialog-mui-title_dark'),
+    content: clsx('dialog-mui-content', darkTheme && 'dialog-mui-content_dark'),
+    dialog: clsx(className),
+  };
 
   return (
     <DialogMUI
       data-testid={'dialog'}
-      className={className}
+      className={classNames.dialog}
       maxWidth={'sm'}
       open={isOpen}
       onClose={onClose}
@@ -31,18 +40,9 @@ export const Dialog = ({ ...rest }: Props) => {
         },
       }}
     >
-      <DialogMUITitle
-        className={'dialog-mui-title'}
-        sx={{
-          borderBottom: '1px solid #ddd',
-          fontWeight: 'bold',
-          fontSize: '22px',
-        }}
-      >
-        {title}
-      </DialogMUITitle>
+      <DialogMUITitle className={classNames.title}>{title}</DialogMUITitle>
       <DialogMUIContent
-        className={'dialog-mui-content'}
+        className={classNames.content}
         sx={{
           paddingTop: '20px !important',
           display: 'flex',
