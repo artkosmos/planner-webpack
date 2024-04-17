@@ -10,6 +10,7 @@ import { clsx } from 'clsx';
 import { CoverIcon } from '@/assets/icons/cover-icon';
 import { DeleteIcon } from '@/assets/icons/delete-icon';
 import { ButtonPrimary } from '@/components/shared/primary-button';
+import { compress } from '@/utils/compressImage';
 
 import './style.scss';
 
@@ -20,7 +21,7 @@ type Props<T extends FieldValues> = {
   isDarkTheme?: boolean;
 } & UseControllerProps<T>;
 
-export const ControlledFileInput = <T extends FieldValues>(props: Props<T>) => {
+export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
   const {
     control,
     name,
@@ -40,18 +41,20 @@ export const ControlledFileInput = <T extends FieldValues>(props: Props<T>) => {
     control,
   });
 
-  const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const imageCompressQuality = 0.5;
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
-      const reader = new FileReader();
+      const compressedFile = await compress(file, imageCompressQuality);
 
+      const reader = new FileReader();
       reader.onload = () => {
         const imageUrl = reader.result as string;
         setSelectedImage(imageUrl);
         onChange(imageUrl);
       };
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(compressedFile);
     }
   };
 
@@ -90,7 +93,7 @@ export const ControlledFileInput = <T extends FieldValues>(props: Props<T>) => {
         className={classNames.input}
         hidden
         type={'file'}
-        onChange={uploadHandler}
+        onChange={uploadImageHandler}
         name={name}
         id={'task-image'}
         accept="image/png, image/jpeg, image/webp"

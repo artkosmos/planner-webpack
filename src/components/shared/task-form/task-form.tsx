@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import type { ITask } from '@/common/types';
-import { ControlledFileInput } from '@/components/shared/controlled-file-input';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
 import { DateInput } from '@/components/shared/date-input';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
 import { ButtonPrimary } from '@/components/shared/primary-button';
 
+import { ImageUploader } from '../image-uploader';
 import {
   EditFormButtons,
   type EditTaskFormFields,
@@ -82,7 +82,7 @@ export const TaskForm = ({ task, onAction, config, darkTheme }: Props) => {
         buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
       })}
     >
-      <ControlledFileInput
+      <ImageUploader
         name={'image'}
         control={control}
         buttonText={config.imageButtonTitle}
