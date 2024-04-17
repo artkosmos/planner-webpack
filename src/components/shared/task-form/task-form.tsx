@@ -25,9 +25,10 @@ type Props = {
   task: ITask;
   onAction?: ({ model, name }: IEditTaskAction) => void;
   config: ITaskFormConfig;
+  darkTheme?: boolean;
 };
 
-export const TaskForm = ({ task, onAction, config }: Props) => {
+export const TaskForm = ({ task, onAction, config, darkTheme }: Props) => {
   const {
     register,
     handleSubmit,
@@ -84,11 +85,13 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         regExp={config.nameFieldRegExp}
         validationMessage={config.nameRequiredValidationMsg}
         autoFocus
+        isDarkTheme={darkTheme}
       />
       <DateInput
         {...register('date', { required: config.dateRequiredValidationMsg })}
         error={errors.date ? errors.date.message : null}
         label={config.dateFieldLabel}
+        isDarkTheme={darkTheme}
       />
       <div className={'task-form__button-container'}>
         <ButtonOutlined

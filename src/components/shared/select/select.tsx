@@ -32,7 +32,7 @@ export const Select = ({
         sx={{
           color: darkTheme && '#F5F5F57F',
           '.MuiSelect-icon': {
-            color: darkTheme && '#F5F5F533',
+            color: darkTheme && '#F5F5F57F',
           },
         }}
         labelId="select-label"

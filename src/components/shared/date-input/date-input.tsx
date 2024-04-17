@@ -7,14 +7,24 @@ import './style.scss';
 type Props = ComponentPropsWithoutRef<'input'> & {
   error?: string | null;
   label?: string;
+  isDarkTheme?: boolean;
 };
 
 export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { className, error, label, ...rest } = props;
+  const { className, error, label, isDarkTheme, ...rest } = props;
 
   const classNames = {
-    datepicker: clsx('datepicker', error && 'datepicker__error', className),
-    label: clsx('datepicker__label', error && 'datepicker__label-error'),
+    datepicker: clsx(
+      'datepicker',
+      error && 'datepicker__error',
+      className,
+      isDarkTheme && 'datepicker_dark',
+    ),
+    label: clsx(
+      'datepicker__label',
+      error && 'datepicker__label-error',
+      isDarkTheme && 'datepicker__label_dark',
+    ),
   };
 
   return (
