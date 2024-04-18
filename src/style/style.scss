@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import './variables';
 @import './mixixns';
 
@@ -5,10 +6,6 @@ body {
   background-color: $background;
   overflow: hidden;
   margin: 0;
-}
-
-.dark {
-  background-color: $background-dark;
 }
 
 * {
@@ -40,4 +37,38 @@ body {
 
 ::-webkit-scrollbar-track {
   background-color: #dcdcdc;
+}
+
+.dark {
+  background-color: $background-dark;
+
+  .filled-input {
+    background-color: #f5f5f57f;
+
+    &__label {
+      color: $title-text-dark;
+    }
+  }
+
+  .datepicker {
+    background-color: #f5f5f57f;
+
+    &__label {
+      color: $title-text-dark;
+    }
+  }
+
+  .dialog-mui-title {
+    color: $title-text-dark;
+    background-color: $soft-dark;
+    border-bottom-color: #f5f5f533;
+  }
+
+  .dialog-mui-content {
+    background-color: $soft-dark;
+  }
+
+  .info-title {
+    color: color.adjust($info-text, $lightness: 10%);
+  }
 }
