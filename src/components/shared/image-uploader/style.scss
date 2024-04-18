@@ -24,22 +24,16 @@
     width: 100%;
   }
 
-  &__delete {
+  &__delete-icon {
     margin-left: 15px;
     margin-right: 5px;
     width: 28px;
     height: 28px;
-
-    &_dark {
-      path {
-        fill: $title-text-dark;
-      }
-    }
   }
 }
 
 @media (hover: hover) {
-  .file-input__delete {
+  .file-input__delete-icon {
     &:hover {
       cursor: pointer;
 

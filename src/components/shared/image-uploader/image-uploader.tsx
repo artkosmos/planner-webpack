@@ -18,19 +18,10 @@ type Props<T extends FieldValues> = {
   buttonText?: string;
   className?: string;
   clearInput?: () => void;
-  isDarkTheme?: boolean;
 } & UseControllerProps<T>;
 
 export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
-  const {
-    control,
-    name,
-    buttonText,
-    className,
-    clearInput,
-    isDarkTheme,
-    ...rest
-  } = props;
+  const { control, name, buttonText, className, clearInput, ...rest } = props;
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -74,10 +65,7 @@ export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
     preview: clsx('file-input__preview'),
     input: clsx('file-input__input'),
     label: clsx('file-input__label'),
-    delete: clsx(
-      'file-input__delete',
-      isDarkTheme && 'file-input__delete_dark',
-    ),
+    delete: clsx('file-input__delete-icon'),
   };
 
   return (

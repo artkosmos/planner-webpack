@@ -96,7 +96,7 @@ export const TaskCard = ({ className }: Props) => {
         <ul className={classNames.list}>
           <li>
             <span className={'task-card__point'}>{t('id')}: </span>
-            <span className={'task-id'}>{currentTask.id}</span>
+            {currentTask.id}
           </li>
           <li>
             <span className={'task-card__point'}>{t('name')}:&nbsp;&nbsp;</span>
