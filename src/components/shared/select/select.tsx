@@ -8,15 +8,9 @@ export type SelectItem = {
   label: string;
 };
 
-type Props = { items: SelectItem[]; darkTheme?: boolean } & SelectProps;
+type Props = { items: SelectItem[] } & SelectProps;
 
-export const Select = ({
-  className,
-  label,
-  items,
-  darkTheme,
-  ...rest
-}: Props) => {
+export const Select = ({ className, label, items, ...rest }: Props) => {
   const selectItems = items.map((item, index) => (
     <MenuItemMUI key={index} value={item.value}>
       {item.label}
@@ -25,16 +19,8 @@ export const Select = ({
 
   return (
     <FormControlMUI className={className} size={'small'}>
-      <InputLabelMUI id="select-label" sx={{ color: darkTheme && '#F5F5F533' }}>
-        {label}
-      </InputLabelMUI>
+      <InputLabelMUI id="select-label">{label}</InputLabelMUI>
       <SelectMUI
-        sx={{
-          color: darkTheme && '#F5F5F57F',
-          '.MuiSelect-icon': {
-            color: darkTheme && '#F5F5F57F',
-          },
-        }}
         labelId="select-label"
         label={label}
         data-testid={'select'}

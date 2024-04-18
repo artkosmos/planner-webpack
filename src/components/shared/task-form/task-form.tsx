@@ -87,7 +87,6 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         buttonText={config.imageButtonTitle}
         className={'task-form__file-input'}
         clearInput={fileClearHandler}
-        isDarkTheme={darkTheme}
       />
       <ControlledFilledInput
         name={'title'}

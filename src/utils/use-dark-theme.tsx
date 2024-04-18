@@ -5,18 +5,20 @@ import { appActions } from '@/api';
 import { AppDispatch } from '@/store';
 
 export const useDarkTheme = () => {
-  const [isDark, setIsDark] = useState<boolean>(false);
+  const appSettingDark = JSON.parse(localStorage.getItem('darkTheme'));
+  const systemSettingDark = window.matchMedia(
+    '(prefers-color-scheme: dark)',
+  ).matches;
+
   const dispatch = useDispatch<AppDispatch>();
+  const [isDark, setIsDark] = useState(
+    appSettingDark !== null ? appSettingDark : systemSettingDark,
+  );
 
   useEffect(() => {
-    const isDarkTheme = localStorage.getItem('darkTheme');
-    if (isDarkTheme === 'true') {
-      setIsDark(true);
-      dispatch(appActions.changeAppTheme(true));
-    } else if (isDarkTheme === null) {
-      localStorage.setItem('darkTheme', 'false');
-    }
-  }, []);
+    dispatch(appActions.changeAppTheme(isDark));
+    localStorage.setItem('darkTheme', `${isDark}`);
+  }, [isDark, dispatch]);
 
   if (isDark) {
     document.body.classList.add('dark');

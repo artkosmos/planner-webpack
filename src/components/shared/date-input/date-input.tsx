@@ -2,8 +2,6 @@ import { type ComponentPropsWithoutRef, forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { useAppSelector } from '@/store';
-
 import './style.scss';
 
 type Props = ComponentPropsWithoutRef<'input'> & {
@@ -14,20 +12,9 @@ type Props = ComponentPropsWithoutRef<'input'> & {
 export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { className, error, label, ...rest } = props;
 
-  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
-
   const classNames = {
-    datepicker: clsx(
-      'datepicker',
-      error && 'datepicker__error',
-      className,
-      isDarkTheme && 'datepicker_dark',
-    ),
-    label: clsx(
-      'datepicker__label',
-      error && 'datepicker__label-error',
-      isDarkTheme && 'datepicker__label_dark',
-    ),
+    datepicker: clsx('datepicker', error && 'datepicker__error', className),
+    label: clsx('datepicker__label', error && 'datepicker__label-error'),
   };
 
   return (

@@ -1,14 +1,16 @@
 @import '@/style/variables';
 
 .filled-input {
+  background-color: #e5efff;
+
+  .MuiFilledInput-input {
+    padding: 15px 10px;
+  }
+
   &__label {
     font-weight: 600;
     color: $title-text;
     margin-bottom: 5px;
-
-    &_dark {
-      color: $title-text-dark;
-    }
   }
 
   &__label-error {

@@ -15,10 +15,6 @@
   font-size: 16px;
   font-family: Arial, sans-serif;
 
-  &_dark {
-    background-color: #f5f5f57f;
-  }
-
   &:focus {
     box-shadow: 0 1px 0 0 $blue;
     border-bottom-color: $blue;
@@ -37,13 +33,17 @@
     font-weight: 600;
     color: $title-text;
     margin-bottom: 5px;
-
-    &_dark {
-      color: $title-text-dark;
-    }
   }
 
   &__label-error {
     color: $error-text;
+  }
+}
+
+::-webkit-calendar-picker-indicator {
+  scale: 1.5;
+
+  &:hover {
+    cursor: pointer;
   }
 }

@@ -36,6 +36,7 @@ export const Header = () => {
   const classNames = {
     header: clsx('header', isDarkTheme && 'header_dark'),
     title: clsx('header__title', isDarkTheme && 'header__title_dark'),
+    select: clsx('header__select', isDarkTheme && 'header__select_dark'),
   };
 
   return (
@@ -44,12 +45,11 @@ export const Header = () => {
       <div className={'header__settings'}>
         <SwitchTheme checked={isDark} onChange={handleSwitchChange} />
         <Select
-          className={'header__select'}
+          className={classNames.select}
           label={t('select_label')}
           items={items}
           onChange={event => i18n.changeLanguage(event.target.value as string)}
           value={i18n.language}
-          darkTheme={isDarkTheme}
         />
       </div>
     </header>
