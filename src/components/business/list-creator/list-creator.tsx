@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -18,19 +17,19 @@ import {
   TaskForm,
 } from '@/components/shared/task-form';
 import { TASK } from '@/routes';
-import { AppDispatch, useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
 
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const [dataInitialization, setDataInitialization] = useState<boolean>(true);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation('home');
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(mainThunk.getTaskList()).finally(() =>
+    dispatch(mainThunk.getTaskList('')).finally(() =>
       setDataInitialization(false),
     );
   }, []);

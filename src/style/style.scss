@@ -42,6 +42,28 @@ body {
 .dark {
   background-color: $background-dark;
 
+  .search-input {
+    .MuiInputBase-root {
+      color: $title-text-dark;
+
+      &::before {
+        border-bottom-color: $grey-text2;
+      }
+
+      &:hover::before {
+        border-bottom-color: $grey-text2;
+      }
+    }
+
+    .MuiInputLabel-root {
+      color: $grey-text2;
+    }
+
+    .MuiSvgIcon-root {
+      color: $grey-text2;
+    }
+  }
+
   .filled-input {
     background-color: $input-dark-background;
 

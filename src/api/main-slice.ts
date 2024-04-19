@@ -10,9 +10,12 @@ import taskService from '@/api';
 import { ITask } from '@/common/types';
 import { createAppAsyncThunk } from '@/utils';
 
-const getTaskList = createAppAsyncThunk('main/getTaskList', async () => {
-  return await taskService.getTaskList();
-});
+const getTaskList = createAppAsyncThunk(
+  'main/getTaskList',
+  async (substr: string) => {
+    return await taskService.getTaskList(substr);
+  },
+);
 
 const getTask = createAppAsyncThunk(
   'main/getTask',
@@ -30,7 +33,7 @@ const createTask = createAppAsyncThunk(
   async (data: ITask, { dispatch }) => {
     const response = await taskService.createTask(data);
     if (response) {
-      return dispatch(getTaskList());
+      return dispatch(getTaskList(''));
     }
   },
 );
@@ -41,7 +44,7 @@ const deleteTask = createAppAsyncThunk(
     try {
       const response = await taskService.deleteTask(id);
       if (response) {
-        return dispatch(getTaskList());
+        return dispatch(getTaskList(''));
       }
     } catch (error) {
       return rejectWithValue(error.message);

@@ -5,10 +5,11 @@ import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 import { appActions } from '@/api';
+import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
 import { AppDispatch, useAppSelector } from '@/store';
-import { useDarkTheme } from '@/utils';
+import { debouncedGetList, useDarkTheme } from '@/utils';
 
 import './style.scss';
 
@@ -31,6 +32,11 @@ export const Header = () => {
     dispatch(appActions.changeAppTheme(event.target.checked));
   };
 
+  const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+    debouncedGetList(inputValue, dispatch);
+  };
+
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   const classNames = {
@@ -42,6 +48,7 @@ export const Header = () => {
   return (
     <header className={classNames.header} data-testid={'header'}>
       <span className={classNames.title}>{t('app_name')} 🤪</span>
+      <SearchInput className={'header__search'} onChange={searchHandler} />
       <div className={'header__settings'}>
         <SwitchTheme checked={isDark} onChange={handleSwitchChange} />
         <Select

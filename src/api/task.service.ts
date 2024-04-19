@@ -27,12 +27,16 @@ const taskService = (() => {
     });
   };
 
-  const getTaskList = () => {
+  const getTaskList = (substr: string) => {
     return new Promise<ITask[]>(resolve => {
       setTimeout(() => {
         const list = getListFromLS();
         if (list) {
-          resolve([...list]);
+          if (substr) {
+            resolve(list.filter(task => task.title.includes(substr)));
+          } else {
+            resolve(list);
+          }
         } else {
           resolve([]);
         }
