@@ -10,7 +10,7 @@ import { clsx } from 'clsx';
 import { CoverIcon } from '@/assets/icons/cover-icon';
 import { DeleteIcon } from '@/assets/icons/delete-icon';
 import { ButtonPrimary } from '@/components/shared/primary-button';
-import { compress } from '@/utils/compressImage';
+import { compress } from '@/utils';
 
 import './style.scss';
 
