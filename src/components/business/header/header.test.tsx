@@ -1,12 +1,16 @@
-import { fireEvent, render, within } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 
+import { renderWithProviders } from '@/__mocks__';
 import { Header } from '@/components/business/header/header';
 
 import '@testing-library/jest-dom';
+import '@/__mocks__/match-media-jest';
 
 describe('testing of header component', () => {
   test('should render with app name and select with default language', () => {
-    const { getByText, getByTestId, getByLabelText } = render(<Header />);
+    const { getByText, getByTestId, getByLabelText } = renderWithProviders(
+      <Header />,
+    );
 
     const header = getByTestId('header');
     const appName = getByText(/Crazy Planner/);
@@ -20,7 +24,7 @@ describe('testing of header component', () => {
   test('select should contain only supported languages', () => {
     const numberOfLanguages = 2;
 
-    const { getAllByRole, getByTestId } = render(<Header />);
+    const { getAllByRole, getByTestId } = renderWithProviders(<Header />);
 
     const select = getByTestId('select');
     const selectButton = within(select).getByRole('combobox');
@@ -34,7 +38,9 @@ describe('testing of header component', () => {
   });
 
   test('should change app language', async () => {
-    const { findByText, getByTestId, getByRole } = render(<Header />);
+    const { findByText, getByTestId, getByRole } = renderWithProviders(
+      <Header />,
+    );
 
     const select = getByTestId('select');
     const selectButton = within(select).getByRole('combobox');
@@ -45,5 +51,17 @@ describe('testing of header component', () => {
     const appName = await findByText(/Сумасшедший Планировщик/);
 
     expect(appName).toBeInTheDocument();
+  });
+
+  test('should change app theme', async () => {
+    const { getByRole } = renderWithProviders(<Header />);
+
+    expect(document.body).not.toHaveClass('dark');
+
+    const switchTheme = getByRole('checkbox');
+    fireEvent.click(switchTheme);
+    fireEvent.change(switchTheme, { target: { checked: true } });
+
+    expect(document.body).toHaveClass('dark');
   });
 });
