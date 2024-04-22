@@ -42,6 +42,20 @@ body {
 .dark {
   background-color: $background-dark;
 
+  .header {
+    .MuiInputLabel-root {
+      color: $grey-text1;
+    }
+
+    .MuiInputBase-root {
+      color: $grey-text2;
+    }
+
+    .MuiSelect-icon {
+      color: $grey-text2;
+    }
+  }
+
   .search-input {
     .MuiInputBase-root {
       color: $title-text-dark;
@@ -56,7 +70,7 @@ body {
     }
 
     .MuiInputLabel-root {
-      color: $grey-text2;
+      color: $grey-text1;
     }
 
     .MuiSvgIcon-root {
@@ -111,7 +125,7 @@ body {
       color: $grey-text2;
 
       &.MuiCheckbox-root.Mui-checked {
-        color: #eaea11;
+        color: #2190ff;
       }
     }
 

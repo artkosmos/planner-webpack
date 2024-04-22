@@ -1,6 +1,7 @@
 import { ChangeEvent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { SelectChangeEvent } from '@mui/material';
 
 import clsx from 'clsx';
 
@@ -9,20 +10,33 @@ import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
 import { AppDispatch, useAppSelector } from '@/store';
-import { debouncedGetList, useDarkTheme } from '@/utils';
+import { debouncedSearch, useDarkTheme } from '@/utils';
 
 import './style.scss';
 
 export const Header = () => {
   const { t, i18n } = useTranslation('header');
   const dispatch = useDispatch<AppDispatch>();
-
   const { isDark, setIsDark } = useDarkTheme();
 
-  const items: SelectItem[] = useMemo(() => {
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+  const sortBy = useAppSelector(state => state.main.sortBy);
+
+  const languageItems: SelectItem[] = useMemo(() => {
     return [
       { value: 'en', label: t('en') },
       { value: 'ru', label: t('ru') },
+    ];
+  }, [t]);
+
+  const sortItems: SelectItem[] = useMemo(() => {
+    return [
+      { value: '', label: 'None' },
+      { value: 'date_first', label: 'Date (first)' },
+      { value: 'date_latest', label: 'Date (latest)' },
+      { value: 'name_a-z', label: 'Name (a-z)' },
+      { value: 'name_z-a', label: 'Name (z-a)' },
+      { value: 'importance', label: 'Importance' },
     ];
   }, [t]);
 
@@ -34,27 +48,44 @@ export const Header = () => {
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    debouncedGetList(inputValue, dispatch);
+    debouncedSearch(inputValue, dispatch);
   };
 
-  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+  const sortHandler = (event: SelectChangeEvent) => {
+    const selectValue = event.target.value;
+    dispatch(appActions.setSort(selectValue));
+  };
 
   const classNames = {
     header: clsx('header', isDarkTheme && 'header_dark'),
     title: clsx('header__title', isDarkTheme && 'header__title_dark'),
-    select: clsx('header__select', isDarkTheme && 'header__select_dark'),
+    selectLanguage: clsx('header__lang-select'),
+    selectSort: clsx('header__sort-select'),
   };
 
   return (
     <header className={classNames.header} data-testid={'header'}>
       <span className={classNames.title}>{t('app_name')} 🤪</span>
-      <SearchInput className={'header__search'} onChange={searchHandler} />
+      <div className={'header__table-sort'}>
+        <SearchInput
+          label={t('search_placeholder')}
+          className={'header__search'}
+          onChange={searchHandler}
+        />
+        <Select
+          items={sortItems}
+          label={t('sort_select_label')}
+          className={classNames.selectSort}
+          onChange={sortHandler}
+          value={sortBy}
+        />
+      </div>
       <div className={'header__settings'}>
         <SwitchTheme checked={isDark} onChange={handleSwitchChange} />
         <Select
-          className={classNames.select}
+          className={classNames.selectLanguage}
           label={t('select_label')}
-          items={items}
+          items={languageItems}
           onChange={event => i18n.changeLanguage(event.target.value as string)}
           value={i18n.language}
         />

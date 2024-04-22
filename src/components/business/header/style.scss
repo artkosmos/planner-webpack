@@ -19,22 +19,18 @@
     align-items: center;
   }
 
-  &__select {
+  &__lang-select {
     width: 150px;
+  }
 
-    &_dark {
-      .MuiInputLabel-root {
-        color: $grey-text1;
-      }
+  &__table-sort {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+  }
 
-      .MuiInputBase-root {
-        color: $grey-text2;
-      }
-
-      .MuiSelect-icon {
-        color: $grey-text2;
-      }
-    }
+  &__sort-select {
+    width: 170px;
   }
 
   &__title {
@@ -49,6 +45,6 @@
 
   &__search {
     width: 250px;
-    margin-bottom: 5px !important;
+    margin-bottom: 7px !important;
   }
 }

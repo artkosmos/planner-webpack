@@ -7,7 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 
-import { mainThunk } from '@/api';
+import { appThunk } from '@/api';
+import { StarIcon } from '@/assets/icons/star-icon';
 import { Card } from '@/components/shared/card';
 import { Dialog } from '@/components/shared/dialog';
 import { InfoTitle } from '@/components/shared/info-title';
@@ -38,7 +39,7 @@ export const TaskCard = ({ className }: Props) => {
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   useEffect(() => {
-    dispatch(mainThunk.getTask(id));
+    dispatch(appThunk.getTask(id));
   }, []);
 
   const updateTaskFormConfig: ITaskFormConfig = useMemo(() => {
@@ -63,7 +64,7 @@ export const TaskCard = ({ className }: Props) => {
       }
       case EditFormButtons.CONFIRM: {
         const { title, date, image, important } = model;
-        dispatch(mainThunk.updateTask({ title, date, image, important, id }));
+        dispatch(appThunk.updateTask({ title, date, image, important, id }));
         setOpenEditDialog(false);
         break;
       }
@@ -92,7 +93,10 @@ export const TaskCard = ({ className }: Props) => {
 
   return (
     <Card className={classNames.card}>
-      <p className={classNames.title}>{t('card_title')}</p>
+      <p className={classNames.title}>
+        {t('card_title')}
+        {currentTask.important && <StarIcon width={30} height={30} />}
+      </p>
       <div className={classNames.info}>
         <ul className={classNames.list}>
           <li>

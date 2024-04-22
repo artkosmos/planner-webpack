@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { v4 as uuid } from 'uuid';
 
-import { mainThunk } from '@/api';
+import { appActions, appThunk } from '@/api';
 import { Dialog } from '@/components/shared/dialog';
 import { InfoTitle } from '@/components/shared/info-title';
 import { ListTable } from '@/components/shared/list-table';
@@ -23,20 +23,22 @@ import './style.scss';
 
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
-  const [dataInitialization, setDataInitialization] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const { t } = useTranslation('home');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(mainThunk.getTaskList('')).finally(() =>
-      setDataInitialization(false),
-    );
-  }, []);
-
   const list = useAppSelector(state => state.main.list);
   const isLoading = useAppSelector(state => state.main.isLoading);
+  const isInitialized = useAppSelector(state => state.main.isInitialized);
   const error = useAppSelector(state => state.main.error);
+  const search = useAppSelector(state => state.main.search);
+  const sortBy = useAppSelector(state => state.main.sortBy);
+
+  useEffect(() => {
+    dispatch(appThunk.getTaskList({ search, sortBy })).finally(() =>
+      dispatch(appActions.changeInitialization(false)),
+    );
+  }, [search, sortBy, dispatch]);
 
   const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
     return {
@@ -65,7 +67,7 @@ export const ListCreator = () => {
         const image = model.image;
         const important = model.important;
         const id = uuid().slice(0, idLength);
-        dispatch(mainThunk.createTask({ date, title, image, id, important }));
+        dispatch(appThunk.createTask({ date, title, image, id, important }));
         setOpenEditDialog(false);
         break;
       }
@@ -73,7 +75,7 @@ export const ListCreator = () => {
   };
 
   const deleteListHandler = (taskId: string) => {
-    dispatch(mainThunk.deleteTask(taskId));
+    dispatch(appThunk.deleteTask(taskId));
   };
 
   const navigateHandler = (taskId: string) => {
@@ -104,10 +106,10 @@ export const ListCreator = () => {
           className={'add-task-block__button'}
           title={t('create_button')}
           onClick={() => setOpenEditDialog(true)}
-          disabled={dataInitialization}
+          disabled={isInitialized || isLoading}
         />
       </div>
-      {isLoading || dataInitialization ? (
+      {isLoading || isInitialized ? (
         <div className={'list-creator__loader'}>
           <CircularProgress data-testid={'loader'} />
         </div>

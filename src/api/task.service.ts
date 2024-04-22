@@ -1,7 +1,8 @@
+import { IGetTaskListArgs } from '@/backend';
 import { ITask } from '@/common/types';
 
 const taskService = (() => {
-  const timeoutDelay = 500;
+  const timeoutDelay = 400;
   const localStorageKey = 'taskList';
 
   const getListFromLS = () => {
@@ -27,16 +28,43 @@ const taskService = (() => {
     });
   };
 
-  const getTaskList = (substr: string) => {
+  const getTaskList = (args: IGetTaskListArgs) => {
     return new Promise<ITask[]>(resolve => {
       setTimeout(() => {
-        const list = getListFromLS();
+        let list = getListFromLS();
         if (list) {
-          if (substr) {
-            resolve(list.filter(task => task.title.includes(substr)));
-          } else {
-            resolve(list);
+          if (args.search) {
+            list = list.filter(task => task.title.includes(args.search));
           }
+
+          if (args.sortBy) {
+            switch (args.sortBy) {
+              case 'date_latest':
+                list.sort(
+                  (a, b) =>
+                    new Date(b.date).getTime() - new Date(a.date).getTime(),
+                );
+                break;
+              case 'date_first':
+                list.sort(
+                  (a, b) =>
+                    new Date(a.date).getTime() - new Date(b.date).getTime(),
+                );
+                break;
+              case 'name_a-z':
+                list.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+              case 'name_z-a':
+                list.sort((a, b) => b.title.localeCompare(a.title));
+                break;
+              case 'importance':
+                list = list.filter(task => task.important);
+                break;
+              default:
+                break;
+            }
+          }
+          resolve(list);
         } else {
           resolve([]);
         }
