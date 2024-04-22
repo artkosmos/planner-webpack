@@ -1,16 +1,17 @@
 import Button, { ButtonProps } from '@mui/material/Button';
 
-export const ButtonPrimary = ({ title, ...rest }: ButtonProps) => {
+export const ButtonPrimary = ({ title, children, ...rest }: ButtonProps) => {
   return (
     <Button
       data-testid={'primary-button'}
-      sx={{ fontWeight: 'bold' }}
+      sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center' }}
       color={'primary'}
       size={'medium'}
       variant={'contained'}
       {...rest}
     >
-      {title}
+      <span style={{ marginRight: '7px' }}>{title}</span>
+      {children}
     </Button>
   );
 };
