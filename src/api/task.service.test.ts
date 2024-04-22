@@ -26,7 +26,7 @@ describe('task service', () => {
         { id: '7f6d314f', title: 'housework', date: '2023-02-13T02:32:13' },
       ];
 
-      const result = await taskService.getTaskList('');
+      const result = await taskService.getTaskList({});
 
       expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
       expect(result).toEqual(expectedResult);
@@ -36,7 +36,7 @@ describe('task service', () => {
       localStorageGetItem.mockReturnValueOnce(null);
       const expectedResult: ITask[] = [];
 
-      const result = await taskService.getTaskList('');
+      const result = await taskService.getTaskList({});
 
       expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
       expect(result).toEqual(expectedResult);

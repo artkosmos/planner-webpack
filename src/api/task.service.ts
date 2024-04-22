@@ -44,10 +44,10 @@ const taskService = (() => {
     });
   };
 
-  const createTask = ({ id, title, date, image }: ITask) => {
+  const createTask = ({ id, title, date, image, important }: ITask) => {
     return new Promise<string>(resolve => {
       setTimeout(() => {
-        const newTask = { id, title, date, image };
+        const newTask = { id, title, date, image, important };
         const list = getListFromLS();
         if (list) {
           list.unshift(newTask);
@@ -76,13 +76,13 @@ const taskService = (() => {
     });
   };
 
-  const updateTask = ({ id, title, date, image }: ITask) => {
+  const updateTask = ({ id, title, date, image, important }: ITask) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
         const index = list?.findIndex((item: ITask) => item.id === id);
         if (index !== -1) {
-          list[index] = { id, title, date, image };
+          list[index] = { id, title, date, image, important };
           setListToLS(list);
           resolve('Task was updated successfully');
         } else {

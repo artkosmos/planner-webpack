@@ -14,6 +14,7 @@ export interface EditTaskFormFields {
   title: string;
   date: string;
   image?: string | null;
+  important: boolean;
 }
 
 export interface ITaskFormConfig {
@@ -25,4 +26,5 @@ export interface ITaskFormConfig {
   dateRequiredValidationMsg?: string;
   dateFieldLabel?: string;
   nameFieldRegExp?: string;
+  checkboxLabel?: string;
 }

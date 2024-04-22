@@ -3,6 +3,7 @@ import { type ComponentPropsWithoutRef, MouseEvent } from 'react';
 import dayjs from 'dayjs';
 
 import { DeleteIcon } from '@/assets/icons/delete-icon';
+import { StarIcon } from '@/assets/icons/star-icon';
 import type { ITask } from '@/common/types';
 
 type Props = {
@@ -21,6 +22,7 @@ export const TableBodyRow = ({ task, deleteRow, ...rest }: Props) => {
       <td>{task.id}</td>
       <td>{task.title}</td>
       <td>{dayjs(task.date).format('DD.MM.YYYY hh:mm:ss a')}</td>
+      <td>{task.important && <StarIcon className={'table-star-icon'} />}</td>
       <td>
         <DeleteIcon
           className={'table-delete-icon'}

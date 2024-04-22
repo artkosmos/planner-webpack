@@ -51,6 +51,7 @@ export const TaskCard = ({ className }: Props) => {
       dateRequiredValidationMsg: t('edit_form_config.date_validation'),
       nameRequiredValidationMsg: t('edit_form_config.name_validation'),
       nameFieldRegExp: '[a-z0-9а-я\\s]+$',
+      checkboxLabel: t('edit_form_config.checkbox_label'),
     } as const;
   }, [t]);
 
@@ -61,8 +62,8 @@ export const TaskCard = ({ className }: Props) => {
         break;
       }
       case EditFormButtons.CONFIRM: {
-        const { title, date, image } = model;
-        dispatch(mainThunk.updateTask({ title, date, image, id }));
+        const { title, date, image, important } = model;
+        dispatch(mainThunk.updateTask({ title, date, image, important, id }));
         setOpenEditDialog(false);
         break;
       }

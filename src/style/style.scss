@@ -105,4 +105,18 @@ body {
       fill: $title-text-dark;
     }
   }
+
+  .checkbox {
+    .MuiCheckbox-root {
+      color: $grey-text2;
+
+      &.MuiCheckbox-root.Mui-checked {
+        color: #eaea11;
+      }
+    }
+
+    &__label {
+      color: $title-text-dark;
+    }
+  }
 }

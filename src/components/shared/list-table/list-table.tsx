@@ -54,6 +54,7 @@ export const ListTable = ({
             <th>{t('table_column_2')}</th>
             <th>{t('table_column_3')}</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>{taskList}</tbody>

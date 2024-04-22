@@ -13,6 +13,7 @@
     "image_button_text": "Изменить изображение",
     "cancel_button": "Отмена",
     "date_validation": "Введите корректную дату",
-    "name_validation": "Название не может быть пустым"
+    "name_validation": "Название не может быть пустым",
+    "checkbox_label": "Пометить как важное"
   }
 }
