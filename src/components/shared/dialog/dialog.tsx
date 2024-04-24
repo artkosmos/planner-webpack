@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import DialogMUI from '@mui/material/Dialog';
+import DialogMUI, { DialogProps } from '@mui/material/Dialog';
 import DialogMUIContent from '@mui/material/DialogContent';
 import DialogMUITitle from '@mui/material/DialogTitle';
 
@@ -13,10 +13,11 @@ type Props = {
   isOpen: boolean;
   className?: string;
   onClose?: () => void;
+  maxWidth?: DialogProps['maxWidth'];
 };
 
 export const Dialog = ({ ...rest }: Props) => {
-  const { children, isOpen, title, onClose, className } = rest;
+  const { children, isOpen, title, onClose, maxWidth = 'sm', className } = rest;
 
   const classNames = {
     title: clsx('dialog-mui-title'),
@@ -28,7 +29,7 @@ export const Dialog = ({ ...rest }: Props) => {
     <DialogMUI
       data-testid={'dialog'}
       className={classNames.dialog}
-      maxWidth={'sm'}
+      maxWidth={maxWidth}
       open={isOpen}
       onClose={onClose}
       fullWidth
@@ -39,7 +40,9 @@ export const Dialog = ({ ...rest }: Props) => {
         },
       }}
     >
-      <DialogMUITitle className={classNames.title}>{title}</DialogMUITitle>
+      {title && (
+        <DialogMUITitle className={classNames.title}>{title}</DialogMUITitle>
+      )}
       <DialogMUIContent
         className={classNames.content}
         sx={{
