@@ -3,4 +3,5 @@ export interface ITask {
   date: string;
   title: string;
   image?: string | null;
+  important?: boolean;
 }

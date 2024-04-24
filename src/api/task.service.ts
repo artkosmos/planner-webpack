@@ -1,7 +1,8 @@
+import { IGetTaskListArgs } from '@/backend';
 import { ITask } from '@/common/types';
 
 const taskService = (() => {
-  const timeoutDelay = 500;
+  const timeoutDelay = 400;
   const localStorageKey = 'taskList';
 
   const getListFromLS = () => {
@@ -27,16 +28,43 @@ const taskService = (() => {
     });
   };
 
-  const getTaskList = (substr: string) => {
+  const getTaskList = (args: IGetTaskListArgs) => {
     return new Promise<ITask[]>(resolve => {
       setTimeout(() => {
-        const list = getListFromLS();
+        let list = getListFromLS();
         if (list) {
-          if (substr) {
-            resolve(list.filter(task => task.title.includes(substr)));
-          } else {
-            resolve(list);
+          if (args.search) {
+            list = list.filter(task => task.title.includes(args.search));
           }
+
+          if (args.sortBy) {
+            switch (args.sortBy) {
+              case 'date_latest':
+                list.sort(
+                  (a, b) =>
+                    new Date(b.date).getTime() - new Date(a.date).getTime(),
+                );
+                break;
+              case 'date_first':
+                list.sort(
+                  (a, b) =>
+                    new Date(a.date).getTime() - new Date(b.date).getTime(),
+                );
+                break;
+              case 'name_a-z':
+                list.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+              case 'name_z-a':
+                list.sort((a, b) => b.title.localeCompare(a.title));
+                break;
+              case 'importance':
+                list = list.filter(task => task.important);
+                break;
+              default:
+                break;
+            }
+          }
+          resolve(list);
         } else {
           resolve([]);
         }
@@ -44,10 +72,10 @@ const taskService = (() => {
     });
   };
 
-  const createTask = ({ id, title, date, image }: ITask) => {
+  const createTask = ({ id, title, date, image, important }: ITask) => {
     return new Promise<string>(resolve => {
       setTimeout(() => {
-        const newTask = { id, title, date, image };
+        const newTask = { id, title, date, image, important };
         const list = getListFromLS();
         if (list) {
           list.unshift(newTask);
@@ -76,13 +104,13 @@ const taskService = (() => {
     });
   };
 
-  const updateTask = ({ id, title, date, image }: ITask) => {
+  const updateTask = ({ id, title, date, image, important }: ITask) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
         const index = list?.findIndex((item: ITask) => item.id === id);
         if (index !== -1) {
-          list[index] = { id, title, date, image };
+          list[index] = { id, title, date, image, important };
           setListToLS(list);
           resolve('Task was updated successfully');
         } else {

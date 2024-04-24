@@ -4,12 +4,7 @@
 
   .add-task-block {
     display: flex;
-    column-gap: 50px;
     margin-bottom: 20px;
-
-    &__input {
-      flex: 3;
-    }
 
     &__button {
       flex: 1;

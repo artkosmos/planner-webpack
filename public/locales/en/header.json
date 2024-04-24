@@ -2,5 +2,7 @@
   "app_name": "Crazy Planner",
   "select_label": "Language",
   "en": "English",
-  "ru": "Russian"
+  "ru": "Russian",
+  "search_placeholder": "Search task",
+  "sort_select_label": "Sort by"
 }

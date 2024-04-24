@@ -7,13 +7,14 @@ import {
 } from '@reduxjs/toolkit';
 
 import taskService from '@/api';
+import { IGetTaskListArgs } from '@/backend';
 import { ITask } from '@/common/types';
 import { createAppAsyncThunk } from '@/utils';
 
 const getTaskList = createAppAsyncThunk(
   'main/getTaskList',
-  async (substr: string) => {
-    return await taskService.getTaskList(substr);
+  async ({ search, sortBy }: IGetTaskListArgs) => {
+    return await taskService.getTaskList({ search, sortBy });
   },
 );
 
@@ -33,18 +34,19 @@ const createTask = createAppAsyncThunk(
   async (data: ITask, { dispatch }) => {
     const response = await taskService.createTask(data);
     if (response) {
-      return dispatch(getTaskList(''));
+      return dispatch(getTaskList({}));
     }
   },
 );
 
 const deleteTask = createAppAsyncThunk(
   'main/deleteTask',
-  async (id: string, { rejectWithValue, dispatch }) => {
+  async (id: string, { rejectWithValue, dispatch, getState }) => {
     try {
       const response = await taskService.deleteTask(id);
       if (response) {
-        return dispatch(getTaskList(''));
+        const { sortBy, search } = getState().main;
+        return dispatch(getTaskList({ sortBy, search }));
       }
     } catch (error) {
       return rejectWithValue(error.message);
@@ -73,11 +75,23 @@ const slice = createSlice({
     currentTask: null as ITask | null,
     error: null as null | string,
     isLoading: false as boolean,
+    isInitialized: true as boolean,
     darkTheme: false as boolean,
+    search: '' as string,
+    sortBy: '' as string,
   },
   reducers: {
     changeAppTheme: (state, action: PayloadAction<boolean>) => {
       state.darkTheme = action.payload;
+    },
+    changeInitialization: (state, action: PayloadAction<boolean>) => {
+      state.isInitialized = action.payload;
+    },
+    setSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload;
+    },
+    setSort: (state, action: PayloadAction<string>) => {
+      state.sortBy = action.payload;
     },
   },
   extraReducers: builder => {
@@ -87,6 +101,10 @@ const slice = createSlice({
       })
       .addCase(getTask.fulfilled, (state, action) => {
         state.currentTask = action.payload;
+      })
+      .addCase(createTask.fulfilled, state => {
+        state.sortBy = '';
+        state.search = '';
       })
       .addCase(getTask.rejected, (state, action) => {
         state.error = action.payload;
@@ -111,7 +129,7 @@ const slice = createSlice({
 
 export const mainSlice = slice.reducer;
 export const appActions = slice.actions;
-export const mainThunk = {
+export const appThunk = {
   createTask,
   deleteTask,
   updateTask,

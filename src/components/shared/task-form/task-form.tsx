@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import type { ITask } from '@/common/types';
+import { ControlledCheckbox } from '@/components/shared/controlled-checkbox';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
 import { DateInput } from '@/components/shared/date-input';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
@@ -36,7 +37,12 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
     setValue,
     formState: { errors },
   } = useForm<EditTaskFormFields>({
-    defaultValues: { title: task.title, date: task.date, image: task.image },
+    defaultValues: {
+      title: task.title,
+      date: task.date,
+      image: task.image,
+      important: task.important,
+    },
   });
 
   useEffect(() => {
@@ -62,10 +68,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       }
       case EditFormButtons.CONFIRM: {
         if (data) {
-          const { title, date, image } = data;
+          const { title, date, image, important } = data;
           onAction({
             name,
-            model: { date, title, image, id: task.id },
+            model: { date, title, image, important, id: task.id },
           });
           break;
         }
@@ -102,6 +108,12 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         {...register('date', { required: config.dateRequiredValidationMsg })}
         error={errors.date ? errors.date.message : null}
         label={config.dateFieldLabel}
+      />
+      <ControlledCheckbox
+        name={'important'}
+        control={control}
+        labelText={config.checkboxLabel}
+        className={'task-form__checkbox'}
       />
       <div className={'task-form__button-container'}>
         <ButtonOutlined

@@ -22,7 +22,6 @@ export const SearchInput = ({ className, ...rest }: TextFieldProps) => {
       variant={'standard'}
       color={'primary'}
       size={'small'}
-      label={'Search'}
       {...rest}
     />
   );

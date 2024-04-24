@@ -8,7 +8,7 @@
   &__button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 15px;
   }
 
   &__name-input {
@@ -25,5 +25,9 @@
     margin-top: 20px;
     font-size: 16px;
     font-weight: bold;
+  }
+
+  &__checkbox {
+    margin-top: 15px;
   }
 }

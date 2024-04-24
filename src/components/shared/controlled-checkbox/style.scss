@@ -1,0 +1,12 @@
+@import '@/style/variables';
+
+.checkbox {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+
+  &__label {
+    color: $title-text;
+    font-weight: 600;
+  }
+}

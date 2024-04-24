@@ -56,7 +56,7 @@ body {
     }
 
     .MuiInputLabel-root {
-      color: $grey-text2;
+      color: $grey-text1;
     }
 
     .MuiSvgIcon-root {
@@ -147,6 +147,20 @@ body {
   .table-delete-icon_dark {
     path {
       fill: $title-text-dark;
+    }
+  }
+
+  .checkbox {
+    .MuiCheckbox-root {
+      color: $grey-text2;
+
+      &.MuiCheckbox-root.Mui-checked {
+        color: #2190ff;
+      }
+    }
+
+    &__label {
+      color: $title-text-dark;
     }
   }
 }
