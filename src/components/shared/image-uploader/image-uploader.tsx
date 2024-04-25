@@ -1,9 +1,4 @@
 import { ChangeEvent, useState } from 'react';
-import {
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
 
 import { clsx } from 'clsx';
 
@@ -14,23 +9,18 @@ import { compress } from '@/utils/compress-image';
 
 import './style.scss';
 
-type Props<T extends FieldValues> = {
+export type ImageUploaderProps = {
   buttonText?: string;
   className?: string;
   clearInput?: () => void;
-} & UseControllerProps<T>;
+  onChange?: (value: string) => void;
+  name?: string;
+};
 
-export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
-  const { control, name, buttonText, className, clearInput, ...rest } = props;
+export const ImageUploader = (props: ImageUploaderProps) => {
+  const { buttonText, className, clearInput, onChange, ...rest } = props;
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const {
-    field: { onChange },
-  } = useController({
-    name,
-    control,
-  });
 
   const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const imageCompressQuality = 0.5;
@@ -78,7 +68,6 @@ export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
         hidden
         type={'file'}
         onChange={uploadImageHandler}
-        name={name}
         id={'task-image'}
         accept="image/png, image/jpeg, image/webp"
         data-testid={'task-image'}

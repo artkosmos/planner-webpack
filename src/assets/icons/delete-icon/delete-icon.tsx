@@ -9,6 +9,7 @@ export const DeleteIcon = ({ ...rest }: Props) => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      data-testid="delete-icon"
       {...rest}
     >
       <g clipPath="url(#clip0_23657_3701)">

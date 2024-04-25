@@ -8,7 +8,7 @@ import { DateInput } from '@/components/shared/date-input';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
 import { ButtonPrimary } from '@/components/shared/primary-button';
 
-import { ImageUploader } from '../image-uploader';
+import { ControlledImageUploader } from '../controlled-image-uploader';
 import {
   EditFormButtons,
   type EditTaskFormFields,
@@ -87,7 +87,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         buttonActionHandler({ name: EditFormButtons.CONFIRM, data });
       })}
     >
-      <ImageUploader
+      <ControlledImageUploader
         name={'image'}
         control={control}
         buttonText={config.imageButtonTitle}
