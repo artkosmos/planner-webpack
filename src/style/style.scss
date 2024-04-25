@@ -42,6 +42,34 @@ body {
 .dark {
   background-color: $background-dark;
 
+  .header {
+    .MuiInputLabel-root {
+      color: $grey-text1;
+    }
+
+    .MuiInputBase-root {
+      color: $grey-text2;
+    }
+
+    .MuiSelect-icon {
+      color: $grey-text2;
+    }
+  }
+
+  .MuiInputBase-root {
+    .MuiOutlinedInput-notchedOutline {
+      border-color: $grey-text1;
+    }
+
+    &:hover .MuiOutlinedInput-notchedOutline {
+      border-color: $grey-text2;
+    }
+
+    &.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-width: 1px;
+    }
+  }
+
   .search-input {
     .MuiInputBase-root {
       color: $title-text-dark;

@@ -1,4 +1,4 @@
-import { fireEvent, within } from '@testing-library/react';
+import { fireEvent, render, within } from '@testing-library/react';
 
 import { renderWithProviders } from '@/__mocks__';
 import { Header } from '@/components/business/header/header';
@@ -6,15 +6,20 @@ import { Header } from '@/components/business/header/header';
 import '@testing-library/jest-dom';
 import '@/__mocks__/match-media-jest';
 
+// jest.mock('react-redux', () => ({
+//   ...jest.requireActual('react-redux'),
+//   useDispatch: jest.fn(),
+// }));
+//
+// const mockedUseDispatch = jest.spyOn(redux, 'useDispatch');
+
 describe('testing of header component', () => {
   test('should render with app name and select with default language', () => {
-    const { getByText, getByTestId, getByLabelText } = renderWithProviders(
-      <Header />,
-    );
+    const { getByText, getByTestId } = renderWithProviders(<Header />);
 
     const header = getByTestId('header');
     const appName = getByText(/Crazy Planner/);
-    const select = getByLabelText('Language');
+    const select = getByTestId('select-lang');
 
     expect(header).toContainElement(appName);
     expect(header).toContainElement(select);
@@ -26,7 +31,7 @@ describe('testing of header component', () => {
 
     const { getAllByRole, getByTestId } = renderWithProviders(<Header />);
 
-    const select = getByTestId('select');
+    const select = getByTestId('select-lang');
     const selectButton = within(select).getByRole('combobox');
     fireEvent.mouseDown(selectButton);
 
@@ -42,7 +47,7 @@ describe('testing of header component', () => {
       <Header />,
     );
 
-    const select = getByTestId('select');
+    const select = getByTestId('select-lang');
     const selectButton = within(select).getByRole('combobox');
     fireEvent.mouseDown(selectButton);
 
@@ -63,5 +68,23 @@ describe('testing of header component', () => {
     fireEvent.change(switchTheme, { target: { checked: true } });
 
     expect(document.body).toHaveClass('dark');
+  });
+
+  test.skip('should apply sorting to table', async () => {
+    const { getByTestId, getByRole } = render(<Header />);
+
+    const select = getByTestId('select-sort');
+    const selectButton = within(select).getByRole('combobox');
+    fireEvent.mouseDown(selectButton);
+
+    const sortOption = getByRole('option', { name: 'Importance' });
+    fireEvent.click(sortOption);
+  });
+
+  test.skip('should apply searching to table', async () => {
+    const { getByTestId } = renderWithProviders(<Header />);
+
+    const searchInput = getByTestId('search-input');
+    fireEvent.change(searchInput, { target: { value: 'mee' } });
   });
 });

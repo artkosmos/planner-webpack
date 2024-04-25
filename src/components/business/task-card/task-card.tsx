@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -19,7 +18,7 @@ import {
   type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
-import { type AppDispatch, useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
 
@@ -30,7 +29,7 @@ type Props = {
 export const TaskCard = ({ className }: Props) => {
   const { id } = useParams<string>();
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation('task');
 
   const currentTask = useAppSelector(state => state.main.currentTask);
