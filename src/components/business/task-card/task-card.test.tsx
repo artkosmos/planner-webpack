@@ -43,6 +43,21 @@ describe('testing of task-card component', () => {
     expect(card).toHaveTextContent('04.02.2018 03:06:46 pm');
   });
 
+  test('should appear image pop up', async () => {
+    const { findByTestId } = renderWithProviders(<TaskCard />);
+
+    const card = await findByTestId('card');
+    const taskImage = within(card).getByRole('img') as HTMLImageElement;
+
+    expect(taskImage.alt).toBe('task image');
+
+    fireEvent.click(taskImage);
+    const imagePopUp = await findByTestId('dialog');
+    const nestedImage = within(imagePopUp).getByRole('img') as HTMLImageElement;
+
+    expect(imagePopUp).toContainElement(nestedImage);
+  });
+
   test("should appear message if a task wasn't found due to wrong id", async () => {
     mockedUseParams.mockReturnValueOnce({ id: 'wrong id' });
 

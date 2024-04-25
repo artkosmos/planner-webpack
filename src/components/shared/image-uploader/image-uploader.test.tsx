@@ -57,11 +57,11 @@ describe('testing of image uploader component', () => {
   });
 
   test('should display image preview when image is uploaded', async () => {
-    const { getByRole, getByTestId } = render(<ImageUploader />);
+    const { findByRole, getByTestId } = render(<ImageUploader />);
 
     const uploadInput = getByTestId('task-image') as HTMLInputElement;
     await userEvent.upload(uploadInput, file);
-    const imagePreview = getByRole('img') as HTMLImageElement;
+    const imagePreview = (await findByRole('img')) as HTMLImageElement;
 
     expect(imagePreview.alt).toBe('image preview');
   });
