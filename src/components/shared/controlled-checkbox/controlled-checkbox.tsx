@@ -29,11 +29,12 @@ export const ControlledCheckbox = <T extends FieldValues>(props: Props<T>) => {
   return (
     <div className={classNames.checkbox}>
       <Checkbox
-        {...rest}
         onChange={onChange}
         checked={value}
         id={name}
         name={name}
+        data-testid={'checkbox'}
+        {...rest}
       />
       {labelText && (
         <label className={classNames.label} htmlFor={name}>

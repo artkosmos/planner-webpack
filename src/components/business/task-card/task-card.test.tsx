@@ -32,9 +32,12 @@ describe('testing of task-card component', () => {
     const card = await findByTestId('card');
     const cardTitle = getByText(/general information/i);
     const editButton = getByText('Edit');
+    const taskImage = within(card).getByRole('img') as HTMLImageElement;
 
     expect(card).toContainElement(cardTitle);
     expect(card).toContainElement(editButton);
+    expect(card).toContainElement(taskImage);
+    expect(taskImage.alt).toBe('task image');
     expect(card).toHaveTextContent('meeting');
     expect(card).toHaveTextContent('72e14782');
     expect(card).toHaveTextContent('04.02.2018 03:06:46 pm');
@@ -57,6 +60,8 @@ describe('testing of task-card component', () => {
       id: '72e14782',
       title: 'important date',
       date: '2023-12-20T19:30:15',
+      image: 'map.png',
+      important: false,
     };
 
     const updatedTaskList = mockedTaskList.map(task =>
@@ -104,10 +109,15 @@ describe('testing of task-card component', () => {
     });
 
     const updatedCard = await findByTestId('card');
+    const updatedImage = updatedCard.querySelector('img') as HTMLImageElement;
+    const iconImportant = within(updatedCard).queryByTestId('star-icon');
 
     expect(updatedCard).toHaveTextContent('important date');
     expect(updatedCard).toHaveTextContent('20.12.2023 07:30:15 pm');
     expect(updatedCard).toHaveTextContent('72e14782');
+    expect(updatedCard).toContainElement(updatedImage);
+    expect(updatedCard).not.toContainElement(iconImportant);
+    expect(updatedImage.src).toMatch(/map\.png/);
   });
 
   test('dialog should be closed if a cancel button was clicked', async () => {

@@ -19,11 +19,41 @@ describe('task service', () => {
   describe('get task list method testing', () => {
     test('task list exists in local storage and should be received', async () => {
       const expectedResult: ITask[] = [
-        { id: '85df17d5', title: 'go camping', date: '2023-03-12T04:46:43' },
-        { id: '9df3077f', title: 'cinema', date: '2021-02-13T15:23:23' },
-        { id: '151dfeb3', title: 'dinner', date: '2019-02-05T02:42:42' },
-        { id: '72e14782', title: 'meeting', date: '2018-02-04T15:06:46' },
-        { id: '7f6d314f', title: 'housework', date: '2023-02-13T02:32:13' },
+        {
+          id: '85df17d5',
+          title: 'go camping',
+          date: '2023-03-12T04:46:43',
+          image: null,
+          important: false,
+        },
+        {
+          id: '9df3077f',
+          title: 'cinema',
+          date: '2021-02-13T15:23:23',
+          image: null,
+          important: false,
+        },
+        {
+          id: '151dfeb3',
+          title: 'dinner',
+          date: '2019-02-05T02:42:42',
+          image: null,
+          important: false,
+        },
+        {
+          id: '72e14782',
+          title: 'meeting',
+          date: '2018-02-04T15:06:46',
+          image: 'img.png',
+          important: true,
+        },
+        {
+          id: '7f6d314f',
+          title: 'housework',
+          date: '2023-02-13T02:32:13',
+          image: null,
+          important: true,
+        },
       ];
 
       const result = await taskService.getTaskList({});
@@ -41,6 +71,279 @@ describe('task service', () => {
       expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
       expect(result).toEqual(expectedResult);
     });
+
+    test('task list should be received by substr', async () => {
+      const searchSubstr = 'cinema';
+      const expectedResult: ITask[] = [
+        {
+          id: '9df3077f',
+          title: 'cinema',
+          date: '2021-02-13T15:23:23',
+          image: null,
+          important: false,
+        },
+      ];
+
+      const result = await taskService.getTaskList({ search: searchSubstr });
+
+      expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('task list should be sorted by name asc', async () => {
+      const sortBy = 'name_a-z';
+      const expectedResult: ITask[] = [
+        {
+          id: '9df3077f',
+          title: 'cinema',
+          date: '2021-02-13T15:23:23',
+          image: null,
+          important: false,
+        },
+        {
+          id: '151dfeb3',
+          title: 'dinner',
+          date: '2019-02-05T02:42:42',
+          image: null,
+          important: false,
+        },
+        {
+          id: '85df17d5',
+          title: 'go camping',
+          date: '2023-03-12T04:46:43',
+          image: null,
+          important: false,
+        },
+        {
+          id: '7f6d314f',
+          title: 'housework',
+          date: '2023-02-13T02:32:13',
+          image: null,
+          important: true,
+        },
+        {
+          id: '72e14782',
+          title: 'meeting',
+          date: '2018-02-04T15:06:46',
+          image: 'img.png',
+          important: true,
+        },
+      ];
+
+      const result = await taskService.getTaskList({ sortBy });
+
+      expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('task list should be sorted by name desc', async () => {
+      const sortBy = 'name_z-a';
+      const expectedResult: ITask[] = [
+        {
+          id: '72e14782',
+          title: 'meeting',
+          date: '2018-02-04T15:06:46',
+          image: 'img.png',
+          important: true,
+        },
+        {
+          id: '7f6d314f',
+          title: 'housework',
+          date: '2023-02-13T02:32:13',
+          image: null,
+          important: true,
+        },
+        {
+          id: '85df17d5',
+          title: 'go camping',
+          date: '2023-03-12T04:46:43',
+          image: null,
+          important: false,
+        },
+        {
+          id: '151dfeb3',
+          title: 'dinner',
+          date: '2019-02-05T02:42:42',
+          image: null,
+          important: false,
+        },
+        {
+          id: '9df3077f',
+          title: 'cinema',
+          date: '2021-02-13T15:23:23',
+          image: null,
+          important: false,
+        },
+      ];
+
+      const result = await taskService.getTaskList({ sortBy });
+
+      expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
+    });
+
+    test("task list shouldn't be sorted due to wrong sorting key", async () => {
+      const sortBy = 'wrong_key';
+      const expectedResult: ITask[] = [
+        {
+          id: '85df17d5',
+          title: 'go camping',
+          date: '2023-03-12T04:46:43',
+          image: null,
+          important: false,
+        },
+        {
+          id: '9df3077f',
+          title: 'cinema',
+          date: '2021-02-13T15:23:23',
+          image: null,
+          important: false,
+        },
+        {
+          id: '151dfeb3',
+          title: 'dinner',
+          date: '2019-02-05T02:42:42',
+          image: null,
+          important: false,
+        },
+        {
+          id: '72e14782',
+          title: 'meeting',
+          date: '2018-02-04T15:06:46',
+          image: 'img.png',
+          important: true,
+        },
+        {
+          id: '7f6d314f',
+          title: 'housework',
+          date: '2023-02-13T02:32:13',
+          image: null,
+          important: true,
+        },
+      ];
+
+      const result = await taskService.getTaskList({ sortBy });
+
+      expect(localStorageGetItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('task list should be sorted by date first', async () => {
+      const sortBy = 'date_first';
+      const expectedResult: ITask[] = [
+        {
+          id: '72e14782',
+          title: 'meeting',
+          date: '2018-02-04T15:06:46',
+          image: 'img.png',
+          important: true,
+        },
+        {
+          id: '151dfeb3',
+          title: 'dinner',
+          date: '2019-02-05T02:42:42',
+          image: null,
+          important: false,
+        },
+        {
+          id: '9df3077f',
+          title: 'cinema',
+          date: '2021-02-13T15:23:23',
+          image: null,
+          important: false,
+        },
+        {
+          id: '7f6d314f',
+          title: 'housework',
+          date: '2023-02-13T02:32:13',
+          image: null,
+          important: true,
+        },
+        {
+          id: '85df17d5',
+          title: 'go camping',
+          date: '2023-03-12T04:46:43',
+          image: null,
+          important: false,
+        },
+      ];
+
+      const result = await taskService.getTaskList({ sortBy });
+
+      expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('task list should be sorted by date latest', async () => {
+      const sortBy = 'date_latest';
+      const expectedResult: ITask[] = [
+        {
+          id: '85df17d5',
+          title: 'go camping',
+          date: '2023-03-12T04:46:43',
+          image: null,
+          important: false,
+        },
+        {
+          id: '7f6d314f',
+          title: 'housework',
+          date: '2023-02-13T02:32:13',
+          image: null,
+          important: true,
+        },
+        {
+          id: '9df3077f',
+          title: 'cinema',
+          date: '2021-02-13T15:23:23',
+          image: null,
+          important: false,
+        },
+        {
+          id: '151dfeb3',
+          title: 'dinner',
+          date: '2019-02-05T02:42:42',
+          image: null,
+          important: false,
+        },
+        {
+          id: '72e14782',
+          title: 'meeting',
+          date: '2018-02-04T15:06:46',
+          image: 'img.png',
+          important: true,
+        },
+      ];
+
+      const result = await taskService.getTaskList({ sortBy });
+
+      expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
+    });
+
+    test('task list should be sorted by importance', async () => {
+      const sortBy = 'importance';
+      const expectedResult: ITask[] = [
+        {
+          id: '72e14782',
+          title: 'meeting',
+          date: '2018-02-04T15:06:46',
+          image: 'img.png',
+          important: true,
+        },
+        {
+          id: '7f6d314f',
+          title: 'housework',
+          date: '2023-02-13T02:32:13',
+          image: null,
+          important: true,
+        },
+      ];
+
+      const result = await taskService.getTaskList({ sortBy });
+
+      expect(localStorage.getItem).toHaveBeenCalledWith('taskList');
+      expect(result).toEqual(expectedResult);
+    });
   });
 
   describe('get task method testing', () => {
@@ -52,6 +355,8 @@ describe('task service', () => {
         id: '85df17d5',
         title: 'go camping',
         date: '2023-03-12T04:46:43',
+        image: null,
+        important: false,
       };
 
       const result = await taskService.getTask(taskId);

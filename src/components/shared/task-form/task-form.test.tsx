@@ -23,11 +23,15 @@ describe('testing of task form component', () => {
     id: '',
     title: '',
     date: '',
+    image: null,
+    important: false,
   };
   const existingTask: ITask = {
     id: '37dd67fd',
     title: 'existing task',
     date: '1993-12-27T15:12:31.000',
+    image: null,
+    important: true,
   };
 
   afterEach(() => {
@@ -89,6 +93,8 @@ describe('testing of task form component', () => {
           date: '2024-06-23T17:00',
           id: '',
           title: 'running',
+          important: false,
+          image: null,
         },
         name: 'confirm',
       }),

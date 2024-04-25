@@ -1,16 +1,25 @@
 import { fireEvent, render, within } from '@testing-library/react';
 
+import { renderWithProviders } from '@/__mocks__';
 import { Header } from '@/components/business/header/header';
 
 import '@testing-library/jest-dom';
+import '@/__mocks__/match-media-jest';
+
+// jest.mock('react-redux', () => ({
+//   ...jest.requireActual('react-redux'),
+//   useDispatch: jest.fn(),
+// }));
+//
+// const mockedUseDispatch = jest.spyOn(redux, 'useDispatch');
 
 describe('testing of header component', () => {
   test('should render with app name and select with default language', () => {
-    const { getByText, getByTestId, getByLabelText } = render(<Header />);
+    const { getByText, getByTestId } = renderWithProviders(<Header />);
 
     const header = getByTestId('header');
     const appName = getByText(/Crazy Planner/);
-    const select = getByLabelText('Language');
+    const select = getByTestId('select-lang');
 
     expect(header).toContainElement(appName);
     expect(header).toContainElement(select);
@@ -20,9 +29,9 @@ describe('testing of header component', () => {
   test('select should contain only supported languages', () => {
     const numberOfLanguages = 2;
 
-    const { getAllByRole, getByTestId } = render(<Header />);
+    const { getAllByRole, getByTestId } = renderWithProviders(<Header />);
 
-    const select = getByTestId('select');
+    const select = getByTestId('select-lang');
     const selectButton = within(select).getByRole('combobox');
     fireEvent.mouseDown(selectButton);
 
@@ -34,9 +43,11 @@ describe('testing of header component', () => {
   });
 
   test('should change app language', async () => {
-    const { findByText, getByTestId, getByRole } = render(<Header />);
+    const { findByText, getByTestId, getByRole } = renderWithProviders(
+      <Header />,
+    );
 
-    const select = getByTestId('select');
+    const select = getByTestId('select-lang');
     const selectButton = within(select).getByRole('combobox');
     fireEvent.mouseDown(selectButton);
 
@@ -45,5 +56,35 @@ describe('testing of header component', () => {
     const appName = await findByText(/Сумасшедший Планировщик/);
 
     expect(appName).toBeInTheDocument();
+  });
+
+  test('should change app theme', async () => {
+    const { getByRole } = renderWithProviders(<Header />);
+
+    expect(document.body).not.toHaveClass('dark');
+
+    const switchTheme = getByRole('checkbox');
+    fireEvent.click(switchTheme);
+    fireEvent.change(switchTheme, { target: { checked: true } });
+
+    expect(document.body).toHaveClass('dark');
+  });
+
+  test.skip('should apply sorting to table', async () => {
+    const { getByTestId, getByRole } = render(<Header />);
+
+    const select = getByTestId('select-sort');
+    const selectButton = within(select).getByRole('combobox');
+    fireEvent.mouseDown(selectButton);
+
+    const sortOption = getByRole('option', { name: 'Importance' });
+    fireEvent.click(sortOption);
+  });
+
+  test.skip('should apply searching to table', async () => {
+    const { getByTestId } = renderWithProviders(<Header />);
+
+    const searchInput = getByTestId('search-input');
+    fireEvent.change(searchInput, { target: { value: 'mee' } });
   });
 });

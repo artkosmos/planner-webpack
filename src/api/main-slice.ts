@@ -9,7 +9,7 @@ import {
 import taskService from '@/api';
 import { IGetTaskListArgs } from '@/backend';
 import { ITask } from '@/common/types';
-import { createAppAsyncThunk } from '@/utils';
+import { createAppAsyncThunk } from '@/utils/pretyped-async-thunk';
 
 const getTaskList = createAppAsyncThunk(
   'main/getTaskList',

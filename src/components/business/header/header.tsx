@@ -1,6 +1,5 @@
 import { ChangeEvent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { SelectChangeEvent } from '@mui/material';
 
 import clsx from 'clsx';
@@ -9,14 +8,15 @@ import { appActions } from '@/api';
 import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
-import { AppDispatch, useAppSelector } from '@/store';
-import { debouncedSearch, useDarkTheme } from '@/utils';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { debouncedSearch } from '@/utils/debounced-search';
+import { useDarkTheme } from '@/utils/use-dark-theme';
 
 import './style.scss';
 
 export const Header = () => {
   const { t, i18n } = useTranslation('header');
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { isDark, setIsDark } = useDarkTheme();
 
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
@@ -78,6 +78,7 @@ export const Header = () => {
           className={classNames.selectSort}
           onChange={sortHandler}
           value={sortBy}
+          data-testid={'select-sort'}
         />
       </div>
       <div className={'header__settings'}>
@@ -88,6 +89,7 @@ export const Header = () => {
           items={languageItems}
           onChange={event => i18n.changeLanguage(event.target.value as string)}
           value={i18n.language}
+          data-testid={'select-lang'}
         />
       </div>
     </header>

@@ -10,7 +10,7 @@ import { clsx } from 'clsx';
 import { CoverIcon } from '@/assets/icons/cover-icon';
 import { DeleteIcon } from '@/assets/icons/delete-icon';
 import { ButtonPrimary } from '@/components/shared/primary-button';
-import { compress } from '@/utils';
+import { compress } from '@/utils/compress-image';
 
 import './style.scss';
 
@@ -49,10 +49,6 @@ export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
     }
   };
 
-  const onButtonClick = () => {
-    document.getElementById('task-image-label').click();
-  };
-
   const onDeleteIconClick = () => {
     setSelectedImage(null);
     clearInput?.();
@@ -85,6 +81,7 @@ export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
         name={name}
         id={'task-image'}
         accept="image/png, image/jpeg, image/webp"
+        data-testid={'task-image'}
         {...rest}
       />
       <label
@@ -92,7 +89,11 @@ export const ImageUploader = <T extends FieldValues>(props: Props<T>) => {
         htmlFor={'task-image'}
         id={'task-image-label'}
       >
-        <ButtonPrimary fullWidth onClick={onButtonClick} title={buttonText}>
+        <ButtonPrimary
+          fullWidth
+          onClick={() => document.getElementById('task-image-label').click()}
+          title={buttonText}
+        >
           <CoverIcon />
         </ButtonPrimary>
       </label>

@@ -56,6 +56,20 @@ body {
     }
   }
 
+  .MuiInputBase-root {
+    .MuiOutlinedInput-notchedOutline {
+      border-color: $grey-text1;
+    }
+
+    &:hover .MuiOutlinedInput-notchedOutline {
+      border-color: $grey-text2;
+    }
+
+    &.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-width: 1px;
+    }
+  }
+
   .search-input {
     .MuiInputBase-root {
       color: $title-text-dark;
@@ -115,6 +129,50 @@ body {
   }
 
   .file-input__delete-icon {
+    path {
+      fill: $title-text-dark;
+    }
+  }
+
+  .list-table {
+    &_dark {
+      thead {
+        color: $title-text-dark;
+
+        th {
+          background: $soft-dark;
+          border-top-color: $soft-dark;
+        }
+      }
+
+      tbody {
+        color: $title-text-dark;
+
+        td {
+          border-bottom-color: $soft-dark;
+        }
+      }
+
+      tr th:first-child,
+      tr td:first-child {
+        border-left-color: $soft-dark;
+      }
+
+      tr th:last-child,
+      tr td:last-child {
+        border-right-color: $soft-dark;
+      }
+
+      tbody tr {
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(#000, 0.15);
+        }
+      }
+    }
+  }
+
+  .table-delete-icon_dark {
     path {
       fill: $title-text-dark;
     }
