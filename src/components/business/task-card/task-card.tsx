@@ -29,6 +29,7 @@ type Props = {
 export const TaskCard = ({ className }: Props) => {
   const { id } = useParams<string>();
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
+  const [openImageDialog, setOpenImageDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation('task');
 
@@ -88,6 +89,8 @@ export const TaskCard = ({ className }: Props) => {
     title: clsx('task-card__title', isDarkTheme && 'task-card__title_dark'),
     list: clsx('task-card__list', isDarkTheme && 'task-card__list_dark'),
     info: clsx('task-card__info'),
+    imageDialog: clsx('task-card__image-dialog'),
+    image: clsx('task-card__image-dialog_image'),
   };
 
   return (
@@ -116,6 +119,7 @@ export const TaskCard = ({ className }: Props) => {
             className={'task-card__image'}
             src={currentTask.image}
             alt={'task image'}
+            onClick={() => setOpenImageDialog(true)}
           />
         )}
       </div>
@@ -129,6 +133,18 @@ export const TaskCard = ({ className }: Props) => {
           config={updateTaskFormConfig}
           onAction={onEditFormAction}
           task={currentTask}
+        />
+      </Dialog>
+      <Dialog
+        isOpen={openImageDialog}
+        onClose={() => setOpenImageDialog(false)}
+        className={classNames.imageDialog}
+        maxWidth={'md'}
+      >
+        <img
+          src={currentTask.image}
+          alt={'task-image'}
+          className={classNames.image}
         />
       </Dialog>
     </Card>
