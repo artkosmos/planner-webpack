@@ -6,8 +6,20 @@
   border-bottom: 1px solid #ddd;
   font-weight: bold !important;
   font-size: 22px !important;
+  border-radius: 10px 10px 0 0;
 }
 
 .dialog-mui-content {
   background-color: $background;
+  border-radius: 0 0 10px 10px;
+}
+
+@media screen and (width <= 600px) {
+  .dialog-mui-content {
+    padding: 15px !important;
+  }
+
+  .dialog-mui-title {
+    padding: 15px !important;
+  }
 }

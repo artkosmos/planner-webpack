@@ -1,7 +1,8 @@
 @import '@/style/variables';
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
   align-items: center;
   padding: 0 50px;
@@ -17,6 +18,7 @@
     display: flex;
     gap: 30px;
     align-items: center;
+    justify-self: flex-end;
   }
 
   &__lang-select {
@@ -27,6 +29,7 @@
     display: flex;
     gap: 50px;
     align-items: center;
+    justify-self: center;
   }
 
   &__sort-select {
@@ -37,6 +40,7 @@
     font-size: 23px;
     font-weight: bold;
     color: $title-text;
+    justify-self: flex-start;
 
     &_dark {
       color: $title-text-dark;
@@ -46,5 +50,107 @@
   &__search {
     width: 250px;
     margin-bottom: 7px !important;
+  }
+
+  &__burger {
+    position: relative;
+    width: 30px;
+    height: 21px;
+    display: none;
+    justify-self: flex-end;
+
+    &::before,
+    &::after {
+      content: '';
+      background-color: $title-text;
+      width: 100%;
+      height: 3px;
+      left: 0;
+      position: absolute;
+      transition: 0.3s;
+    }
+
+    &::before {
+      top: 0;
+    }
+
+    &::after {
+      bottom: 0;
+    }
+
+    & span {
+      position: absolute;
+      background-color: $title-text;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      top: 9px;
+      transition: 0.3s;
+    }
+
+    &_active {
+      &::before {
+        transform: rotate(45deg);
+        top: 9px;
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+        bottom: 9px;
+      }
+
+      & span {
+        transform: scale(0);
+      }
+    }
+
+    &_dark {
+      &::before,
+      &::after,
+      span {
+        background-color: $title-text-dark;
+      }
+    }
+  }
+}
+
+@media screen and (width <= 1100px) {
+  .header {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 5px;
+    height: min-content;
+    padding: 10px 30px;
+
+    &__table-sort {
+      grid-column: span 2;
+      grid-row: 2;
+    }
+  }
+}
+
+@media screen and (width <= 600px) {
+  .header {
+    grid-template-columns: auto;
+    grid-template-rows: repeat(2, 40px);
+    gap: 0;
+
+    &__burger {
+      display: block;
+    }
+
+    &__settings {
+      display: none;
+      position: absolute;
+      flex-direction: column-reverse;
+      right: -100%;
+      top: 80px;
+    }
+
+    &__sort-select {
+      display: none;
+      position: absolute !important;
+      right: 100%;
+    }
   }
 }

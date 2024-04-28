@@ -22,7 +22,7 @@ export const Dialog = ({ ...rest }: Props) => {
   const classNames = {
     title: clsx('dialog-mui-title'),
     content: clsx('dialog-mui-content'),
-    dialog: clsx(className),
+    dialog: clsx('dialog', className),
   };
 
   return (
@@ -35,7 +35,7 @@ export const Dialog = ({ ...rest }: Props) => {
       fullWidth
       sx={{
         '.MuiPaper-root': {
-          borderRadius: '10px',
+          borderRadius: '15px',
           overflow: 'visible',
         },
       }}

@@ -23,7 +23,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    const imageCompressQuality = 0.5;
+    const imageCompressQuality = 0.6;
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
       const compressedFile = await compress(file, imageCompressQuality);

@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material';
 
@@ -17,6 +17,7 @@ import './style.scss';
 export const Header = () => {
   const { t, i18n } = useTranslation('header');
   const dispatch = useAppDispatch();
+  const [isBurgerOpen, setIsBurgerOpen] = useState<boolean>(false);
   const { isDark, setIsDark } = useDarkTheme();
 
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
@@ -57,15 +58,32 @@ export const Header = () => {
   };
 
   const classNames = {
-    header: clsx('header', isDarkTheme && 'header_dark'),
+    header: clsx(
+      'header',
+      isDarkTheme && 'header_dark',
+      isBurgerOpen && 'header_active',
+    ),
     title: clsx('header__title', isDarkTheme && 'header__title_dark'),
     selectLanguage: clsx('header__lang-select'),
     selectSort: clsx('header__sort-select'),
+    burger: clsx(
+      'header__burger',
+      isBurgerOpen && 'header__burger_active',
+      isDarkTheme && 'header__burger_dark',
+    ),
   };
 
   return (
     <header className={classNames.header} data-testid={'header'}>
       <span className={classNames.title}>{t('app_name')} 🤪</span>
+      <div
+        className={classNames.burger}
+        onClick={() => setIsBurgerOpen(!isBurgerOpen)}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <div className={'header__table-sort'}>
         <SearchInput
           label={t('search_placeholder')}

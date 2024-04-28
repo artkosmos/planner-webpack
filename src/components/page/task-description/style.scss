@@ -7,3 +7,9 @@
     align-self: start;
   }
 }
+
+@media screen and (width <= 768px) {
+  .task-description {
+    gap: 5px;
+  }
+}
