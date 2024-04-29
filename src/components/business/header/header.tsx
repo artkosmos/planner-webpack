@@ -71,6 +71,12 @@ export const Header = () => {
       isBurgerOpen && 'header__burger_active',
       isDarkTheme && 'header__burger_dark',
     ),
+    burgerList: clsx(
+      'header__burger-list',
+      isBurgerOpen && 'header__burger-list_active',
+      isDarkTheme && 'header__burger-list_dark',
+    ),
+    overlay: clsx('header__overlay', isBurgerOpen && 'header__overlay_active'),
   };
 
   return (
@@ -81,9 +87,9 @@ export const Header = () => {
         onClick={() => setIsBurgerOpen(!isBurgerOpen)}
       >
         <span></span>
-        <span></span>
-        <span></span>
       </div>
+      <div className={classNames.burgerList}></div>
+      <div className={classNames.overlay}></div>
       <div className={'header__table-sort'}>
         <SearchInput
           label={t('search_placeholder')}
