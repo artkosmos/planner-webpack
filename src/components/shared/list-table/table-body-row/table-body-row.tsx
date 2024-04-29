@@ -10,9 +10,10 @@ import type { ITask } from '@/common/types';
 type Props = {
   task: ITask;
   deleteRow: (id: string) => void;
+  isMobile?: boolean;
 } & ComponentPropsWithoutRef<'tr'>;
 
-export const TableBodyRow = ({ task, deleteRow, ...rest }: Props) => {
+export const TableBodyRow = ({ task, deleteRow, isMobile, ...rest }: Props) => {
   const deleteRowHandler = (event: MouseEvent<SVGSVGElement>) => {
     event.stopPropagation();
     deleteRow(task.id);
@@ -24,9 +25,9 @@ export const TableBodyRow = ({ task, deleteRow, ...rest }: Props) => {
 
   return (
     <tr key={task.id} {...rest}>
-      <td>{task.id}</td>
+      {!isMobile && <td>{task.id}</td>}
       <td>{task.title}</td>
-      <td>{dayjs(task.date).format('DD.MM.YYYY hh:mm:ss a')}</td>
+      {!isMobile && <td>{dayjs(task.date).format('DD.MM.YYYY')}</td>}
       <td>{task.important && <StarIcon className={'table-star-icon'} />}</td>
       <td>
         <DeleteIcon className={classNames.delete} onClick={deleteRowHandler} />

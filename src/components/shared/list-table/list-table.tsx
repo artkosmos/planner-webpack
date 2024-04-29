@@ -22,6 +22,7 @@ export const ListTable = ({
   onRowClick,
 }: Props) => {
   const { t } = useTranslation('home');
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   const taskList = useMemo(() => {
     return list.map(task => {
@@ -32,6 +33,7 @@ export const ListTable = ({
           key={task.id}
           task={task}
           deleteRow={deleteTask}
+          isMobile={isMobile}
         />
       );
     });
@@ -47,9 +49,9 @@ export const ListTable = ({
       <table className={classNames.table} cellSpacing={0}>
         <thead>
           <tr>
-            <th>{t('table_column_1')}</th>
+            {!isMobile && <th>{t('table_column_1')}</th>}
             <th>{t('table_column_2')}</th>
-            <th>{t('table_column_3')}</th>
+            {!isMobile && <th>{t('table_column_3')}</th>}
             <th></th>
             <th></th>
           </tr>
