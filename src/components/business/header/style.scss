@@ -1,9 +1,9 @@
 @import '@/style/variables';
 
 .header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   justify-content: space-between;
+  gap: 50px;
   align-items: center;
   padding: 0 50px;
   height: 65px;
@@ -16,9 +16,10 @@
 
   &__settings {
     display: flex;
+    flex: 1 1 max-content;
     gap: 30px;
     align-items: center;
-    justify-self: flex-end;
+    justify-content: flex-end;
   }
 
   &__lang-select {
@@ -27,9 +28,10 @@
 
   &__table-sort {
     display: flex;
+    flex: 1 1 max-content;
     gap: 50px;
     align-items: center;
-    justify-self: center;
+    justify-content: center;
   }
 
   &__sort-select {
@@ -37,10 +39,12 @@
   }
 
   &__title {
+    display: flex;
+    flex: 1 1 max-content;
+    align-items: center;
     font-size: 23px;
     font-weight: bold;
     color: $title-text;
-    justify-self: flex-start;
 
     &_dark {
       color: $title-text-dark;
@@ -122,6 +126,8 @@
     width: 200px;
     height: 100%;
     background-color: $soft-blue;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     z-index: 2;
     box-shadow: -5px 0 8px rgb(0 0 0 / 70%);
 
@@ -152,24 +158,20 @@
 
 @media screen and (width <= 1100px) {
   .header {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    row-gap: 5px;
+    gap: 10px 90px;
     height: min-content;
     padding: 10px 30px;
+    flex-wrap: wrap;
 
     &__table-sort {
-      grid-column: span 2;
-      grid-row: 2;
+      order: 3;
     }
   }
 }
 
-@media screen and (width <= 600px) {
+@media screen and (width <= 580px) {
   .header {
-    grid-template-columns: auto;
-    grid-template-rows: repeat(2, 40px);
-    gap: 0;
+    gap: 5px 40px;
 
     &__burger {
       display: block;

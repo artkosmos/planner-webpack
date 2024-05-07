@@ -1,5 +1,6 @@
 import { ChangeEvent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { SelectChangeEvent } from '@mui/material';
 
 import clsx from 'clsx';
@@ -19,6 +20,7 @@ export const Header = () => {
   const dispatch = useAppDispatch();
   const [isBurgerOpen, setIsBurgerOpen] = useState<boolean>(false);
   const { isDark, setIsDark } = useDarkTheme();
+  const location = useLocation();
 
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
   const sortBy = useAppSelector(state => state.main.sortBy);
@@ -90,21 +92,23 @@ export const Header = () => {
       </div>
       <div className={classNames.burgerList}></div>
       <div className={classNames.overlay}></div>
-      <div className={'header__table-sort'}>
-        <SearchInput
-          label={t('search_placeholder')}
-          className={'header__search'}
-          onChange={searchHandler}
-        />
-        <Select
-          items={sortItems}
-          label={t('sort_select_label')}
-          className={classNames.selectSort}
-          onChange={sortHandler}
-          value={sortBy}
-          data-testid={'select-sort'}
-        />
-      </div>
+      {location.pathname === '/' && (
+        <div className={'header__table-sort'}>
+          <SearchInput
+            label={t('search_placeholder')}
+            className={'header__search'}
+            onChange={searchHandler}
+          />
+          <Select
+            items={sortItems}
+            label={t('sort_select_label')}
+            className={classNames.selectSort}
+            onChange={sortHandler}
+            value={sortBy}
+            data-testid={'select-sort'}
+          />
+        </div>
+      )}
       <div className={'header__settings'}>
         <SwitchTheme checked={isDark} onChange={handleSwitchChange} />
         <Select
