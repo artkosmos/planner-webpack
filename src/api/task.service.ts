@@ -58,7 +58,9 @@ const taskService = (() => {
                 list.sort((a, b) => b.title.localeCompare(a.title));
                 break;
               case 'importance':
-                list = list.filter(task => task.important);
+                list.sort(
+                  (a, b) => (a.important ? -1 : 1) - (b.important ? -1 : 1),
+                );
                 break;
               default:
                 break;

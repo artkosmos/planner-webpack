@@ -25,8 +25,8 @@ export const SwitchTheme = styled(Switch)((props: SwitchProps) => ({
   },
   '& .MuiSwitch-thumb': {
     backgroundColor: props.checked ? '#003892' : '#e09b41',
-    width: 32.5,
-    height: 32.5,
+    width: 32,
+    height: 32,
     '&::before': {
       content: "''",
       position: 'absolute',
