@@ -27,7 +27,7 @@ export const TableBodyRow = ({ task, deleteRow, isMobile, ...rest }: Props) => {
     <tr key={task.id} {...rest}>
       {!isMobile && <td>{task.id}</td>}
       <td>{task.title}</td>
-      {!isMobile && <td>{dayjs(task.date).format('DD.MM.YYYY')}</td>}
+      {!isMobile && <td>{dayjs(task.date).format('DD.MM.YYYY hh:mm:ss a')}</td>}
       <td>{task.important && <StarIcon className={'table-star-icon'} />}</td>
       <td>
         <DeleteIcon className={classNames.delete} onClick={deleteRowHandler} />
