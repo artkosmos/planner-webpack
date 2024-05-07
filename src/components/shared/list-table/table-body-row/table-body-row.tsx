@@ -21,12 +21,13 @@ export const TableBodyRow = ({ task, deleteRow, isMobile, ...rest }: Props) => {
 
   const classNames = {
     delete: clsx('table-delete-icon', 'table-delete-icon_dark'),
+    taskTitle: clsx('list-table__task-title'),
   };
 
   return (
     <tr key={task.id} {...rest}>
       {!isMobile && <td>{task.id}</td>}
-      <td>{task.title}</td>
+      <td className={classNames.taskTitle}>{task.title}</td>
       {!isMobile && <td>{dayjs(task.date).format('DD.MM.YYYY hh:mm:ss a')}</td>}
       <td>{task.important && <StarIcon className={'table-star-icon'} />}</td>
       <td>
