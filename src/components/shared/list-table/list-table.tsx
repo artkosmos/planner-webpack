@@ -13,6 +13,7 @@ type Props = {
   className?: string;
   deleteTask?: (id: string) => void;
   onRowClick?: (id: string) => void;
+  dateFormat?: string;
 };
 
 export const ListTable = ({
@@ -20,6 +21,7 @@ export const ListTable = ({
   deleteTask,
   className,
   onRowClick,
+  dateFormat,
 }: Props) => {
   const { t } = useTranslation('home');
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -34,10 +36,11 @@ export const ListTable = ({
           task={task}
           deleteRow={deleteTask}
           isMobile={isMobile}
+          dateFormat={dateFormat}
         />
       );
     });
-  }, [list]);
+  }, [list, dateFormat]);
 
   const classNames = {
     container: clsx('table-container', className),

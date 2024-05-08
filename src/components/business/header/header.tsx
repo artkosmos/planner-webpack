@@ -58,6 +58,12 @@ export const Header = () => {
     dispatch(appActions.changeAppTheme(event.target.checked));
   };
 
+  const handleLanguageSelect = (event: SelectChangeEvent) => {
+    const selectValue = event.target.value as TAvailableLanguages;
+    dispatch(appActions.setLanguage(selectValue));
+    i18n.changeLanguage(selectValue);
+  };
+
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     debouncedSearch(inputValue, dispatch);
@@ -124,7 +130,7 @@ export const Header = () => {
           className={classNames.selectLanguage}
           label={t('select_label')}
           items={languageItems}
-          onChange={event => i18n.changeLanguage(event.target.value as string)}
+          onChange={handleLanguageSelect}
           value={currentLanguage}
           data-testid={'select-lang'}
         />

@@ -16,6 +16,7 @@ import {
   type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
+import { dateFormats } from '@/constants/languages';
 import { TASK } from '@/routes';
 import { useAppDispatch, useAppSelector } from '@/store';
 
@@ -33,6 +34,7 @@ export const ListCreator = () => {
   const error = useAppSelector(state => state.main.error);
   const search = useAppSelector(state => state.main.search);
   const sortBy = useAppSelector(state => state.main.sortBy);
+  const currentLanguage = useAppSelector(state => state.main.language);
 
   useEffect(() => {
     dispatch(appThunk.getTaskList({ search, sortBy })).finally(() =>
@@ -120,6 +122,7 @@ export const ListCreator = () => {
               list={list}
               deleteTask={deleteListHandler}
               onRowClick={navigateHandler}
+              dateFormat={dateFormats[currentLanguage]}
             />
           )}
           {!list.length && <InfoTitle title={t('no_data')} />}
