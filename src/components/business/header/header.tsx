@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { SelectChangeEvent } from '@mui/material';
@@ -6,9 +6,11 @@ import { SelectChangeEvent } from '@mui/material';
 import clsx from 'clsx';
 
 import { appActions } from '@/api';
+import { TAvailableLanguages } from '@/common/types';
 import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
+import { languages } from '@/constants/languages';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { debouncedSearch } from '@/utils/debounced-search';
 import { useDarkTheme } from '@/utils/use-dark-theme';
@@ -22,8 +24,15 @@ export const Header = () => {
   const { isDark, setIsDark } = useDarkTheme();
   const location = useLocation();
 
+  useEffect(() => {
+    const initLanguage: TAvailableLanguages =
+      languages.find(lang => lang === i18n.language) || 'en';
+    dispatch(appActions.setLanguage(initLanguage));
+  }, []);
+
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
   const sortBy = useAppSelector(state => state.main.sortBy);
+  const currentLanguage = useAppSelector(state => state.main.language);
 
   const languageItems: SelectItem[] = useMemo(() => {
     return [
@@ -116,7 +125,7 @@ export const Header = () => {
           label={t('select_label')}
           items={languageItems}
           onChange={event => i18n.changeLanguage(event.target.value as string)}
-          value={i18n.language}
+          value={currentLanguage}
           data-testid={'select-lang'}
         />
       </div>

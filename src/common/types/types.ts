@@ -5,3 +5,5 @@ export interface ITask {
   image?: string | null;
   important?: boolean;
 }
+
+export type TAvailableLanguages = 'en' | 'ru';

@@ -8,7 +8,7 @@ import {
 
 import taskService from '@/api';
 import { IGetTaskListArgs } from '@/backend';
-import { ITask } from '@/common/types';
+import { ITask, TAvailableLanguages } from '@/common/types';
 import { createAppAsyncThunk } from '@/utils/pretyped-async-thunk';
 
 const getTaskList = createAppAsyncThunk(
@@ -79,6 +79,7 @@ const slice = createSlice({
     darkTheme: false as boolean,
     search: '' as string,
     sortBy: '' as string,
+    language: '' as TAvailableLanguages,
   },
   reducers: {
     changeAppTheme: (state, action: PayloadAction<boolean>) => {
@@ -92,6 +93,9 @@ const slice = createSlice({
     },
     setSort: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;
+    },
+    setLanguage: (state, action: PayloadAction<TAvailableLanguages>) => {
+      state.language = action.payload;
     },
   },
   extraReducers: builder => {
