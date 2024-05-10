@@ -18,9 +18,12 @@ import {
   type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
+import { dateFormats } from '@/constants/languages';
 import { useAppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
+
+import 'dayjs/locale/ru';
 
 type Props = {
   className?: string;
@@ -37,6 +40,7 @@ export const TaskCard = ({ className }: Props) => {
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+  const currentLanguage = useAppSelector(state => state.main.language);
 
   useEffect(() => {
     dispatch(appThunk.getTask(id));
@@ -111,7 +115,7 @@ export const TaskCard = ({ className }: Props) => {
           </li>
           <li>
             <span className={'task-card__point'}>{t('date')}:&nbsp;&nbsp;</span>
-            {dayjs(currentTask.date).format('DD.MM.YYYY hh:mm:ss a')}
+            {dayjs(currentTask.date).format(dateFormats[currentLanguage])}
           </li>
         </ul>
         {currentTask.image && (

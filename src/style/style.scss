@@ -56,6 +56,17 @@ body {
     }
   }
 
+  .MuiPaper-root {
+    ul {
+      background-color: $input-dark-background;
+      color: $title-text-dark;
+
+      .Mui-selected {
+        background-color: color.adjust($blue, $lightness: 30%);
+      }
+    }
+  }
+
   .MuiInputBase-root {
     .MuiOutlinedInput-notchedOutline {
       border-color: $grey-text1;

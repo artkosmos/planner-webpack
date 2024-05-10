@@ -4,5 +4,11 @@
   "en": "English",
   "ru": "Russian",
   "search_placeholder": "Search task",
-  "sort_select_label": "Sort by"
+  "sort_select_label": "Sort by",
+  "table_sort": {
+    "date": "Date",
+    "name": "Name",
+    "important": "Importance",
+    "none": "None"
+  }
 }

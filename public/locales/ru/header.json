@@ -4,5 +4,11 @@
   "en": "Английский",
   "ru": "Русский",
   "search_placeholder": "Поиск задачи",
-  "sort_select_label": "Сортировать по"
+  "sort_select_label": "Сортировать по",
+  "table_sort": {
+    "date": "Дата",
+    "name": "Имя",
+    "important": "Важность",
+    "none": "Ничего"
+  }
 }

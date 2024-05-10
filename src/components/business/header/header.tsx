@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { SelectChangeEvent } from '@mui/material';
@@ -6,9 +6,11 @@ import { SelectChangeEvent } from '@mui/material';
 import clsx from 'clsx';
 
 import { appActions } from '@/api';
+import { TAvailableLanguages } from '@/common/types';
 import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
+import { languages } from '@/constants/languages';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { debouncedSearch } from '@/utils/debounced-search';
 import { useDarkTheme } from '@/utils/use-dark-theme';
@@ -22,8 +24,15 @@ export const Header = () => {
   const { isDark, setIsDark } = useDarkTheme();
   const location = useLocation();
 
+  useEffect(() => {
+    const initLanguage: TAvailableLanguages =
+      languages.find(lang => lang === i18n.language) || 'en';
+    dispatch(appActions.setLanguage(initLanguage));
+  }, []);
+
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
   const sortBy = useAppSelector(state => state.main.sortBy);
+  const currentLanguage = useAppSelector(state => state.main.language);
 
   const languageItems: SelectItem[] = useMemo(() => {
     return [
@@ -34,12 +43,12 @@ export const Header = () => {
 
   const sortItems: SelectItem[] = useMemo(() => {
     return [
-      { value: '', label: 'None' },
-      { value: 'date_first', label: 'Date (first)' },
-      { value: 'date_latest', label: 'Date (latest)' },
-      { value: 'name_a-z', label: 'Name (a-z)' },
-      { value: 'name_z-a', label: 'Name (z-a)' },
-      { value: 'importance', label: 'Importance' },
+      { value: '', label: `${t('table_sort.none')}` },
+      { value: 'date_first ', label: `${t('table_sort.date')} ↑` },
+      { value: 'date_latest', label: `${t('table_sort.date')} ↓` },
+      { value: 'name_a-z', label: `${t('table_sort.name')} ↑` },
+      { value: 'name_z-a', label: `${t('table_sort.name')} ↓` },
+      { value: 'importance', label: `${t('table_sort.important')}` },
     ];
   }, [t]);
 
@@ -47,6 +56,12 @@ export const Header = () => {
     setIsDark(event.target.checked);
     localStorage.setItem('darkTheme', `${event.target.checked}`);
     dispatch(appActions.changeAppTheme(event.target.checked));
+  };
+
+  const handleLanguageSelect = (event: SelectChangeEvent) => {
+    const selectValue = event.target.value as TAvailableLanguages;
+    dispatch(appActions.setLanguage(selectValue));
+    i18n.changeLanguage(selectValue);
   };
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -115,8 +130,8 @@ export const Header = () => {
           className={classNames.selectLanguage}
           label={t('select_label')}
           items={languageItems}
-          onChange={event => i18n.changeLanguage(event.target.value as string)}
-          value={i18n.language}
+          onChange={handleLanguageSelect}
+          value={currentLanguage}
           data-testid={'select-lang'}
         />
       </div>
