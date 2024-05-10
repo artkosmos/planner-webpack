@@ -74,21 +74,17 @@
     max-width: 200px;
     max-height: 200px;
     margin: 8px 40px 0 20px;
-    border-radius: 20px;
+    border-radius: 8px;
     box-shadow:
       -10px 0 15px -7px #000,
       10px 2px 13px -7px #000,
       5px 5px 15px 5px rgb(0 0 0 / 0%);
     transition: transform 0.15s linear;
-
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.1);
-    }
   }
 
   &__image-dialog {
     width: min-content;
+    max-width: 100%;
     margin: 0 auto;
 
     &_image {
@@ -96,6 +92,22 @@
       width: auto;
       height: auto;
       max-height: 550px;
+    }
+
+    .MuiDialogContent-root {
+      border-radius: 0;
+      padding: 0 !important;
+    }
+  }
+}
+
+@media (hover: hover) {
+  .task-card {
+    &__image {
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+      }
     }
   }
 }
