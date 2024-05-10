@@ -43,12 +43,12 @@ export const Header = () => {
 
   const sortItems: SelectItem[] = useMemo(() => {
     return [
-      { value: '', label: 'None' },
-      { value: 'date_first', label: 'Date (first)' },
-      { value: 'date_latest', label: 'Date (latest)' },
-      { value: 'name_a-z', label: 'Name (a-z)' },
-      { value: 'name_z-a', label: 'Name (z-a)' },
-      { value: 'importance', label: 'Importance' },
+      { value: '', label: `${t('table_sort.none')}` },
+      { value: 'date_first ', label: `${t('table_sort.date')} ↑` },
+      { value: 'date_latest', label: `${t('table_sort.date')} ↓` },
+      { value: 'name_a-z', label: `${t('table_sort.name')} ↑` },
+      { value: 'name_z-a', label: `${t('table_sort.name')} ↓` },
+      { value: 'importance', label: `${t('table_sort.important')}` },
     ];
   }, [t]);
 
