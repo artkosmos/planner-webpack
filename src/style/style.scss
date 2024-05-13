@@ -56,13 +56,13 @@ body {
     }
   }
 
-  .MuiPaper-root {
+  .MuiPaper-root.MuiMenu-paper {
     ul {
       background-color: $input-dark-background;
       color: $title-text-dark;
 
       .Mui-selected {
-        background-color: color.adjust($blue, $lightness: 30%);
+        background-color: color.adjust($background-dark, $lightness: 20%);
       }
     }
   }

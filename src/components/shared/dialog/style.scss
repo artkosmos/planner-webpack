@@ -9,6 +9,12 @@
   border-radius: 10px 10px 0 0;
 }
 
+.dialog {
+  .MuiPaper-root {
+    background-color: transparent;
+  }
+}
+
 .dialog-mui-content {
   background-color: $background;
   border-radius: 0 0 10px 10px;
