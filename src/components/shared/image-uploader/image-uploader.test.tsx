@@ -45,7 +45,7 @@ describe('testing of image uploader component', () => {
     const clearInput = jest.fn();
 
     const { findByTestId, getByTestId } = render(
-      <ImageUploader clearInput={clearInput} />,
+      <ImageUploader clearImage={clearInput} />,
     );
 
     const uploadInput = getByTestId('task-image') as HTMLInputElement;

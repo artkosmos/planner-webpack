@@ -9,6 +9,8 @@ type Props = ComponentPropsWithoutRef<'input'> & {
   label?: string;
 };
 
+const ISO_8601_DATE_TIME_FORMAT = 16;
+
 export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { className, error, label, ...rest } = props;
 
@@ -16,6 +18,8 @@ export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
     datepicker: clsx('datepicker', error && 'datepicker__error', className),
     label: clsx('datepicker__label', error && 'datepicker__label-error'),
   };
+
+  const today = new Date().toISOString().slice(0, ISO_8601_DATE_TIME_FORMAT);
 
   return (
     <>
@@ -32,7 +36,7 @@ export const DateInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
         ref={ref}
         id={'date'}
         type="datetime-local"
-        min="0001-06-01T00:00"
+        min={today}
         max="9999-06-30T00:00"
         step={'1'}
         data-testid={'date'}

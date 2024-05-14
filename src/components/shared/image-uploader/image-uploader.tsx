@@ -12,15 +12,19 @@ import './style.scss';
 export type ImageUploaderProps = {
   buttonText?: string;
   className?: string;
-  clearInput?: () => void;
+  clearImage?: () => void;
   onChange?: (value: string) => void;
   name?: string;
+  preview?: string;
 };
 
 export const ImageUploader = (props: ImageUploaderProps) => {
-  const { buttonText, className, clearInput, onChange, ...rest } = props;
+  const { buttonText, className, clearImage, onChange, preview, ...rest } =
+    props;
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(
+    preview || null,
+  );
 
   const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const imageCompressQuality = 0.6;
@@ -41,7 +45,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
 
   const onDeleteIconClick = () => {
     setSelectedImage(null);
-    clearInput?.();
+    clearImage?.();
     const fileInput = document.getElementById('task-image') as HTMLInputElement;
     fileInput.value = '';
   };

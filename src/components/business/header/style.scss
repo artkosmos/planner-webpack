@@ -180,9 +180,9 @@
     &__settings {
       display: none;
       position: absolute;
-      flex-direction: column-reverse;
-      right: 20px;
-      top: 160px;
+      flex-direction: column;
+      right: 25px;
+      top: 80px;
       z-index: 3;
       gap: 20px;
     }
@@ -191,7 +191,7 @@
       display: none !important;
       position: absolute !important;
       right: 15px;
-      top: 90px;
+      top: 205px;
       z-index: 3;
     }
   }

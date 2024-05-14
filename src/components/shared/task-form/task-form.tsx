@@ -57,7 +57,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
   }, []);
 
   const fileClearHandler = () => {
-    setValue('image', task.image);
+    setValue('image', null);
   };
 
   const buttonActionHandler = ({ name, data }: IButtonAction) => {
@@ -92,7 +92,8 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         control={control}
         buttonText={config.imageButtonTitle}
         className={'task-form__file-input'}
-        clearInput={fileClearHandler}
+        clearImage={fileClearHandler}
+        preview={task.image}
       />
       <ControlledFilledInput
         name={'title'}
