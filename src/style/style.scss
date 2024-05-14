@@ -113,6 +113,10 @@ body {
     &__label {
       color: $title-text-dark;
     }
+
+    &__label-error {
+      color: $error-text;
+    }
   }
 
   .datepicker {
@@ -122,6 +126,10 @@ body {
 
     &__label {
       color: $title-text-dark;
+    }
+
+    &__label-error {
+      color: $error-text;
     }
   }
 
