@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { appActions } from '@/api';
+import { setTheme } from '@/api';
 import { AppDispatch } from '@/store';
 
 export const useDarkTheme = () => {
@@ -16,8 +16,7 @@ export const useDarkTheme = () => {
   );
 
   useEffect(() => {
-    dispatch(appActions.changeAppTheme(isDark));
-    localStorage.setItem('darkTheme', `${isDark}`);
+    dispatch(setTheme(isDark));
   }, [isDark, dispatch]);
 
   if (isDark) {

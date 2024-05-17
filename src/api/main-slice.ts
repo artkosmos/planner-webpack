@@ -45,7 +45,7 @@ const deleteTask = createAppAsyncThunk(
     try {
       const response = await taskService.deleteTask(id);
       if (response) {
-        const { sortBy, search } = getState().main;
+        const { sortBy, search } = getState().main.listSort;
         return dispatch(getTaskList({ sortBy, search }));
       }
     } catch (error) {
@@ -67,6 +67,17 @@ const updateTask = createAppAsyncThunk(
     }
   },
 );
+export const setTheme = createAppAsyncThunk(
+  'main/setTheme',
+  async (isDark: boolean, { rejectWithValue }) => {
+    try {
+      localStorage.setItem('darkTheme', `${isDark}`);
+      return isDark;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 const slice = createSlice({
   name: 'main',
@@ -75,27 +86,29 @@ const slice = createSlice({
     currentTask: null as ITask | null,
     error: null as null | string,
     isLoading: false as boolean,
-    isInitialized: true as boolean,
+    isInitialized: false as boolean,
     darkTheme: false as boolean,
-    search: '' as string,
-    sortBy: '' as string,
+    listSort: {
+      search: '' as string,
+      sortBy: '' as string,
+    },
   },
   reducers: {
-    changeAppTheme: (state, action: PayloadAction<boolean>) => {
-      state.darkTheme = action.payload;
-    },
-    changeInitialization: (state, action: PayloadAction<boolean>) => {
-      state.isInitialized = action.payload;
-    },
     setSearch: (state, action: PayloadAction<string>) => {
-      state.search = action.payload;
+      state.listSort.search = action.payload;
     },
     setSort: (state, action: PayloadAction<string>) => {
-      state.sortBy = action.payload;
+      state.listSort.sortBy = action.payload;
+    },
+    setIsAppInitialized: (state, action: PayloadAction<boolean>) => {
+      state.isInitialized = action.payload;
     },
   },
   extraReducers: builder => {
     builder
+      .addCase(setTheme.fulfilled, (state, action) => {
+        state.darkTheme = action.payload;
+      })
       .addCase(getTaskList.fulfilled, (state, action) => {
         state.list = action.payload;
       })
@@ -103,8 +116,8 @@ const slice = createSlice({
         state.currentTask = action.payload;
       })
       .addCase(createTask.fulfilled, state => {
-        state.sortBy = '';
-        state.search = '';
+        state.listSort.sortBy = '';
+        state.listSort.search = '';
       })
       .addCase(getTask.rejected, (state, action) => {
         state.error = action.payload;
@@ -135,4 +148,5 @@ export const appThunk = {
   updateTask,
   getTask,
   getTaskList,
+  setTheme,
 };

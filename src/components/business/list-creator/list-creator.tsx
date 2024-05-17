@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { v4 as uuid } from 'uuid';
 
 import { appActions, appThunk } from '@/api';
+import { ITask } from '@/common/types';
 import { Dialog } from '@/components/shared/dialog';
 import { InfoTitle } from '@/components/shared/info-title';
 import { ListTable } from '@/components/shared/list-table';
@@ -22,6 +23,14 @@ import { useAppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
 
+const emptyTaskModel: ITask = {
+  id: '',
+  title: '',
+  date: '',
+  image: null,
+  important: false,
+};
+
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -30,14 +39,13 @@ export const ListCreator = () => {
 
   const list = useAppSelector(state => state.main.list);
   const isLoading = useAppSelector(state => state.main.isLoading);
-  const isInitialized = useAppSelector(state => state.main.isInitialized);
   const error = useAppSelector(state => state.main.error);
-  const search = useAppSelector(state => state.main.search);
-  const sortBy = useAppSelector(state => state.main.sortBy);
+  const isAppInitialized = useAppSelector(state => state.main.isInitialized);
+  const { search, sortBy } = useAppSelector(state => state.main.listSort);
 
   useEffect(() => {
     dispatch(appThunk.getTaskList({ search, sortBy })).finally(() =>
-      dispatch(appActions.changeInitialization(false)),
+      dispatch(appActions.setIsAppInitialized(true)),
     );
   }, [search, sortBy, dispatch]);
 
@@ -93,13 +101,7 @@ export const ListCreator = () => {
         <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
           <TaskForm
             onAction={onCreateFormAction}
-            task={{
-              id: '',
-              title: '',
-              date: '',
-              image: null,
-              important: false,
-            }}
+            task={emptyTaskModel}
             config={createTaskFormConfig}
           />
         </Dialog>
@@ -107,10 +109,10 @@ export const ListCreator = () => {
           className={'add-task-block__button'}
           title={t('create_button')}
           onClick={() => setOpenEditDialog(true)}
-          disabled={isInitialized || isLoading}
+          disabled={isLoading || !isAppInitialized}
         />
       </div>
-      {isLoading || isInitialized ? (
+      {isLoading || !isAppInitialized ? (
         <div className={'list-creator__loader'}>
           <CircularProgress data-testid={'loader'} />
         </div>

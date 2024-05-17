@@ -31,7 +31,7 @@ export const Header = () => {
   }, []);
 
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
-  const sortBy = useAppSelector(state => state.main.sortBy);
+  const sortBy = useAppSelector(state => state.main.listSort.sortBy);
 
   const languageItems: SelectItem[] = useMemo(() => {
     return [
@@ -53,8 +53,6 @@ export const Header = () => {
 
   const handleSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsDark(event.target.checked);
-    localStorage.setItem('darkTheme', `${event.target.checked}`);
-    dispatch(appActions.changeAppTheme(event.target.checked));
   };
 
   const handleLanguageSelect = (event: SelectChangeEvent) => {
