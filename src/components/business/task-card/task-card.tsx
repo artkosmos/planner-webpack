@@ -18,7 +18,7 @@ import {
   type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
-import { dateFormats } from '@/constants/languages';
+import { dateFormats } from '@/constants/date-formats';
 import { useAppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
@@ -34,13 +34,12 @@ export const TaskCard = ({ className }: Props) => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const [openImageDialog, setOpenImageDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { t } = useTranslation('task');
+  const { t, i18n } = useTranslation('task');
 
   const currentTask = useAppSelector(state => state.main.currentTask);
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
-  const currentLanguage = useAppSelector(state => state.main.language);
 
   useEffect(() => {
     dispatch(appThunk.getTask(id));
@@ -57,7 +56,7 @@ export const TaskCard = ({ className }: Props) => {
       nameRequiredValidationMsg: t('edit_form_config.name_validation'),
       nameFieldRegExp: '[a-z0-9а-я\\s]+$',
       checkboxLabel: t('edit_form_config.checkbox_label'),
-    } as const;
+    };
   }, [t]);
 
   const onEditFormAction = ({ name, model }: IEditTaskAction) => {
@@ -115,7 +114,7 @@ export const TaskCard = ({ className }: Props) => {
           </li>
           <li>
             <span className={'task-card__point'}>{t('date')}:&nbsp;&nbsp;</span>
-            {dayjs(currentTask.date).format(dateFormats[currentLanguage])}
+            {dayjs(currentTask.date).format(dateFormats[i18n.language])}
           </li>
         </ul>
         {currentTask.image && (

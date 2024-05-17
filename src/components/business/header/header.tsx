@@ -6,11 +6,10 @@ import { SelectChangeEvent } from '@mui/material';
 import clsx from 'clsx';
 
 import { appActions } from '@/api';
-import { TAvailableLanguages } from '@/common/types';
 import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
-import { languages } from '@/constants/languages';
+import { availableLanguages } from '@/constants/languages';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { debouncedSearch } from '@/utils/debounced-search';
 import { useDarkTheme } from '@/utils/use-dark-theme';
@@ -25,14 +24,14 @@ export const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const initLanguage: TAvailableLanguages =
-      languages.find(lang => lang === i18n.language) || 'en';
-    dispatch(appActions.setLanguage(initLanguage));
+    const languageCodeLength = 2;
+    const detectedLng = i18n.language.slice(0, languageCodeLength);
+    const appInitLng = availableLanguages[detectedLng] || availableLanguages.en;
+    i18n.changeLanguage(appInitLng);
   }, []);
 
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
   const sortBy = useAppSelector(state => state.main.sortBy);
-  const currentLanguage = useAppSelector(state => state.main.language);
 
   const languageItems: SelectItem[] = useMemo(() => {
     return [
@@ -59,8 +58,7 @@ export const Header = () => {
   };
 
   const handleLanguageSelect = (event: SelectChangeEvent) => {
-    const selectValue = event.target.value as TAvailableLanguages;
-    dispatch(appActions.setLanguage(selectValue));
+    const selectValue = event.target.value;
     i18n.changeLanguage(selectValue);
   };
 
@@ -131,7 +129,7 @@ export const Header = () => {
           label={t('select_label')}
           items={languageItems}
           onChange={handleLanguageSelect}
-          value={currentLanguage}
+          value={i18n.language}
           data-testid={'select-lang'}
         />
       </div>

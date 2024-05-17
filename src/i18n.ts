@@ -11,6 +11,8 @@ const i18n = i18next
   .init({
     fallbackLng: 'en',
     load: 'languageOnly',
+    cleanCode: true,
+    nonExplicitSupportedLngs: true,
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
     },

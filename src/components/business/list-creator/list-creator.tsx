@@ -16,7 +16,7 @@ import {
   type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
-import { dateFormats } from '@/constants/languages';
+import { dateFormats } from '@/constants/date-formats';
 import { TASK } from '@/routes';
 import { useAppDispatch, useAppSelector } from '@/store';
 
@@ -25,7 +25,7 @@ import './style.scss';
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { t } = useTranslation('home');
+  const { t, i18n } = useTranslation('home');
   const navigate = useNavigate();
 
   const list = useAppSelector(state => state.main.list);
@@ -34,7 +34,6 @@ export const ListCreator = () => {
   const error = useAppSelector(state => state.main.error);
   const search = useAppSelector(state => state.main.search);
   const sortBy = useAppSelector(state => state.main.sortBy);
-  const currentLanguage = useAppSelector(state => state.main.language);
 
   useEffect(() => {
     dispatch(appThunk.getTaskList({ search, sortBy })).finally(() =>
@@ -53,7 +52,7 @@ export const ListCreator = () => {
       nameRequiredValidationMsg: t('create_form_config.name_validation'),
       nameFieldRegExp: '[a-z0-9а-я\\s]+$',
       checkboxLabel: t('create_form_config.checkbox_label'),
-    } as const;
+    };
   }, [t]);
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
@@ -122,7 +121,7 @@ export const ListCreator = () => {
               list={list}
               deleteTask={deleteListHandler}
               onRowClick={navigateHandler}
-              dateFormat={dateFormats[currentLanguage]}
+              dateFormat={dateFormats[i18n.language]}
             />
           )}
           {!list.length && <InfoTitle title={t('no_data')} />}
