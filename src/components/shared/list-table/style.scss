@@ -81,7 +81,7 @@
     .table-row {
       &:hover {
         cursor: pointer;
-        background-color: color.adjust(#000, $lightness: 90%);
+        background-color: color.adjust(#000, $lightness: 80%);
       }
     }
 
