@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import clsx from 'clsx';
-
+// import clsx from 'clsx';
 import { ITask } from '@/common/types';
 import { TableBodyRow } from '@/components/shared/list-table';
 
@@ -19,7 +18,7 @@ type Props = {
 export const ListTable = ({
   list,
   deleteTask,
-  className,
+  // className,
   onRowClick,
   dateFormat,
 }: Props) => {
@@ -42,25 +41,23 @@ export const ListTable = ({
     });
   }, [list, dateFormat]);
 
-  const classNames = {
-    container: clsx('table-container', className),
-    table: clsx('list-table', 'list-table_dark'),
-  };
+  // const classNames = {
+  //   container: clsx('table-container', className),
+  //   table: clsx('list-table', 'list-table_dark'),
+  // };
 
   return (
-    <div className={classNames.container}>
-      <table className={classNames.table} cellSpacing={0}>
-        <thead>
-          <tr>
-            {!isMobile && <th>{t('table_column_1')}</th>}
-            <th>{t('table_column_2')}</th>
-            {!isMobile && <th>{t('table_column_3')}</th>}
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{taskList}</tbody>
-      </table>
+    <div className="table-container">
+      <ul className="table">
+        <li className="table-header">
+          <div className="col col-1">{t('table_column_1')}</div>
+          <div className="col col-2">{t('table_column_2')}</div>
+          <div className="col col-3">{t('table_column_3')}</div>
+          <div className="col col-4"></div>
+          <div className="col col-5"></div>
+        </li>
+        <div className={'table-list'}>{taskList}</div>
+      </ul>
     </div>
   );
 };

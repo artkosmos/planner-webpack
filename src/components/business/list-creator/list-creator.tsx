@@ -109,7 +109,7 @@ export const ListCreator = () => {
           className={'add-task-block__button'}
           title={t('create_button')}
           onClick={() => setOpenEditDialog(true)}
-          disabled={isLoading || !isAppInitialized}
+          disabled={!isAppInitialized}
         />
       </div>
       {isLoading || !isAppInitialized ? (
