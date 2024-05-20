@@ -1,0 +1,12 @@
+@import '@/style/variables';
+
+.datepicker {
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 50px;
+    color: $title-text !important;
+    font-weight: 600 !important;
+  }
+}

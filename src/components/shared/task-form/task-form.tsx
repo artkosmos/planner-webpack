@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import type { ITask } from '@/common/types';
 import { ControlledCheckbox } from '@/components/shared/controlled-checkbox';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
-import { DateInput } from '@/components/shared/date-input';
+import { ControlledImageUploader } from '@/components/shared/controlled-image-uploader';
+import { PickerWithButtonField } from '@/components/shared/date-picker';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
 import { ButtonPrimary } from '@/components/shared/primary-button';
 
-import { ControlledImageUploader } from '../controlled-image-uploader';
 import {
   EditFormButtons,
   type EditTaskFormFields,
@@ -31,7 +31,6 @@ type Props = {
 
 export const TaskForm = ({ task, onAction, config }: Props) => {
   const {
-    register,
     handleSubmit,
     control,
     setValue,
@@ -105,10 +104,14 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         validationMessage={config.nameRequiredValidationMsg}
         autoFocus
       />
-      <DateInput
-        {...register('date', { required: config.dateRequiredValidationMsg })}
-        error={errors.date ? errors.date.message : null}
-        label={config.dateFieldLabel}
+      <PickerWithButtonField
+        control={control}
+        name={'date'}
+        error={!!errors.date}
+        validationMessage={config.nameRequiredValidationMsg}
+        buttonLabel={config.dateFieldLabel}
+        dateFormat={config.dateFormat}
+        locale={config.locale}
       />
       <ControlledCheckbox
         name={'important'}

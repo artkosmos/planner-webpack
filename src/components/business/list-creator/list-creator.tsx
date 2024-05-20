@@ -60,8 +60,10 @@ export const ListCreator = () => {
       nameRequiredValidationMsg: t('create_form_config.name_validation'),
       nameFieldRegExp: '[a-z0-9а-я\\s]+$',
       checkboxLabel: t('create_form_config.checkbox_label'),
+      dateFormat: dateFormats[i18n.language],
+      locale: i18n.language,
     };
-  }, [t]);
+  }, [t, i18n.language]);
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {

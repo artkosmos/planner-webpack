@@ -7,7 +7,7 @@
   "no_data": "Нет доступных даннных",
   "create_form_config": {
     "name_label": "Название",
-    "date_label": "Дата",
+    "date_label": "Выберите дату и время",
     "add_button": "Добавить",
     "cancel_button": "Отмена",
     "date_validation": "Введите корректную дату",

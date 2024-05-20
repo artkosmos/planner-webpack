@@ -27,4 +27,6 @@ export interface ITaskFormConfig {
   dateFieldLabel?: string;
   nameFieldRegExp?: string;
   checkboxLabel?: string;
+  dateFormat?: string;
+  locale?: string;
 }
