@@ -3,161 +3,95 @@
 
 .table-container {
   width: 100%;
-  border-radius: 20px 20px 0 0;
-  font-size: 20px;
 }
 
-.list-table {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+.table {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 
-  &__task-title {
-    max-width: 300px;
+  &-list {
+    max-height: calc(100vh - $table-top-offset - $table-bottom-offset);
+    overflow: auto;
+  }
+
+  li {
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+
+    &.table-row {
+      margin: 2px 10px 15px 2px;
+    }
+
+    &:last-child {
+      margin-bottom: 6px;
+    }
+  }
+
+  .table-header {
+    background-color: $soft-blue;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: $title-text;
+    margin-bottom: 20px;
+  }
+
+  .table-row {
+    background-color: white;
+    box-shadow: 0 4px 7px -4px rgb(0 0 0 / 50%);
+    margin-bottom: 15px;
+  }
+
+  .col {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .col-1 {
+    flex: 1;
+  }
+
+  .col-2 {
+    display: block;
+    flex: 6;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-}
-
-.list-table thead {
-  color: $title-text;
-
-  tr {
-    display: flex;
-    width: 100%;
+    margin-right: 10px;
   }
 
-  th {
-    font-weight: bold;
-    text-align: left;
-    border: none;
-    padding: 15px;
-    background: $soft-blue;
-    font-size: 18px;
-    letter-spacing: 1px;
-    border-top: 1px solid #ddd;
+  .col-3 {
     flex: 3;
-
-    &:last-child {
-      flex: 1;
-    }
-
-    &:nth-last-child(2) {
-      flex: 1;
-    }
-
-    &:first-child {
-      flex: 1;
-    }
   }
-}
 
-.list-table tbody {
-  display: block;
-  overflow: auto;
-  width: 100%;
-  max-height: calc(100vh - $table-top-offset - $table-bottom-offset);
-  border-radius: 0 0 20px 20px;
-
-  tr {
+  .col-4,
+  .col-5 {
+    flex: 1;
     display: flex;
-    width: 100%;
+    justify-content: center;
   }
 
-  td {
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 15px;
-    font-size: 16px;
-    vertical-align: middle;
-    flex: 3;
-
-    &:last-child {
-      text-align: center;
-      flex: 1;
-    }
-
-    &:nth-last-child(2) {
-      text-align: center;
-      flex: 1;
-    }
-
-    &:first-child {
-      flex: 1;
-    }
-  }
-}
-
-.list-table tr th:first-child,
-.list-table tr td:first-child {
-  border-left: 1px solid #ddd;
-}
-
-.list-table tr th:last-child,
-.list-table tr td:last-child {
-  border-right: 1px solid #ddd;
-}
-
-.list-table thead tr th:first-child {
-  border-radius: 20px 0 0;
-}
-
-.list-table thead tr th:last-child {
-  border-radius: 0 20px 0 0;
-}
-
-.list-table tbody tr:last-child td:first-child {
-  border-radius: 0 0 0 20px;
-}
-
-.list-table tbody tr:last-child td:last-child {
-  border-radius: 0 0 20px;
-}
-
-@media (hover: hover) {
-  .table-delete-icon {
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.1);
-
-      path {
-        fill: red;
-      }
-    }
-  }
-
-  .list-table {
-    tbody tr {
+  @media (hover: hover) {
+    .table-row {
       &:hover {
         cursor: pointer;
-        background-color: color.adjust(#000, $lightness: 90%);
+        background-color: color.adjust(#000, $lightness: 80%);
       }
     }
-  }
-}
 
-@media screen and (width <= 768px) {
-  .list-table {
-    tbody {
-      max-height: calc(100vh - $table-top-offset - 50px);
+    .table-delete-icon {
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
 
-      td {
-        padding: 10px 0;
-
-        &:last-child {
-          text-align: center;
-          flex: 1;
-        }
-
-        &:nth-last-child(2) {
-          text-align: center;
-          flex: 1;
-        }
-
-        &:first-child {
-          flex: 5;
-          padding-left: 10px;
+        path {
+          fill: red;
         }
       }
     }
