@@ -15,6 +15,8 @@ import { useDarkTheme } from '@/utils/use-dark-theme';
 
 import { DatePicker } from './date-picker';
 
+import './style.scss';
+
 import 'dayjs/locale/ru';
 
 type PickerProps<T extends FieldValues> = UseControllerProps<T> & {
@@ -66,25 +68,21 @@ export const PickerWithButtonField = <T extends FieldValues>(
     [isDark],
   );
 
-  const classNames = useMemo(
-    () => ({
-      buttonField: clsx(
-        'datepicker__button',
-        error && 'datepicker__button_error',
-      ),
-      datepicker: 'datepicker',
-    }),
-    [error],
-  );
+  const isFormattedDate = date && date.format(dateFormat);
+
+  const classNames = {
+    buttonField: clsx(
+      'datepicker__button',
+      error && 'datepicker__button_error',
+      isFormattedDate && 'datepicker__button_large',
+    ),
+    datepicker: 'datepicker',
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
       <DatePicker
-        label={
-          error
-            ? validationMessage
-            : (date && date.format(dateFormat)) || buttonLabel
-        }
+        label={error ? validationMessage : isFormattedDate || buttonLabel}
         value={date}
         onChange={onDatePickerChange}
         error={error}

@@ -13,5 +13,9 @@
     &_error {
       color: $error-text !important;
     }
+
+    &_large {
+      font-size: 18px !important;
+    }
   }
 }

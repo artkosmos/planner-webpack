@@ -7,8 +7,6 @@ import { Dayjs } from 'dayjs';
 
 import { ButtonField } from './button-field';
 
-import './style.scss';
-
 export const DatePicker = (
   props: Omit<DatePickerProps<Dayjs>, 'open' | 'onOpen' | 'onClose'> & {
     error?: boolean;

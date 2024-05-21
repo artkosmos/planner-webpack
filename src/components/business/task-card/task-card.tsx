@@ -20,6 +20,7 @@ import {
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { useDarkTheme } from '@/utils/use-dark-theme';
 
 import './style.scss';
 
@@ -35,11 +36,11 @@ export const TaskCard = ({ className }: Props) => {
   const [openImageDialog, setOpenImageDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation('task');
+  const { isDark } = useDarkTheme();
 
   const currentTask = useAppSelector(state => state.main.currentTask);
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
-  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   useEffect(() => {
     dispatch(appThunk.getTask(id));
@@ -56,6 +57,8 @@ export const TaskCard = ({ className }: Props) => {
       nameRequiredValidationMsg: t('edit_form_config.name_validation'),
       nameFieldRegExp: '[a-z0-9а-я\\s]+$',
       checkboxLabel: t('edit_form_config.checkbox_label'),
+      dateFormat: dateFormats[i18n.language],
+      locale: i18n.language,
     };
   }, [t]);
 
@@ -74,6 +77,18 @@ export const TaskCard = ({ className }: Props) => {
     }
   };
 
+  const classNames = useMemo(
+    () => ({
+      card: clsx('task-card', isDark && 'task-card_dark', className),
+      title: clsx('task-card__title', isDark && 'task-card__title_dark'),
+      list: clsx('task-card__list', isDark && 'task-card__list_dark'),
+      info: clsx('task-card__info'),
+      imageDialog: clsx('task-card__image-dialog'),
+      image: clsx('task-card__image-dialog_image'),
+    }),
+    [isDark],
+  );
+
   if (isLoading) {
     return (
       <CircularProgress
@@ -86,15 +101,6 @@ export const TaskCard = ({ className }: Props) => {
   if (!currentTask || error) {
     return <InfoTitle title={error} />;
   }
-
-  const classNames = {
-    card: clsx('task-card', isDarkTheme && 'task-card_dark', className),
-    title: clsx('task-card__title', isDarkTheme && 'task-card__title_dark'),
-    list: clsx('task-card__list', isDarkTheme && 'task-card__list_dark'),
-    info: clsx('task-card__info'),
-    imageDialog: clsx('task-card__image-dialog'),
-    image: clsx('task-card__image-dialog_image'),
-  };
 
   return (
     <Card className={classNames.card}>
