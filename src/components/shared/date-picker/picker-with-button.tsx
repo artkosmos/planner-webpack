@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   FieldValues,
   useController,
   UseControllerProps,
 } from 'react-hook-form';
+import { createTheme } from '@mui/material/styles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
+import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
+
+import { useDarkTheme } from '@/utils/use-dark-theme';
 
 import { DatePicker } from './date-picker';
 
@@ -25,12 +29,23 @@ type PickerProps<T extends FieldValues> = UseControllerProps<T> & {
 export const PickerWithButtonField = <T extends FieldValues>(
   props: PickerProps<T>,
 ) => {
+  const {
+    name,
+    control,
+    locale,
+    dateFormat,
+    validationMessage,
+    error,
+    buttonLabel,
+  } = props;
+
   const [date, setDate] = useState<Dayjs | null>(null);
+  const { isDark } = useDarkTheme();
   const {
     field: { onChange },
   } = useController({
-    name: props.name,
-    control: props.control,
+    name,
+    control,
     rules: {
       required: true,
     },
@@ -41,22 +56,41 @@ export const PickerWithButtonField = <T extends FieldValues>(
     setDate(value);
   };
 
-  const buttonLabel = props.error
-    ? props.validationMessage
-    : (date && date.format(props.dateFormat)) || props.buttonLabel;
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: isDark ? 'dark' : 'light',
+        },
+      }),
+    [isDark],
+  );
+
+  const classNames = useMemo(
+    () => ({
+      buttonField: clsx(
+        'datepicker__button',
+        error && 'datepicker__button_error',
+      ),
+      datepicker: 'datepicker',
+    }),
+    [error],
+  );
 
   return (
-    <LocalizationProvider
-      dateAdapter={AdapterDayjs}
-      adapterLocale={props.locale}
-    >
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
       <DatePicker
-        label={buttonLabel}
+        label={
+          error
+            ? validationMessage
+            : (date && date.format(dateFormat)) || buttonLabel
+        }
         value={date}
         onChange={onDatePickerChange}
-        error={props.error}
-        buttonClassName={'datepicker__button'}
-        className={'datepicker'}
+        error={error}
+        buttonClassName={classNames.buttonField}
+        className={classNames.datepicker}
+        theme={theme}
       />
     </LocalizationProvider>
   );

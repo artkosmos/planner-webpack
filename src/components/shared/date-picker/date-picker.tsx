@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Theme, ThemeProvider } from '@mui/material/styles';
 import { DatePickerProps } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
@@ -12,25 +13,28 @@ export const DatePicker = (
   props: Omit<DatePickerProps<Dayjs>, 'open' | 'onOpen' | 'onClose'> & {
     error?: boolean;
     buttonClassName?: string;
+    theme: Theme;
   },
 ) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <DateTimePicker
-      slots={{ ...props.slots, field: ButtonField }}
-      slotProps={{
-        ...props.slotProps,
-        field: {
-          setOpen,
-          error: props.error,
-          buttonClassName: props.buttonClassName,
-        } as never,
-      }}
-      {...props}
-      open={open}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-    />
+    <ThemeProvider theme={props.theme}>
+      <DateTimePicker
+        slots={{ ...props.slots, field: ButtonField }}
+        slotProps={{
+          ...props.slotProps,
+          field: {
+            setOpen,
+            error: props.error,
+            buttonClassName: props.buttonClassName,
+          } as never,
+        }}
+        {...props}
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+      />
+    </ThemeProvider>
   );
 };

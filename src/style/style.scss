@@ -45,15 +45,15 @@ body {
 
   .header {
     .MuiInputLabel-root {
-      color: $grey-text1;
+      color: $grey-1;
     }
 
     .MuiInputBase-root {
-      color: $grey-text2;
+      color: $grey-2;
     }
 
     .MuiSelect-icon {
-      color: $grey-text2;
+      color: $grey-2;
     }
   }
 
@@ -70,11 +70,11 @@ body {
 
   .MuiInputBase-root {
     .MuiOutlinedInput-notchedOutline {
-      border-color: $grey-text1;
+      border-color: $grey-1;
     }
 
     &:hover .MuiOutlinedInput-notchedOutline {
-      border-color: $grey-text2;
+      border-color: $grey-2;
     }
 
     &.Mui-focused .MuiOutlinedInput-notchedOutline {
@@ -87,20 +87,20 @@ body {
       color: $title-text-dark;
 
       &::before {
-        border-bottom-color: $grey-text2;
+        border-bottom-color: $grey-2;
       }
 
       &:hover::before {
-        border-bottom-color: $grey-text2;
+        border-bottom-color: $grey-2;
       }
     }
 
     .MuiInputLabel-root {
-      color: $grey-text1;
+      color: $grey-1;
     }
 
     .MuiSvgIcon-root {
-      color: $grey-text2;
+      color: $grey-2;
     }
   }
 
@@ -125,12 +125,26 @@ body {
     background-color: $input-dark-background;
     color: $title-text-dark;
 
-    &__label {
-      color: $title-text-dark;
+    &__button {
+      color: $title-text-dark !important;
+      border-color: $input-dark-background;
+
+      &_error {
+        color: $error-text !important;
+        border-color: #934242;
+      }
     }
 
-    &__label-error {
-      color: $error-text;
+    @media (hover: hover) {
+      &__button:hover {
+        border-color: $grey-2;
+        background-color: rgba(245, 245, 245, 0.04);
+      }
+
+      &__button_error:hover {
+        border-color: #d22f2f;
+        background-color: #D32F2F0A;
+      }
     }
   }
 
@@ -182,7 +196,7 @@ body {
 
   .checkbox {
     .MuiCheckbox-root {
-      color: $grey-text2;
+      color: $grey-2;
 
       &.MuiCheckbox-root.Mui-checked {
         color: #2190ff;

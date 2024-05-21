@@ -47,9 +47,9 @@ export const ButtonField = (
       aria-label={ariaLabel}
       onClick={() => setOpen?.((prev: boolean) => !prev)}
       color={error ? 'error' : 'primary'}
+      endIcon={<CalendarMonthIcon />}
     >
       {label}
-      <CalendarMonthIcon />
     </Button>
   );
 };

@@ -108,7 +108,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         control={control}
         name={'date'}
         error={!!errors.date}
-        validationMessage={config.nameRequiredValidationMsg}
+        validationMessage={config.dateRequiredValidationMsg}
         buttonLabel={config.dateFieldLabel}
         dateFormat={config.dateFormat}
         locale={config.locale}
