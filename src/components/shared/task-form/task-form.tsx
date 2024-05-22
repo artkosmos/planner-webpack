@@ -111,6 +111,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         validationMessage={config.dateRequiredValidationMsg}
         buttonLabel={config.dateFieldLabel}
         dateFormat={config.dateFormat}
+        theme={config.datePickerMode}
         locale={config.locale}
       />
       <ControlledCheckbox

@@ -42,6 +42,7 @@ export const ListCreator = () => {
   const error = useAppSelector(state => state.main.error);
   const isAppInitialized = useAppSelector(state => state.main.isInitialized);
   const { search, sortBy } = useAppSelector(state => state.main.listSort);
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   useEffect(() => {
     dispatch(appThunk.getTaskList({ search, sortBy })).finally(() =>
@@ -62,8 +63,9 @@ export const ListCreator = () => {
       checkboxLabel: t('create_form_config.checkbox_label'),
       dateFormat: dateFormats[i18n.language],
       locale: i18n.language,
+      datePickerMode: isDarkTheme ? 'dark' : 'light',
     };
-  }, [t, i18n.language]);
+  }, [i18n.language, isDarkTheme]);
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {

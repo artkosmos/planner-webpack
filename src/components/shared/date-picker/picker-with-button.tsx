@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import {
   FieldValues,
   useController,
@@ -9,11 +9,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import clsx from 'clsx';
-import { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-import { useDarkTheme } from '@/utils/use-dark-theme';
-
-import { DatePicker } from './date-picker';
+import { DatePicker } from './components/date-picker';
 
 import './style.scss';
 
@@ -22,10 +20,11 @@ import 'dayjs/locale/ru';
 type PickerProps<T extends FieldValues> = UseControllerProps<T> & {
   buttonLabel: string;
   dateFormat: string;
-  locale?: string;
   className?: string;
   validationMessage?: string;
   error?: boolean;
+  theme?: 'dark' | 'light';
+  locale?: string;
 };
 
 export const PickerWithButtonField = <T extends FieldValues>(
@@ -34,17 +33,16 @@ export const PickerWithButtonField = <T extends FieldValues>(
   const {
     name,
     control,
-    locale,
     dateFormat,
     validationMessage,
     error,
     buttonLabel,
+    theme,
+    locale,
   } = props;
 
-  const [date, setDate] = useState<Dayjs | null>(null);
-  const { isDark } = useDarkTheme();
   const {
-    field: { onChange },
+    field: { onChange, value },
   } = useController({
     name,
     control,
@@ -53,22 +51,17 @@ export const PickerWithButtonField = <T extends FieldValues>(
     },
   });
 
-  const onDatePickerChange = (value: Dayjs) => {
-    onChange(value.toDate());
-    setDate(value);
-  };
-
-  const theme = useMemo(
+  const currentTheme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode: isDark ? 'dark' : 'light',
+          mode: theme || 'light',
         },
       }),
-    [isDark],
+    [theme],
   );
 
-  const isFormattedDate = date && date.format(dateFormat);
+  const isFormattedDate = value && dayjs(value).format(dateFormat);
 
   const classNames = {
     buttonField: clsx(
@@ -83,12 +76,13 @@ export const PickerWithButtonField = <T extends FieldValues>(
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
       <DatePicker
         label={error ? validationMessage : isFormattedDate || buttonLabel}
-        value={date}
-        onChange={onDatePickerChange}
+        value={dayjs(value)}
+        onChange={value => onChange(value.toDate())}
         error={error}
         buttonClassName={classNames.buttonField}
         className={classNames.datepicker}
-        theme={theme}
+        theme={currentTheme}
+        closeOnSelect={false}
       />
     </LocalizationProvider>
   );

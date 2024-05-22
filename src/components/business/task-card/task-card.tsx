@@ -37,6 +37,7 @@ export const TaskCard = ({ className }: Props) => {
   const currentTask = useAppSelector(state => state.main.currentTask);
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   useEffect(() => {
     dispatch(appThunk.getTask(id));
@@ -55,8 +56,9 @@ export const TaskCard = ({ className }: Props) => {
       checkboxLabel: t('edit_form_config.checkbox_label'),
       dateFormat: dateFormats[i18n.language],
       locale: i18n.language,
+      datePickerMode: isDarkTheme ? 'dark' : 'light',
     };
-  }, [t, i18n.language]);
+  }, [i18n.language, isDarkTheme]);
 
   const onEditFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {

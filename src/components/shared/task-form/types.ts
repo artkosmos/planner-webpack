@@ -29,4 +29,5 @@ export interface ITaskFormConfig {
   checkboxLabel?: string;
   dateFormat?: string;
   locale?: string;
+  datePickerMode?: 'dark' | 'light';
 }
