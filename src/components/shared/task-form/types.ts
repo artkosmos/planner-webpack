@@ -18,16 +18,24 @@ export interface EditTaskFormFields {
 }
 
 export interface ITaskFormConfig {
+  imageField: {
+    label?: string;
+  };
+  nameField: {
+    label?: string;
+    validationMsg?: string;
+    formatRegExp?: string;
+  };
+  dateField: {
+    label?: string;
+    validationMsg?: string;
+    locale?: string;
+    dateFormat?: string;
+    datePickerMode?: 'dark' | 'light';
+  };
+  checkbox: {
+    label?: string;
+  };
   cancelButtonTitle: string;
   confirmButtonTitle: string;
-  imageButtonTitle: string;
-  nameFieldLabel?: string;
-  nameRequiredValidationMsg?: string;
-  dateRequiredValidationMsg?: string;
-  dateFieldLabel?: string;
-  nameFieldRegExp?: string;
-  checkboxLabel?: string;
-  dateFormat?: string;
-  locale?: string;
-  datePickerMode?: 'dark' | 'light';
 }

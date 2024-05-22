@@ -45,18 +45,26 @@ export const TaskCard = ({ className }: Props) => {
 
   const updateTaskFormConfig: ITaskFormConfig = useMemo(() => {
     return {
+      imageField: {
+        label: t('edit_form_config.image_button_text'),
+      },
+      nameField: {
+        label: t('edit_form_config.name_label'),
+        validationMsg: t('edit_form_config.name_validation'),
+        formatRegExp: '[a-z0-9а-я\\s]+$',
+      },
+      dateField: {
+        label: t('edit_form_config.date_label'),
+        validationMsg: t('edit_form_config.date_validation'),
+        locale: i18n.language,
+        dateFormat: dateFormats[i18n.language],
+        datePickerMode: isDarkTheme ? 'dark' : 'light',
+      },
+      checkbox: {
+        label: t('edit_form_config.checkbox_label'),
+      },
       cancelButtonTitle: t('edit_form_config.cancel_button'),
       confirmButtonTitle: t('edit_form_config.edit_button'),
-      imageButtonTitle: t('edit_form_config.image_button_text'),
-      dateFieldLabel: t('edit_form_config.date_label'),
-      nameFieldLabel: t('edit_form_config.name_label'),
-      dateRequiredValidationMsg: t('edit_form_config.date_validation'),
-      nameRequiredValidationMsg: t('edit_form_config.name_validation'),
-      nameFieldRegExp: '[a-z0-9а-я\\s]+$',
-      checkboxLabel: t('edit_form_config.checkbox_label'),
-      dateFormat: dateFormats[i18n.language],
-      locale: i18n.language,
-      datePickerMode: isDarkTheme ? 'dark' : 'light',
     };
   }, [i18n.language, isDarkTheme]);
 

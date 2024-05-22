@@ -11,13 +11,22 @@ import '@testing-library/jest-dom';
 describe('testing of task form component', () => {
   const onAction = jest.fn();
   const config: ITaskFormConfig = {
-    nameFieldLabel: 'Title',
-    nameRequiredValidationMsg: 'Title is required',
-    dateFieldLabel: 'Date',
-    dateRequiredValidationMsg: 'Date is required',
+    imageField: {
+      label: 'Choose image',
+    },
+    nameField: {
+      label: 'Title',
+      validationMsg: 'Title is required',
+    },
+    dateField: {
+      label: 'Date',
+      validationMsg: 'Date is required',
+    },
+    checkbox: {
+      label: 'Checkbox',
+    },
     cancelButtonTitle: 'Cancel',
     confirmButtonTitle: 'Confirm',
-    imageButtonTitle: 'Choose image',
   };
   const newTask: ITask = {
     id: '',
@@ -43,10 +52,10 @@ describe('testing of task form component', () => {
       <TaskForm task={newTask} onAction={onAction} config={config} />,
     );
 
-    const nameField = getByLabelText(config.nameFieldLabel);
-    const nameFieldLabel = getByText(config.nameFieldLabel);
-    const dateField = getByLabelText(config.dateFieldLabel);
-    const dateFieldLabel = getByText(config.dateFieldLabel);
+    const nameField = getByLabelText(config.nameField.label);
+    const nameFieldLabel = getByText(config.nameField.label);
+    const dateField = getByLabelText(config.dateField.label);
+    const dateFieldLabel = getByText(config.dateField.label);
 
     expect(nameFieldLabel).toHaveTextContent('Title');
     expect(dateFieldLabel).toHaveTextContent('Date');
@@ -59,10 +68,10 @@ describe('testing of task form component', () => {
       <TaskForm task={existingTask} onAction={onAction} config={config} />,
     );
 
-    const nameField = getByLabelText(config.nameFieldLabel);
-    const nameFieldLabel = getByText(config.nameFieldLabel);
-    const dateField = getByLabelText(config.dateFieldLabel);
-    const dateFieldLabel = getByText(config.dateFieldLabel);
+    const nameField = getByLabelText(config.nameField.label);
+    const nameFieldLabel = getByText(config.nameField.label);
+    const dateField = getByLabelText(config.dateField.label);
+    const dateFieldLabel = getByText(config.dateField.label);
 
     expect(nameFieldLabel).toHaveTextContent('Title');
     expect(dateFieldLabel).toHaveTextContent('Date');
@@ -75,8 +84,8 @@ describe('testing of task form component', () => {
       <TaskForm task={newTask} onAction={onAction} config={config} />,
     );
 
-    const nameField = getByLabelText(config.nameFieldLabel);
-    const dateField = getByLabelText(config.dateFieldLabel);
+    const nameField = getByLabelText(config.nameField.label);
+    const dateField = getByLabelText(config.dateField.label);
     const confirmButton = getByRole('button', {
       name: config.confirmButtonTitle,
     });
@@ -122,10 +131,10 @@ describe('testing of task form component', () => {
       <TaskForm task={newTask} onAction={onAction} config={config} />,
     );
 
-    const nameField = getByLabelText(config.nameFieldLabel);
-    const nameFieldLabel = getByText(config.nameFieldLabel);
-    const dateField = getByLabelText(config.dateFieldLabel);
-    const dateFieldLabel = getByText(config.dateFieldLabel);
+    const nameField = getByLabelText(config.nameField.label);
+    const nameFieldLabel = getByText(config.nameField.label);
+    const dateField = getByLabelText(config.dateField.label);
+    const dateFieldLabel = getByText(config.dateField.label);
     const confirmButton = getByRole('button', {
       name: config.confirmButtonTitle,
     });
@@ -135,12 +144,8 @@ describe('testing of task form component', () => {
     fireEvent.click(confirmButton);
 
     await waitFor(() => {
-      expect(nameFieldLabel).toHaveTextContent(
-        config.nameRequiredValidationMsg,
-      );
-      expect(dateFieldLabel).toHaveTextContent(
-        config.dateRequiredValidationMsg,
-      );
+      expect(nameFieldLabel).toHaveTextContent(config.nameField.validationMsg);
+      expect(dateFieldLabel).toHaveTextContent(config.nameField.validationMsg);
     });
   });
 
@@ -150,11 +155,14 @@ describe('testing of task form component', () => {
       <TaskForm
         task={newTask}
         onAction={onAction}
-        config={{ ...config, nameFieldRegExp: regExp }}
+        config={{
+          ...config,
+          nameField: { ...config.nameField, formatRegExp: regExp },
+        }}
       />,
     );
 
-    const nameField = getByLabelText(config.nameFieldLabel);
+    const nameField = getByLabelText(config.nameField.label);
 
     await userEvent.type(nameField, 'test str&#ing $%123&&');
 
@@ -166,7 +174,7 @@ describe('testing of task form component', () => {
       <TaskForm task={newTask} onAction={onAction} config={config} />,
     );
 
-    const nameField = getByLabelText(config.nameFieldLabel);
+    const nameField = getByLabelText(config.nameField.label);
     fireEvent.keyUp(nameField, { key: 'Enter' });
 
     expect(document.activeElement).not.toBe(nameField);

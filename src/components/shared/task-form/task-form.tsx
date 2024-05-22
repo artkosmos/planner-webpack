@@ -89,7 +89,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       <ControlledImageUploader
         name={'image'}
         control={control}
-        buttonText={config.imageButtonTitle}
+        buttonText={config.imageField.label}
         className={'task-form__file-input'}
         clearImage={fileClearHandler}
         preview={task.image}
@@ -98,26 +98,26 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         name={'title'}
         control={control}
         className={'task-form__name-input'}
-        label={errors.title ? errors.title.message : config.nameFieldLabel}
+        label={errors.title ? errors.title.message : config.nameField.label}
         error={!!errors.title}
-        regExp={config.nameFieldRegExp}
-        validationMessage={config.nameRequiredValidationMsg}
+        regExp={config.nameField.formatRegExp}
+        validationMessage={config.nameField.validationMsg}
         autoFocus
       />
       <PickerWithButtonField
         control={control}
         name={'date'}
         error={!!errors.date}
-        validationMessage={config.dateRequiredValidationMsg}
-        buttonLabel={config.dateFieldLabel}
-        dateFormat={config.dateFormat}
-        theme={config.datePickerMode}
-        locale={config.locale}
+        validationMessage={config.dateField.validationMsg}
+        buttonLabel={config.dateField.label}
+        dateFormat={config.dateField.dateFormat}
+        theme={config.dateField.datePickerMode}
+        locale={config.dateField.locale}
       />
       <ControlledCheckbox
         name={'important'}
         control={control}
-        labelText={config.checkboxLabel}
+        labelText={config.checkbox.label}
         className={'task-form__checkbox'}
       />
       <div className={'task-form__button-container'}>

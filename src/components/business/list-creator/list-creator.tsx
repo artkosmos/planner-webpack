@@ -52,18 +52,26 @@ export const ListCreator = () => {
 
   const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
     return {
+      imageField: {
+        label: t('create_form_config.image_button_text'),
+      },
+      nameField: {
+        label: t('create_form_config.name_label'),
+        validationMsg: t('create_form_config.name_validation'),
+        formatRegExp: '[a-z0-9а-я\\s]+$',
+      },
+      dateField: {
+        label: t('create_form_config.date_label'),
+        validationMsg: t('create_form_config.date_validation'),
+        locale: i18n.language,
+        dateFormat: dateFormats[i18n.language],
+        datePickerMode: isDarkTheme ? 'dark' : 'light',
+      },
+      checkbox: {
+        label: t('create_form_config.checkbox_label'),
+      },
       cancelButtonTitle: t('create_form_config.cancel_button'),
       confirmButtonTitle: t('create_form_config.add_button'),
-      imageButtonTitle: t('create_form_config.image_button_text'),
-      nameFieldLabel: t('create_form_config.name_label'),
-      dateFieldLabel: t('create_form_config.date_label'),
-      dateRequiredValidationMsg: t('create_form_config.date_validation'),
-      nameRequiredValidationMsg: t('create_form_config.name_validation'),
-      nameFieldRegExp: '[a-z0-9а-я\\s]+$',
-      checkboxLabel: t('create_form_config.checkbox_label'),
-      dateFormat: dateFormats[i18n.language],
-      locale: i18n.language,
-      datePickerMode: isDarkTheme ? 'dark' : 'light',
     };
   }, [i18n.language, isDarkTheme]);
 
