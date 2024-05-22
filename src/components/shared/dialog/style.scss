@@ -20,6 +20,11 @@
   border-radius: 0 0 10px 10px;
 }
 
+.css-bxxbz8-MuiModal-root-MuiDialog-root .MuiPaper-root {
+  width: 95%;
+  margin: 0;
+}
+
 @media screen and (width <= 600px) {
   .dialog-mui-content {
     padding: 15px !important;

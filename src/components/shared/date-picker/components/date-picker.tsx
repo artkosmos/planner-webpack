@@ -27,11 +27,16 @@ export const DatePicker = (
             error: props.error,
             buttonClassName: props.buttonClassName,
           } as never,
+          actionBar: {
+            actions: ['accept'],
+          },
         }}
         {...props}
         open={open}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
+        dayOfWeekFormatter={weekday => `${weekday.format('dd')}`.toUpperCase()}
+        reduceAnimations={true}
       />
     </ThemeProvider>
   );
