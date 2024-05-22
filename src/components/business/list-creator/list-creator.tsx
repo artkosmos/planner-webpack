@@ -115,9 +115,10 @@ export const ListCreator = () => {
         />
       </div>
       {isLoading || !isAppInitialized ? (
-        <div className={'list-creator__loader'}>
-          <CircularProgress data-testid={'loader'} />
-        </div>
+        <CircularProgress
+          className={'list-creator__loader'}
+          data-testid={'loader'}
+        />
       ) : (
         <div className={'list-creator__table-block'}>
           {!!list.length && (

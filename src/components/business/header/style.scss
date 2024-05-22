@@ -10,10 +10,6 @@
   background-color: $soft-blue;
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 50%);
 
-  &_dark {
-    background-color: $background-dark-2;
-  }
-
   &__settings {
     display: flex;
     flex: 1 1 max-content;
@@ -45,10 +41,6 @@
     font-size: 23px;
     font-weight: bold;
     color: $title-text;
-
-    &_dark {
-      color: $title-text-dark;
-    }
   }
 
   &__search {

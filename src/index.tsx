@@ -6,6 +6,7 @@ import { router } from '@/routes';
 import { setupStore } from '@/store';
 
 import './style/style.scss';
+import './style/style.dark.scss';
 
 import './i18n.ts';
 

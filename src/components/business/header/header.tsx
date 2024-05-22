@@ -70,27 +70,28 @@ export const Header = () => {
     dispatch(appActions.setSort(selectValue));
   };
 
-  const classNames = {
-    header: clsx(
-      'header',
-      isDarkTheme && 'header_dark',
-      isBurgerOpen && 'header_active',
-    ),
-    title: clsx('header__title', isDarkTheme && 'header__title_dark'),
-    selectLanguage: clsx('header__lang-select'),
-    selectSort: clsx('header__sort-select'),
-    burger: clsx(
-      'header__burger',
-      isBurgerOpen && 'header__burger_active',
-      isDarkTheme && 'header__burger_dark',
-    ),
-    burgerList: clsx(
-      'header__burger-list',
-      isBurgerOpen && 'header__burger-list_active',
-      isDarkTheme && 'header__burger-list_dark',
-    ),
-    overlay: clsx('header__overlay', isBurgerOpen && 'header__overlay_active'),
-  };
+  const classNames = useMemo(() => {
+    return {
+      header: clsx('header', isBurgerOpen && 'header_active'),
+      title: clsx('header__title'),
+      selectLanguage: clsx('header__lang-select'),
+      selectSort: clsx('header__sort-select'),
+      burger: clsx(
+        'header__burger',
+        isBurgerOpen && 'header__burger_active',
+        isDarkTheme && 'header__burger_dark',
+      ),
+      burgerList: clsx(
+        'header__burger-list',
+        isBurgerOpen && 'header__burger-list_active',
+        isDarkTheme && 'header__burger-list_dark',
+      ),
+      overlay: clsx(
+        'header__overlay',
+        isBurgerOpen && 'header__overlay_active',
+      ),
+    };
+  }, [isDarkTheme, isBurgerOpen]);
 
   return (
     <header className={classNames.header} data-testid={'header'}>

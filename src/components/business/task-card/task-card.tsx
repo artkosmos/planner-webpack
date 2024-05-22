@@ -20,11 +20,8 @@ import {
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { useDarkTheme } from '@/utils/use-dark-theme';
 
 import './style.scss';
-
-import 'dayjs/locale/ru';
 
 type Props = {
   className?: string;
@@ -36,7 +33,6 @@ export const TaskCard = ({ className }: Props) => {
   const [openImageDialog, setOpenImageDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation('task');
-  const { isDark } = useDarkTheme();
 
   const currentTask = useAppSelector(state => state.main.currentTask);
   const isLoading = useAppSelector(state => state.main.isLoading);
@@ -60,7 +56,7 @@ export const TaskCard = ({ className }: Props) => {
       dateFormat: dateFormats[i18n.language],
       locale: i18n.language,
     };
-  }, [t]);
+  }, [t, i18n.language]);
 
   const onEditFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -77,17 +73,16 @@ export const TaskCard = ({ className }: Props) => {
     }
   };
 
-  const classNames = useMemo(
-    () => ({
-      card: clsx('task-card', isDark && 'task-card_dark', className),
-      title: clsx('task-card__title', isDark && 'task-card__title_dark'),
-      list: clsx('task-card__list', isDark && 'task-card__list_dark'),
+  const classNames = useMemo(() => {
+    return {
+      card: clsx('task-card', className),
+      title: clsx('task-card__title'),
+      list: clsx('task-card__list'),
       info: clsx('task-card__info'),
       imageDialog: clsx('task-card__image-dialog'),
       image: clsx('task-card__image-dialog_image'),
-    }),
-    [isDark],
-  );
+    };
+  }, []);
 
   if (isLoading) {
     return (
