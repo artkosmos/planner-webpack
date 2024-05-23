@@ -1,0 +1,38 @@
+@import '@/style/variables';
+
+.datepicker {
+  transition: none !important;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    color: $title-text !important;
+    font-weight: 600 !important;
+
+    &_error {
+      color: $error-text !important;
+    }
+
+    &_large {
+      font-size: 18px !important;
+    }
+  }
+}
+
+.MuiPickersLayout-contentWrapper {
+  max-height: 335px;
+}
+
+.css-1cxh0dg-MuiTypography-root {
+  display: none;
+  text-transform: capitalize;
+}
+
+.css-dplwbx-MuiPickersCalendarHeader-label {
+  text-transform: capitalize;
+}
+
+.MuiPickersToolbarText-root {
+  text-transform: capitalize;
+}

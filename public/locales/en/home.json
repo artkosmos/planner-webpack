@@ -7,7 +7,7 @@
   "no_data": "No available data",
   "create_form_config": {
     "name_label": "Task name",
-    "date_label": "Date",
+    "date_label": "Pick date and time",
     "add_button": "Add",
     "cancel_button": "Cancel",
     "date_validation": "Enter valid date",

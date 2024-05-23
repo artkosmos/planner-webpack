@@ -1,4 +1,8 @@
 import type { ITask } from '@/common/types';
+import {
+  AvailablePickerLocales,
+  AvailablePickerMode,
+} from '@/components/shared/date-picker/types';
 
 export enum EditFormButtons {
   CANCEL = 'cancel',
@@ -18,13 +22,24 @@ export interface EditTaskFormFields {
 }
 
 export interface ITaskFormConfig {
+  imageField: {
+    label?: string;
+  };
+  nameField: {
+    label?: string;
+    validationMsg?: string;
+    formatRegExp?: string;
+  };
+  dateField: {
+    label?: string;
+    validationMsg?: string;
+    locale?: AvailablePickerLocales;
+    dateFormat?: string;
+    datePickerMode?: AvailablePickerMode;
+  };
+  checkbox: {
+    label?: string;
+  };
   cancelButtonTitle: string;
   confirmButtonTitle: string;
-  imageButtonTitle: string;
-  nameFieldLabel?: string;
-  nameRequiredValidationMsg?: string;
-  dateRequiredValidationMsg?: string;
-  dateFieldLabel?: string;
-  nameFieldRegExp?: string;
-  checkboxLabel?: string;
 }

@@ -14,12 +14,13 @@ import { ButtonPrimary } from '@/components/shared/primary-button';
 import {
   EditFormButtons,
   type IEditTaskAction,
-  type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 import { TASK } from '@/routes';
 import { useAppDispatch, useAppSelector } from '@/store';
+
+import { getTaskCreateConfig } from './form-config';
 
 import './style.scss';
 
@@ -42,6 +43,7 @@ export const ListCreator = () => {
   const error = useAppSelector(state => state.main.error);
   const isAppInitialized = useAppSelector(state => state.main.isInitialized);
   const { search, sortBy } = useAppSelector(state => state.main.listSort);
+  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
 
   useEffect(() => {
     dispatch(appThunk.getTaskList({ search, sortBy })).finally(() =>
@@ -49,19 +51,10 @@ export const ListCreator = () => {
     );
   }, [search, sortBy, dispatch]);
 
-  const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
-    return {
-      cancelButtonTitle: t('create_form_config.cancel_button'),
-      confirmButtonTitle: t('create_form_config.add_button'),
-      imageButtonTitle: t('create_form_config.image_button_text'),
-      nameFieldLabel: t('create_form_config.name_label'),
-      dateFieldLabel: t('create_form_config.date_label'),
-      dateRequiredValidationMsg: t('create_form_config.date_validation'),
-      nameRequiredValidationMsg: t('create_form_config.name_validation'),
-      nameFieldRegExp: '[a-z0-9а-я\\s]+$',
-      checkboxLabel: t('create_form_config.checkbox_label'),
-    };
-  }, [t]);
+  const formConfig = useMemo(
+    () => getTaskCreateConfig(t, i18n.language, isDarkTheme),
+    [t, i18n.language, isDarkTheme],
+  );
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -102,7 +95,7 @@ export const ListCreator = () => {
           <TaskForm
             onAction={onCreateFormAction}
             task={emptyTaskModel}
-            config={createTaskFormConfig}
+            config={formConfig}
           />
         </Dialog>
         <ButtonPrimary
@@ -113,9 +106,10 @@ export const ListCreator = () => {
         />
       </div>
       {isLoading || !isAppInitialized ? (
-        <div className={'list-creator__loader'}>
-          <CircularProgress data-testid={'loader'} />
-        </div>
+        <CircularProgress
+          className={'list-creator__loader'}
+          data-testid={'loader'}
+        />
       ) : (
         <div className={'list-creator__table-block'}>
           {!!list.length && (

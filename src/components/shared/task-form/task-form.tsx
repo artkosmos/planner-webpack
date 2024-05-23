@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import type { ITask } from '@/common/types';
 import { ControlledCheckbox } from '@/components/shared/controlled-checkbox';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
-import { DateInput } from '@/components/shared/date-input';
+import { ControlledImageUploader } from '@/components/shared/controlled-image-uploader';
+import { PickerWithButtonField } from '@/components/shared/date-picker';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
 import { ButtonPrimary } from '@/components/shared/primary-button';
 
-import { ControlledImageUploader } from '../controlled-image-uploader';
 import {
   EditFormButtons,
   type EditTaskFormFields,
@@ -31,7 +31,6 @@ type Props = {
 
 export const TaskForm = ({ task, onAction, config }: Props) => {
   const {
-    register,
     handleSubmit,
     control,
     setValue,
@@ -90,7 +89,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       <ControlledImageUploader
         name={'image'}
         control={control}
-        buttonText={config.imageButtonTitle}
+        buttonText={config.imageField.label}
         className={'task-form__file-input'}
         clearImage={fileClearHandler}
         preview={task.image}
@@ -99,21 +98,26 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         name={'title'}
         control={control}
         className={'task-form__name-input'}
-        label={errors.title ? errors.title.message : config.nameFieldLabel}
+        label={errors.title ? errors.title.message : config.nameField.label}
         error={!!errors.title}
-        regExp={config.nameFieldRegExp}
-        validationMessage={config.nameRequiredValidationMsg}
+        regExp={config.nameField.formatRegExp}
+        validationMessage={config.nameField.validationMsg}
         autoFocus
       />
-      <DateInput
-        {...register('date', { required: config.dateRequiredValidationMsg })}
-        error={errors.date ? errors.date.message : null}
-        label={config.dateFieldLabel}
+      <PickerWithButtonField
+        control={control}
+        name={'date'}
+        error={!!errors.date}
+        validationMessage={config.dateField.validationMsg}
+        buttonLabel={config.dateField.label}
+        dateFormat={config.dateField.dateFormat}
+        theme={config.dateField.datePickerMode}
+        locale={config.dateField.locale}
       />
       <ControlledCheckbox
         name={'important'}
         control={control}
-        labelText={config.checkboxLabel}
+        labelText={config.checkbox.label}
         className={'task-form__checkbox'}
       />
       <div className={'task-form__button-container'}>

@@ -15,15 +15,14 @@ import { ButtonPrimary } from '@/components/shared/primary-button';
 import {
   EditFormButtons,
   type IEditTaskAction,
-  type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 import { useAppDispatch, useAppSelector } from '@/store';
 
-import './style.scss';
+import { getTaskUpdateConfig } from './form-config';
 
-import 'dayjs/locale/ru';
+import './style.scss';
 
 type Props = {
   className?: string;
@@ -45,19 +44,10 @@ export const TaskCard = ({ className }: Props) => {
     dispatch(appThunk.getTask(id));
   }, []);
 
-  const updateTaskFormConfig: ITaskFormConfig = useMemo(() => {
-    return {
-      cancelButtonTitle: t('edit_form_config.cancel_button'),
-      confirmButtonTitle: t('edit_form_config.edit_button'),
-      imageButtonTitle: t('edit_form_config.image_button_text'),
-      dateFieldLabel: t('edit_form_config.date_label'),
-      nameFieldLabel: t('edit_form_config.name_label'),
-      dateRequiredValidationMsg: t('edit_form_config.date_validation'),
-      nameRequiredValidationMsg: t('edit_form_config.name_validation'),
-      nameFieldRegExp: '[a-z0-9а-я\\s]+$',
-      checkboxLabel: t('edit_form_config.checkbox_label'),
-    };
-  }, [t]);
+  const formConfig = useMemo(
+    () => getTaskUpdateConfig(t, i18n.language, isDarkTheme),
+    [t, i18n.language, isDarkTheme],
+  );
 
   const onEditFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -74,6 +64,17 @@ export const TaskCard = ({ className }: Props) => {
     }
   };
 
+  const classNames = useMemo(() => {
+    return {
+      card: clsx('task-card', className),
+      title: clsx('task-card__title'),
+      list: clsx('task-card__list'),
+      info: clsx('task-card__info'),
+      imageDialog: clsx('task-card__image-dialog'),
+      image: clsx('task-card__image-dialog_image'),
+    };
+  }, []);
+
   if (isLoading) {
     return (
       <CircularProgress
@@ -86,15 +87,6 @@ export const TaskCard = ({ className }: Props) => {
   if (!currentTask || error) {
     return <InfoTitle title={error} />;
   }
-
-  const classNames = {
-    card: clsx('task-card', isDarkTheme && 'task-card_dark', className),
-    title: clsx('task-card__title', isDarkTheme && 'task-card__title_dark'),
-    list: clsx('task-card__list', isDarkTheme && 'task-card__list_dark'),
-    info: clsx('task-card__info'),
-    imageDialog: clsx('task-card__image-dialog'),
-    image: clsx('task-card__image-dialog_image'),
-  };
 
   return (
     <Card className={classNames.card}>
@@ -133,7 +125,7 @@ export const TaskCard = ({ className }: Props) => {
       />
       <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
         <TaskForm
-          config={updateTaskFormConfig}
+          config={formConfig}
           onAction={onEditFormAction}
           task={currentTask}
         />
