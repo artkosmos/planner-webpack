@@ -8,6 +8,7 @@ import { setupStore } from '@/store';
 import './style/style.scss';
 import './style/style.dark.scss';
 
+import 'dayjs/locale/ru';
 import './i18n.ts';
 
 const rootElement = document.getElementById('root');

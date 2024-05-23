@@ -1,9 +1,5 @@
 import { useMemo } from 'react';
-import {
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import { createTheme } from '@mui/material/styles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,21 +7,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 
-import { DatePicker } from './components/date-picker';
+import { DatePicker } from './components';
+import { localeText } from './locale-text';
+import { PickerProps } from './types';
 
 import './style.scss';
-
-import 'dayjs/locale/ru';
-
-type PickerProps<T extends FieldValues> = UseControllerProps<T> & {
-  buttonLabel: string;
-  dateFormat: string;
-  className?: string;
-  validationMessage?: string;
-  error?: boolean;
-  theme?: 'dark' | 'light';
-  locale?: string;
-};
 
 export const PickerWithButtonField = <T extends FieldValues>(
   props: PickerProps<T>,
@@ -73,16 +59,21 @@ export const PickerWithButtonField = <T extends FieldValues>(
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+    <LocalizationProvider
+      dateAdapter={AdapterDayjs}
+      adapterLocale={locale}
+      localeText={localeText[locale]}
+    >
       <DatePicker
         label={error ? validationMessage : isFormattedDate || buttonLabel}
         value={dayjs(value)}
-        onChange={value => onChange(value.toDate())}
+        onAccept={value => onChange(value.toDate())}
         error={error}
         buttonClassName={classNames.buttonField}
         className={classNames.datepicker}
         theme={currentTheme}
         closeOnSelect={false}
+        disablePast
       />
     </LocalizationProvider>
   );

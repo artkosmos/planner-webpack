@@ -28,7 +28,7 @@ export const DatePicker = (
             buttonClassName: props.buttonClassName,
           } as never,
           actionBar: {
-            actions: ['accept'],
+            actions: ['cancel', 'accept'],
           },
         }}
         {...props}
