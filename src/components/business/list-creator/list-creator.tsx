@@ -14,12 +14,13 @@ import { ButtonPrimary } from '@/components/shared/primary-button';
 import {
   EditFormButtons,
   type IEditTaskAction,
-  type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 import { TASK } from '@/routes';
 import { useAppDispatch, useAppSelector } from '@/store';
+
+import { getTaskCreateConfig } from './form-config';
 
 import './style.scss';
 
@@ -50,30 +51,10 @@ export const ListCreator = () => {
     );
   }, [search, sortBy, dispatch]);
 
-  const createTaskFormConfig: ITaskFormConfig = useMemo(() => {
-    return {
-      imageField: {
-        label: t('create_form_config.image_button_text'),
-      },
-      nameField: {
-        label: t('create_form_config.name_label'),
-        validationMsg: t('create_form_config.name_validation'),
-        formatRegExp: '[a-z0-9а-я\\s]+$',
-      },
-      dateField: {
-        label: t('create_form_config.date_label'),
-        validationMsg: t('create_form_config.date_validation'),
-        locale: i18n.language,
-        dateFormat: dateFormats[i18n.language],
-        datePickerMode: isDarkTheme ? 'dark' : 'light',
-      },
-      checkbox: {
-        label: t('create_form_config.checkbox_label'),
-      },
-      cancelButtonTitle: t('create_form_config.cancel_button'),
-      confirmButtonTitle: t('create_form_config.add_button'),
-    };
-  }, [i18n.language, isDarkTheme]);
+  const formConfig = useMemo(
+    () => getTaskCreateConfig(t, i18n.language, isDarkTheme),
+    [t, i18n.language, isDarkTheme],
+  );
 
   const onCreateFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -114,7 +95,7 @@ export const ListCreator = () => {
           <TaskForm
             onAction={onCreateFormAction}
             task={emptyTaskModel}
-            config={createTaskFormConfig}
+            config={formConfig}
           />
         </Dialog>
         <ButtonPrimary

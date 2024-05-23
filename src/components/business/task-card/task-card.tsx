@@ -15,11 +15,12 @@ import { ButtonPrimary } from '@/components/shared/primary-button';
 import {
   EditFormButtons,
   type IEditTaskAction,
-  type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 import { useAppDispatch, useAppSelector } from '@/store';
+
+import { getTaskUpdateConfig } from './form-config';
 
 import './style.scss';
 
@@ -43,30 +44,10 @@ export const TaskCard = ({ className }: Props) => {
     dispatch(appThunk.getTask(id));
   }, []);
 
-  const updateTaskFormConfig: ITaskFormConfig = useMemo(() => {
-    return {
-      imageField: {
-        label: t('edit_form_config.image_button_text'),
-      },
-      nameField: {
-        label: t('edit_form_config.name_label'),
-        validationMsg: t('edit_form_config.name_validation'),
-        formatRegExp: '[a-z0-9а-я\\s]+$',
-      },
-      dateField: {
-        label: t('edit_form_config.date_label'),
-        validationMsg: t('edit_form_config.date_validation'),
-        locale: i18n.language,
-        dateFormat: dateFormats[i18n.language],
-        datePickerMode: isDarkTheme ? 'dark' : 'light',
-      },
-      checkbox: {
-        label: t('edit_form_config.checkbox_label'),
-      },
-      cancelButtonTitle: t('edit_form_config.cancel_button'),
-      confirmButtonTitle: t('edit_form_config.edit_button'),
-    };
-  }, [i18n.language, isDarkTheme]);
+  const formConfig = useMemo(
+    () => getTaskUpdateConfig(t, i18n.language, isDarkTheme),
+    [t, i18n.language, isDarkTheme],
+  );
 
   const onEditFormAction = ({ name, model }: IEditTaskAction) => {
     switch (name) {
@@ -144,7 +125,7 @@ export const TaskCard = ({ className }: Props) => {
       />
       <Dialog title={t('dialog_title')} isOpen={openEditDialog}>
         <TaskForm
-          config={updateTaskFormConfig}
+          config={formConfig}
           onAction={onEditFormAction}
           task={currentTask}
         />
