@@ -16,7 +16,13 @@ body {
   @include layout;
 }
 
-@media screen and (width <= 500px) {
+@media screen and (width <= 750px) {
+  .container {
+    padding: 20px;
+  }
+}
+
+@media screen and (width <= 600px) {
   .container {
     padding: 0 10px 15px;
   }

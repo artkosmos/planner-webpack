@@ -1,6 +1,5 @@
 {
   "create_button": "Добавить задачу",
-  "table_column_1": "Id",
   "table_column_2": "Название",
   "table_column_3": "Дата",
   "dialog_title": "Создать задачу",
