@@ -19,6 +19,10 @@
     margin: 20px 0;
     font-size: 30px;
     color: $title-text;
+
+    svg {
+      scale: 1.5;
+    }
   }
 
   &__list {
@@ -27,13 +31,14 @@
     gap: 10px;
     list-style-type: none;
     margin-top: 0;
+    padding: 0;
 
     li {
       overflow-wrap: anywhere;
     }
 
     li:first-child {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       opacity: 0.5;
       font-size: 16px;
     }
@@ -57,15 +62,16 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    padding: 0 20px;
   }
 
   &__image {
     max-width: 200px;
     max-height: 200px;
-    margin: 8px 40px 0 20px;
+    margin: 8px 15px 0 20px;
     border-radius: 8px;
     box-shadow:
-      -10px 0 15px -10px #000,
+      -10px 0 20px -10px #000,
       10px 2px 13px -10px #000,
       5px 5px 15px 5px rgb(0 0 0 / 0%);
     transition: transform 0.15s linear;
@@ -101,19 +107,22 @@
   }
 }
 
-@media screen and (width <= 600px) {
+@media screen and (width <= 650px) {
   .task-card {
     &__info {
       flex-direction: column;
-      align-items: center;
+      align-items: start;
     }
 
     &__image {
       margin: 0;
+      align-self: center;
     }
 
     &__list {
-      padding: 0;
+      li {
+        font-size: 18px;
+      }
 
       li:first-child {
         margin-bottom: 0;
@@ -122,17 +131,33 @@
       }
     }
 
+    &__important {
+      position: absolute;
+    }
+
     &__title {
-      font-size: 26px;
+      font-size: 22px;
       align-items: center;
-      width: min-content;
+      width: 100%;
       gap: 10px;
       text-align: center;
       margin: 0 auto 20px;
 
       svg {
-        scale: 1.5;
+        scale: 1;
       }
+    }
+
+    &__point {
+      font-size: 18px;
+    }
+  }
+}
+
+@media screen and (width <= 500px) {
+  .task-card {
+    &__info {
+      padding: 0;
     }
   }
 }
