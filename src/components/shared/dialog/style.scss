@@ -12,25 +12,28 @@
 .dialog {
   .MuiPaper-root {
     background-color: transparent;
+    padding-top: 20px !important;
+    border-radius: 15px;
+    overflow: visible;
+    width: 95%;
+    margin: 0;
   }
 }
 
 .dialog-mui-content {
+  display: flex;
+  flex-direction: column;
   background-color: $background;
   border-radius: 0 0 10px 10px;
 }
 
-.css-bxxbz8-MuiModal-root-MuiDialog-root .MuiPaper-root {
-  width: 95%;
-  margin: 0;
-}
-
-@media screen and (width <= 600px) {
+@media screen and (width <= 750px) {
   .dialog-mui-content {
-    padding: 15px !important;
+    padding: 10px !important;
   }
 
   .dialog-mui-title {
-    padding: 15px !important;
+    padding: 5px !important;
+    text-align: center;
   }
 }
