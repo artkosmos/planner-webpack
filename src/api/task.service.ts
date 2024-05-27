@@ -39,17 +39,11 @@ const taskService = (() => {
 
           if (args.sortBy) {
             switch (args.sortBy) {
-              case 'date_latest':
-                list.sort(
-                  (a, b) =>
-                    new Date(b.date).getTime() - new Date(a.date).getTime(),
-                );
-                break;
               case 'date_first':
-                list.sort(
-                  (a, b) =>
-                    new Date(a.date).getTime() - new Date(b.date).getTime(),
-                );
+                list.sort((a, b) => a.date.localeCompare(b.date));
+                break;
+              case 'date_latest':
+                list.sort((a, b) => b.date.localeCompare(a.date));
                 break;
               case 'name_a-z':
                 list.sort((a, b) => a.title.localeCompare(b.title));
