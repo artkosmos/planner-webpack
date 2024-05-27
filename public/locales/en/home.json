@@ -1,6 +1,5 @@
 {
   "create_button": "Add task",
-  "table_column_1": "Id",
   "table_column_2": "Title",
   "table_column_3": "Date",
   "dialog_title": "Create task",

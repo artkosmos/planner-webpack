@@ -33,24 +33,11 @@ export const Dialog = ({ ...rest }: Props) => {
       open={isOpen}
       onClose={onClose}
       fullWidth
-      sx={{
-        '.MuiPaper-root': {
-          borderRadius: '15px',
-          overflow: 'visible',
-        },
-      }}
     >
       {title && (
         <DialogMUITitle className={classNames.title}>{title}</DialogMUITitle>
       )}
-      <DialogMUIContent
-        className={classNames.content}
-        sx={{
-          paddingTop: '20px !important',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <DialogMUIContent className={classNames.content}>
         {children}
       </DialogMUIContent>
     </DialogMUI>

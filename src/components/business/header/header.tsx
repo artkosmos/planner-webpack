@@ -10,9 +10,9 @@ import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
 import { availableLanguages } from '@/constants/languages';
+import { useDarkTheme } from '@/hooks/use-dark-theme';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { debouncedSearch } from '@/utils/debounced-search';
-import { useDarkTheme } from '@/utils/use-dark-theme';
 
 import './style.scss';
 

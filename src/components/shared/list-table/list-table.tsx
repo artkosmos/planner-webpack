@@ -24,7 +24,6 @@ export const ListTable = ({
   dateFormat,
 }: Props) => {
   const { t } = useTranslation('home');
-  // const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   const taskList = useMemo(() => {
     return list.map(task => {
@@ -41,23 +40,25 @@ export const ListTable = ({
     });
   }, [list, dateFormat]);
 
-  const classNames = {
-    container: clsx('table-container', className),
-    table: clsx('table', 'table_dark'),
-    tableHeader: 'table-header',
-    col1: 'col col-1',
-    col2: 'col col-2',
-    col3: 'col col-3',
-    col4: 'col col-4',
-    col5: 'col col-5',
-    tableList: 'table-list',
-  };
+  const classNames = useMemo(() => {
+    return {
+      container: clsx('table-container', className),
+      table: clsx('table', 'table_dark'),
+      tableHeader: 'table-header',
+      col1: 'col col-1',
+      col2: 'col col-2',
+      col3: 'col col-3',
+      col4: 'col col-4',
+      col5: 'col col-5',
+      tableList: 'table-list',
+    };
+  }, []);
 
   return (
     <div className={classNames.container}>
       <ul className={classNames.table}>
         <li className={classNames.tableHeader}>
-          <div className={classNames.col1}>{t('table_column_1')}</div>
+          <div className={classNames.col1}></div>
           <div className={classNames.col2}>{t('table_column_2')}</div>
           <div className={classNames.col3}>{t('table_column_3')}</div>
           <div className={classNames.col4}></div>

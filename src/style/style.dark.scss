@@ -116,14 +116,16 @@
     }
   }
 
-  .dialog-mui-title {
-    color: $title-text-dark;
-    background-color: $soft-dark;
-    border-bottom-color: #f5f5f533;
-  }
+  .dialog {
+    .dialog-mui-title {
+      color: $title-text-dark;
+      background-color: $soft-dark;
+      border-bottom-color: #f5f5f533;
+    }
 
-  .dialog-mui-content {
-    background-color: $soft-dark;
+    .dialog-mui-content {
+      background-color: $soft-dark;
+    }
   }
 
   .info-title {

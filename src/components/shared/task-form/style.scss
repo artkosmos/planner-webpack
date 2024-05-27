@@ -30,4 +30,26 @@
   &__checkbox {
     margin-top: 15px;
   }
+
+  @media screen and (width <= 600px) {
+    &__checkbox {
+      margin-top: 5px;
+    }
+
+    &__button-container {
+      margin-top: 5px;
+    }
+
+    &__file-input {
+      margin-bottom: 10px;
+
+      svg {
+        width: 35px;
+      }
+    }
+
+    &__name-input {
+      margin-bottom: 15px !important;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { type ComponentPropsWithoutRef, MouseEvent } from 'react';
+import { type ComponentPropsWithoutRef, MouseEvent, useMemo } from 'react';
 
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -25,15 +25,17 @@ export const TableBodyRow = ({
     deleteRow(task.id);
   };
 
-  const classNames = {
-    delete: clsx('table-delete-icon', 'table-delete-icon_dark'),
-    taskTitle: clsx('list-table__task-title'),
-  };
+  const classNames = useMemo(() => {
+    return {
+      delete: clsx('table-delete-icon', 'table-delete-icon_dark'),
+      taskTitle: clsx('list-table__task-title'),
+    };
+  }, []);
 
   return (
     <li className="table-row" {...rest}>
-      <div className="col col-1" data-label="Id">
-        {task.id}
+      <div className="col col-1" data-label="Status">
+        <span className="status"></span>
       </div>
       <div className="col col-2" data-label="Title">
         {task.title}

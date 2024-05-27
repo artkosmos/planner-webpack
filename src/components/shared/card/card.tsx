@@ -21,6 +21,10 @@ export const Card = ({ children, className }: Props) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          padding: '17px',
+          '&:last-child': {
+            paddingBottom: '17px',
+          },
         }}
       >
         {children}
