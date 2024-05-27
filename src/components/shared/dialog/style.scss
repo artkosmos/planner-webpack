@@ -1,14 +1,5 @@
 @import '@/style/variables';
 
-.dialog-mui-title {
-  color: $title-text;
-  background-color: $background;
-  border-bottom: 1px solid #ddd;
-  font-weight: bold !important;
-  font-size: 22px !important;
-  border-radius: 10px 10px 0 0;
-}
-
 .dialog {
   .MuiPaper-root {
     background-color: transparent;
@@ -18,25 +9,34 @@
     margin: 0;
   }
 
-  .MuiDialogContent-root {
+  .MuiDialogTitle-root + .css-ypiqx9-MuiDialogContent-root {
     padding-top: 20px;
-  }
-}
-
-.dialog-mui-content {
-  display: flex;
-  flex-direction: column;
-  background-color: $background;
-  border-radius: 0 0 10px 10px;
-}
-
-@media screen and (width <= 600px) {
-  .dialog-mui-content {
-    padding: 10px !important;
   }
 
   .dialog-mui-title {
-    padding: 5px !important;
-    text-align: center;
+    color: $title-text;
+    background-color: $background;
+    font-weight: bold !important;
+    font-size: 22px !important;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .dialog-mui-content {
+    display: flex;
+    flex-direction: column;
+    background-color: $background;
+    border-radius: 0 0 10px 10px;
+  }
+
+  @media screen and (width <= 600px) {
+    .dialog-mui-content {
+      padding: 10px !important;
+    }
+
+    .dialog-mui-title {
+      padding: 5px !important;
+      text-align: center;
+    }
   }
 }

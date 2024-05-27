@@ -90,15 +90,15 @@ export const TaskCard = ({ className }: Props) => {
 
   return (
     <Card className={classNames.card}>
-      <p className={classNames.title}>
-        {t('card_title')}
-        {currentTask.important && <StarIcon width={30} height={30} />}
-      </p>
+      <p className={classNames.title}>{t('card_title')}</p>
       <div className={classNames.info}>
         <ul className={classNames.list}>
           <li>
-            <span className={'task-card__point'}>{t('id')}: </span>
-            {currentTask.id}
+            <div>
+              <span className={'task-card__point'}>{t('id')}: </span>
+              {currentTask.id}
+            </div>
+            {currentTask.important && <StarIcon width={30} height={30} />}
           </li>
           <li>
             <span className={'task-card__point'}>{t('name')}:&nbsp;&nbsp;</span>
