@@ -3,6 +3,12 @@
   "id": "Id",
   "name": "Name",
   "date": "Date",
+  "status": {
+    "expired": "Task was expired",
+    "today": "Task expires today",
+    "actual": "Task is actual",
+    "unknown": "Status is unknown"
+  },
   "back_button": "To home",
   "dialog_title": "Edit task information",
   "edit_button": "Edit",

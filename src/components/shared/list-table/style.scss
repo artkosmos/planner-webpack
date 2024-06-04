@@ -1,5 +1,6 @@
 @use 'sass:color';
 @import '@/style/variables';
+@import '@/style/mixixns';
 
 .table-container {
   width: 100%;
@@ -45,10 +46,32 @@
     }
   }
 
+  .status {
+    @include status-point;
+  }
+
   .table-row {
     background-color: white;
     box-shadow: 0 4px 7px -4px rgb(0 0 0 / 50%);
     margin-bottom: 15px;
+
+    &[data-status='expired'] {
+      .status {
+        background-color: $notification-expired;
+      }
+    }
+
+    &[data-status='today'] {
+      .status {
+        background-color: $notification-today;
+      }
+    }
+
+    &[data-status='actual'] {
+      .status {
+        background-color: $notification-actual;
+      }
+    }
   }
 
   .col {
@@ -89,15 +112,6 @@
     flex: 1;
     display: flex;
     justify-content: center;
-  }
-
-  .status {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: green;
-    border-radius: 50%;
-    vertical-align: middle;
   }
 
   @media (hover: hover) {

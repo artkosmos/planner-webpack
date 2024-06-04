@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
+
 import { IGetTaskListArgs } from '@/backend';
-import { ITask } from '@/common/types';
+import { ITask, TaskStatus } from '@/common/types';
 
 const taskService = (() => {
   const timeoutDelay = 400;
@@ -14,55 +16,87 @@ const taskService = (() => {
     localStorage.setItem(localStorageKey, JSON.stringify(list));
   };
 
-  const getTask = (id: string) => {
-    return new Promise<ITask>((resolve, reject) => {
-      setTimeout(() => {
-        const list = getListFromLS();
-        const task = list?.find(item => item.id === id);
-        if (task) {
-          resolve(task);
-        } else {
-          reject(new Error("Specified task wasn't found"));
-        }
-      }, timeoutDelay);
-    });
+  const filterTasks = (list: ITask[], search: string) => {
+    return list.filter(task => task.title.includes(search));
+  };
+
+  const sortTasks = (list: ITask[], sortBy: string) => {
+    switch (sortBy) {
+      case 'date_first':
+        list.sort((a, b) => a.date.localeCompare(b.date));
+        return list;
+      case 'date_latest':
+        list.sort((a, b) => b.date.localeCompare(a.date));
+        return list;
+      case 'name_a-z':
+        list.sort((a, b) => a.title.localeCompare(b.title));
+        return list;
+      case 'name_z-a':
+        list.sort((a, b) => b.title.localeCompare(a.title));
+        return list;
+      case 'importance':
+        list.sort((a, b) => (a.important ? -1 : 1) - (b.important ? -1 : 1));
+        return list;
+      default:
+        return list;
+    }
+  };
+
+  const setStatusForTask = (task: ITask, referenceDate: Date) => {
+    const taskDate = dayjs(task.date);
+    let status = TaskStatus.ACTUAL;
+
+    if (taskDate.isBefore(dayjs(referenceDate), 'day')) {
+      status = TaskStatus.EXPIRED;
+    } else if (taskDate.isSame(dayjs(referenceDate), 'day')) {
+      status = TaskStatus.TODAY;
+    }
+
+    return { ...task, status };
+  };
+
+  const setStatus = (input: ITask | ITask[]) => {
+    const today = new Date();
+    if (Array.isArray(input)) {
+      return input.map(task => setStatusForTask(task, today));
+    } else {
+      return setStatusForTask(input, today);
+    }
   };
 
   const getTaskList = (args: IGetTaskListArgs) => {
     return new Promise<ITask[]>(resolve => {
       setTimeout(() => {
         let list = getListFromLS();
+        list = setStatus(list) as ITask[];
+        setListToLS(list);
+
         if (list) {
           if (args.search) {
-            list = list.filter(task => task.title.includes(args.search));
+            list = filterTasks(list, args.search);
+          }
+          if (args.sortBy) {
+            list = sortTasks(list, args.sortBy);
           }
 
-          if (args.sortBy) {
-            switch (args.sortBy) {
-              case 'date_first':
-                list.sort((a, b) => a.date.localeCompare(b.date));
-                break;
-              case 'date_latest':
-                list.sort((a, b) => b.date.localeCompare(a.date));
-                break;
-              case 'name_a-z':
-                list.sort((a, b) => a.title.localeCompare(b.title));
-                break;
-              case 'name_z-a':
-                list.sort((a, b) => b.title.localeCompare(a.title));
-                break;
-              case 'importance':
-                list.sort(
-                  (a, b) => (a.important ? -1 : 1) - (b.important ? -1 : 1),
-                );
-                break;
-              default:
-                break;
-            }
-          }
           resolve(list);
         } else {
           resolve([]);
+        }
+      }, timeoutDelay);
+    });
+  };
+
+  const getTask = (id: string) => {
+    return new Promise<ITask>((resolve, reject) => {
+      setTimeout(() => {
+        const list = getListFromLS();
+        const task = list?.find(item => item.id === id);
+        if (task) {
+          const taskWithStatus = setStatus(task) as ITask;
+          resolve(taskWithStatus);
+        } else {
+          reject(new Error("Specified task wasn't found"));
         }
       }, timeoutDelay);
     });
@@ -100,13 +134,13 @@ const taskService = (() => {
     });
   };
 
-  const updateTask = ({ id, title, date, image, important }: ITask) => {
+  const updateTask = ({ id, title, date, image, important, status }: ITask) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
         const index = list?.findIndex((item: ITask) => item.id === id);
         if (index !== -1) {
-          list[index] = { id, title, date, image, important };
+          list[index] = { id, title, date, image, important, status };
           setListToLS(list);
           resolve('Task was updated successfully');
         } else {

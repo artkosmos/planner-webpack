@@ -41,6 +41,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       date: task.date,
       image: task.image,
       important: task.important,
+      status: task.status,
     },
   });
 
@@ -67,10 +68,10 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       }
       case EditFormButtons.CONFIRM: {
         if (data) {
-          const { title, date, image, important } = data;
+          const { title, date, image, important, status } = data;
           onAction({
             name,
-            model: { date, title, image, important, id: task.id },
+            model: { date, title, image, important, status, id: task.id },
           });
           break;
         }

@@ -1,5 +1,6 @@
 @use 'sass:color';
 @import '@/style/variables';
+@import '@/style/mixixns';
 
 .task-card {
   display: flex;
@@ -30,7 +31,7 @@
     flex-direction: column;
     gap: 10px;
     list-style-type: none;
-    margin-top: 0;
+    margin: 0;
     padding: 0;
 
     li {
@@ -58,6 +59,30 @@
   &__point {
     font-size: 20px;
     font-weight: bold;
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    margin-top: 15px;
+
+    &-point {
+      @include status-point;
+
+      &[data-status='expired'] {
+        background-color: $notification-expired;
+      }
+
+      &[data-status='today'] {
+        background-color: $notification-today;
+      }
+
+      &[data-status='actual'] {
+        background-color: $notification-actual;
+      }
+    }
   }
 
   &__edit-button {
@@ -120,6 +145,11 @@
 
 @media screen and (width <= 650px) {
   .task-card {
+    &__status {
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+
     &__info {
       flex-direction: column;
       align-items: start;
@@ -137,9 +167,10 @@
 
       li:first-child {
         margin-bottom: 0;
+        gap: 5px;
 
         svg {
-          scale: 0.8;
+          scale: 0.7;
         }
       }
     }

@@ -6,3 +6,11 @@
   padding: 30px;
   margin: $top-layout-margin auto 0;
 }
+
+@mixin status-point {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  vertical-align: middle;
+}

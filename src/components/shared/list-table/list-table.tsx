@@ -30,6 +30,7 @@ export const ListTable = ({
       return (
         <TableBodyRow
           data-testid={`table-row-${task.id}`}
+          data-status={task.status}
           onClick={() => onRowClick(task.id)}
           key={task.id}
           task={task}

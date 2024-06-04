@@ -1,4 +1,5 @@
 import type { ITask } from '@/common/types';
+import { TaskStatus } from '@/common/types';
 import {
   AvailablePickerLocales,
   AvailablePickerMode,
@@ -19,6 +20,7 @@ export interface EditTaskFormFields {
   date: string;
   image?: string | null;
   important: boolean;
+  status: TaskStatus;
 }
 
 export interface ITaskFormConfig {

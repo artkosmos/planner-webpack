@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import clsx from 'clsx';
-import dayjs from 'dayjs';
 
 import { appThunk } from '@/api';
-import { StarIcon } from '@/assets/icons/star-icon';
+import { CardInfo } from '@/components/business/task-card/components';
 import { Card } from '@/components/shared/card';
 import { Dialog } from '@/components/shared/dialog';
 import { InfoTitle } from '@/components/shared/info-title';
@@ -56,8 +55,10 @@ export const TaskCard = ({ className }: Props) => {
         break;
       }
       case EditFormButtons.CONFIRM: {
-        const { title, date, image, important } = model;
-        dispatch(appThunk.updateTask({ title, date, image, important, id }));
+        const { title, date, image, important, status } = model;
+        dispatch(
+          appThunk.updateTask({ title, date, image, important, status, id }),
+        );
         setOpenEditDialog(false);
         break;
       }
@@ -92,23 +93,12 @@ export const TaskCard = ({ className }: Props) => {
     <Card className={classNames.card}>
       <p className={classNames.title}>{t('card_title')}</p>
       <div className={classNames.info}>
-        <ul className={classNames.list}>
-          <li>
-            <div>
-              <span className={'task-card__point'}>{t('id')}: </span>
-              {currentTask.id}
-            </div>
-            {currentTask.important && <StarIcon width={30} height={30} />}
-          </li>
-          <li>
-            <span className={'task-card__point'}>{t('name')}:&nbsp;&nbsp;</span>
-            {currentTask.title}
-          </li>
-          <li>
-            <span className={'task-card__point'}>{t('date')}:&nbsp;&nbsp;</span>
-            {dayjs(currentTask.date).format(dateFormats[i18n.language])}
-          </li>
-        </ul>
+        <CardInfo
+          className={classNames.list}
+          t={t}
+          dateFormat={dateFormats[i18n.language]}
+          task={currentTask}
+        />
         {currentTask.image && (
           <img
             className={'task-card__image'}
