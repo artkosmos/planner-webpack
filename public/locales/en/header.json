@@ -3,12 +3,18 @@
   "select_label": "Language",
   "en": "English",
   "ru": "Russian",
-  "search_placeholder": "Search task",
   "sort_select_label": "Sort by",
+  "filter_select_label": "Filter by",
   "table_sort": {
     "date": "Date",
     "name": "Name",
-    "important": "Importance",
+    "none": "None"
+  },
+  "table_filter": {
+    "actual": "Actual",
+    "expired": "Expired",
+    "today": "Today",
+    "important": "Important",
     "none": "None"
   }
 }

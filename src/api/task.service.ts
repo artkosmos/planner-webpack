@@ -16,7 +16,7 @@ const taskService = (() => {
     localStorage.setItem(localStorageKey, JSON.stringify(list));
   };
 
-  const filterTasks = (list: ITask[], search: string) => {
+  const searchTasks = (list: ITask[], search: string) => {
     return list.filter(task => task.title.includes(search));
   };
 
@@ -34,9 +34,21 @@ const taskService = (() => {
       case 'name_z-a':
         list.sort((a, b) => b.title.localeCompare(a.title));
         return list;
-      case 'importance':
-        list.sort((a, b) => (a.important ? -1 : 1) - (b.important ? -1 : 1));
+      default:
         return list;
+    }
+  };
+
+  const filterTask = (list: ITask[], filterBy: string) => {
+    switch (filterBy) {
+      case 'actual':
+        return list.filter(task => task.status === TaskStatus.ACTUAL);
+      case 'expired':
+        return list.filter(task => task.status === TaskStatus.EXPIRED);
+      case 'today':
+        return list.filter(task => task.status === TaskStatus.TODAY);
+      case 'important':
+        return list.filter(task => task.important);
       default:
         return list;
     }
@@ -73,10 +85,13 @@ const taskService = (() => {
 
         if (list) {
           if (args.search) {
-            list = filterTasks(list, args.search);
+            list = searchTasks(list, args.search);
           }
           if (args.sortBy) {
             list = sortTasks(list, args.sortBy);
+          }
+          if (args.filterBy) {
+            list = filterTask(list, args.filterBy);
           }
 
           resolve(list);

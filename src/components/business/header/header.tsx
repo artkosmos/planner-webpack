@@ -6,13 +6,11 @@ import { SelectChangeEvent } from '@mui/material';
 import clsx from 'clsx';
 
 import { appActions } from '@/api';
-import { SearchInput } from '@/components/shared/search-input';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
 import { availableLanguages } from '@/constants/languages';
 import { useDarkTheme } from '@/hooks/use-dark-theme';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { debouncedSearch } from '@/utils/debounced-search';
 
 import './style.scss';
 
@@ -32,6 +30,7 @@ export const Header = () => {
 
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
   const sortBy = useAppSelector(state => state.main.listSort.sortBy);
+  const filterBy = useAppSelector(state => state.main.listSort.filterBy);
 
   const languageItems: SelectItem[] = useMemo(() => {
     return [
@@ -47,7 +46,16 @@ export const Header = () => {
       { value: 'date_latest', label: `${t('table_sort.date')} ↓` },
       { value: 'name_a-z', label: `${t('table_sort.name')} ↑` },
       { value: 'name_z-a', label: `${t('table_sort.name')} ↓` },
-      { value: 'importance', label: `${t('table_sort.important')}` },
+    ];
+  }, [t]);
+
+  const filterItems: SelectItem[] = useMemo(() => {
+    return [
+      { value: '', label: `${t('table_filter.none')}` },
+      { value: 'actual', label: `${t('table_filter.actual')}` },
+      { value: 'expired', label: `${t('table_filter.expired')}` },
+      { value: 'today', label: `${t('table_filter.today')}` },
+      { value: 'important', label: `${t('table_filter.important')}` },
     ];
   }, [t]);
 
@@ -60,14 +68,14 @@ export const Header = () => {
     i18n.changeLanguage(selectValue);
   };
 
-  const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    debouncedSearch(inputValue, dispatch);
-  };
-
   const sortHandler = (event: SelectChangeEvent) => {
     const selectValue = event.target.value;
     dispatch(appActions.setSort(selectValue));
+  };
+
+  const filterHandler = (event: SelectChangeEvent) => {
+    const selectValue = event.target.value;
+    dispatch(appActions.setFilter(selectValue));
   };
 
   const classNames = useMemo(() => {
@@ -76,6 +84,7 @@ export const Header = () => {
       title: clsx('header__title'),
       selectLanguage: clsx('header__lang-select'),
       selectSort: clsx('header__sort-select'),
+      selectFilter: clsx('header__filter-select'),
       burger: clsx(
         'header__burger',
         isBurgerOpen && 'header__burger_active',
@@ -106,10 +115,13 @@ export const Header = () => {
       <div className={classNames.overlay}></div>
       {location.pathname === '/' && (
         <div className={'header__table-sort'}>
-          <SearchInput
-            label={t('search_placeholder')}
-            className={'header__search'}
-            onChange={searchHandler}
+          <Select
+            items={filterItems}
+            label={t('filter_select_label')}
+            className={classNames.selectFilter}
+            onChange={filterHandler}
+            value={filterBy}
+            data-testid={'select-filter'}
           />
           <Select
             items={sortItems}

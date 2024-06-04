@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,6 +11,7 @@ import { Dialog } from '@/components/shared/dialog';
 import { InfoTitle } from '@/components/shared/info-title';
 import { ListTable } from '@/components/shared/list-table';
 import { ButtonPrimary } from '@/components/shared/primary-button';
+import { SearchInput } from '@/components/shared/search-input';
 import {
   EditFormButtons,
   type IEditTaskAction,
@@ -19,6 +20,7 @@ import {
 import { dateFormats } from '@/constants/date-formats';
 import { TASK } from '@/routes';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { debouncedSearch } from '@/utils/debounced-search';
 
 import { getTaskCreateConfig } from './form-config';
 
@@ -42,14 +44,16 @@ export const ListCreator = () => {
   const isLoading = useAppSelector(state => state.main.isLoading);
   const error = useAppSelector(state => state.main.error);
   const isAppInitialized = useAppSelector(state => state.main.isInitialized);
-  const { search, sortBy } = useAppSelector(state => state.main.listSort);
   const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+  const { search, sortBy, filterBy } = useAppSelector(
+    state => state.main.listSort,
+  );
 
   useEffect(() => {
-    dispatch(appThunk.getTaskList({ search, sortBy })).finally(() =>
+    dispatch(appThunk.getTaskList({ search, sortBy, filterBy })).finally(() =>
       dispatch(appActions.setIsAppInitialized(true)),
     );
-  }, [search, sortBy, dispatch]);
+  }, [search, sortBy, filterBy, dispatch]);
 
   const formConfig = useMemo(
     () => getTaskCreateConfig(t, i18n.language, isDarkTheme),
@@ -84,6 +88,11 @@ export const ListCreator = () => {
     navigate(`${TASK}/${taskId}`);
   };
 
+  const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+    debouncedSearch(inputValue, dispatch);
+  };
+
   if (error) {
     return <InfoTitle title={error} />;
   }
@@ -105,6 +114,11 @@ export const ListCreator = () => {
           disabled={!isAppInitialized}
         />
       </div>
+      <SearchInput
+        label={t('search_placeholder')}
+        className={'list-creator__search'}
+        onChange={searchHandler}
+      />
       {isLoading || !isAppInitialized ? (
         <CircularProgress
           className={'list-creator__loader'}

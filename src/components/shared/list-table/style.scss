@@ -32,20 +32,6 @@
     }
   }
 
-  .table-header {
-    background-color: $soft-blue;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: $title-text;
-    margin-bottom: 20px;
-
-    .col-1 {
-      margin-left: 3px;
-    }
-  }
-
   .status {
     @include status-point;
   }
@@ -143,10 +129,6 @@
   @media screen and (width <= 750px) {
     li {
       padding: 10px 0;
-    }
-
-    .table-header {
-      display: none;
     }
 
     .table-row {
