@@ -99,7 +99,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin-right: 10px;
-    max-height: 100%;
   }
 
   .col-3 {
@@ -141,13 +140,13 @@
 
   @media screen and (width <= 750px) {
     li {
-      padding: 10px 0;
+      padding: 10px 5px 10px 0;
     }
 
     .table-row {
       display: grid;
       grid-template-columns: [column-1] 10% [column-2] 80% [column-3] 10%;
-      grid-template-rows: [line-1] 1fr [line-2] 0.7fr [line-3] 1fr;
+      grid-template-rows: [line-1] 1fr [line-2] 0.8fr [line-3] 0.15fr [line-4] 1fr;
     }
 
     .status {
@@ -163,10 +162,14 @@
       grid-area: line-1 / column-2 / line-3 / column-3;
       margin-right: 0;
       font-weight: 600;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      white-space: normal;
     }
 
     .col-3 {
-      grid-area: line-3 / column-2 / auto / column-3;
+      grid-area: line-4 / column-2 / auto / column-3;
     }
 
     .col-4 {
@@ -179,7 +182,7 @@
     }
 
     .col-5 {
-      grid-area: line-3 / column-3 / auto / auto;
+      grid-area: line-4 / column-3 / auto / auto;
 
       svg {
         width: 20px;
