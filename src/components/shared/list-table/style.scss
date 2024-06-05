@@ -58,6 +58,19 @@
         background-color: $notification-actual;
       }
     }
+
+    &[data-status='done'] {
+      background-color: rgb(255 255 255 / 30%);
+
+      .col:not(:first-child) {
+        opacity: 0.3;
+        text-decoration: line-through;
+      }
+
+      .status {
+        background-color: $notification-done;
+      }
+    }
   }
 
   .col {

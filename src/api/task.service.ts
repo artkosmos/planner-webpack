@@ -58,7 +58,9 @@ const taskService = (() => {
     const taskDate = dayjs(task.date);
     let status = TaskStatus.ACTUAL;
 
-    if (taskDate.isBefore(dayjs(referenceDate), 'day')) {
+    if (task.isDone) {
+      status = TaskStatus.DONE;
+    } else if (taskDate.isBefore(dayjs(referenceDate), 'day')) {
       status = TaskStatus.EXPIRED;
     } else if (taskDate.isSame(dayjs(referenceDate), 'day')) {
       status = TaskStatus.TODAY;
@@ -117,10 +119,10 @@ const taskService = (() => {
     });
   };
 
-  const createTask = ({ id, title, date, image, important }: ITask) => {
+  const createTask = ({ id, title, date, image, important, isDone }: ITask) => {
     return new Promise<string>(resolve => {
       setTimeout(() => {
-        const newTask = { id, title, date, image, important };
+        const newTask = { id, title, date, image, important, isDone };
         const list = getListFromLS();
         if (list) {
           list.unshift(newTask);
@@ -149,13 +151,21 @@ const taskService = (() => {
     });
   };
 
-  const updateTask = ({ id, title, date, image, important, status }: ITask) => {
+  const updateTask = ({
+    id,
+    title,
+    date,
+    image,
+    important,
+    status,
+    isDone,
+  }: ITask) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
         const index = list?.findIndex((item: ITask) => item.id === id);
         if (index !== -1) {
-          list[index] = { id, title, date, image, important, status };
+          list[index] = { id, title, date, image, important, status, isDone };
           setListToLS(list);
           resolve('Task was updated successfully');
         } else {

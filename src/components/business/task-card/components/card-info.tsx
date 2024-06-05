@@ -24,6 +24,9 @@ export const CardInfo = ({ className, task, t, dateFormat }: Props) => {
     case 'actual':
       statusTranslationKey = 'status.actual';
       break;
+    case 'done':
+      statusTranslationKey = 'status.done';
+      break;
     default:
       statusTranslationKey = 'status.unknown';
       break;

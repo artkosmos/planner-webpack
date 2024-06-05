@@ -32,6 +32,7 @@ const emptyTaskModel: ITask = {
   date: '',
   image: null,
   important: false,
+  isDone: false,
 };
 
 export const ListCreator = () => {
@@ -72,8 +73,11 @@ export const ListCreator = () => {
         const title = model.title;
         const image = model.image;
         const important = model.important;
+        const isDone = model.isDone;
         const id = uuid().slice(0, idLength);
-        dispatch(appThunk.createTask({ date, title, image, id, important }));
+        dispatch(
+          appThunk.createTask({ date, title, image, id, important, isDone }),
+        );
         setOpenEditDialog(false);
         break;
       }

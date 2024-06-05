@@ -13,6 +13,6 @@
     "date_validation": "Введите корректную дату",
     "name_validation": "Название обязательно",
     "image_button_text": "Фото",
-    "checkbox_label": "Пометить как важное"
+    "checkbox-important_label": "Пометить как важное"
   }
 }

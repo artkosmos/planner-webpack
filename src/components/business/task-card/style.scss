@@ -36,6 +36,7 @@
 
     li {
       overflow-wrap: anywhere;
+      font-style: italic;
     }
 
     li:first-child {
@@ -43,6 +44,7 @@
       gap: 10px;
       margin-bottom: 20px;
       align-items: center;
+      font-style: normal;
 
       div {
         opacity: 0.5;
@@ -59,6 +61,7 @@
   &__point {
     font-size: 20px;
     font-weight: bold;
+    font-style: normal;
   }
 
   &__status {
@@ -81,6 +84,10 @@
 
       &[data-status='actual'] {
         background-color: $notification-actual;
+      }
+
+      &[data-status='done'] {
+        background-color: $notification-done;
       }
     }
   }

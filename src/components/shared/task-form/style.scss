@@ -27,8 +27,15 @@
     font-weight: bold;
   }
 
-  &__checkbox {
+  &__checkbox-block {
     margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  &__checkbox-done {
+    margin-right: 20px;
   }
 
   @media screen and (width <= 600px) {
