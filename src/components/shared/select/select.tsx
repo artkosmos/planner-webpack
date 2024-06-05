@@ -19,13 +19,8 @@ export const Select = ({ className, label, items, ...rest }: Props) => {
 
   return (
     <FormControlMUI className={className} size={'small'}>
-      <InputLabelMUI id="select-label">{label}</InputLabelMUI>
-      <SelectMUI
-        labelId="select-label"
-        label={label}
-        data-testid={'select'}
-        {...rest}
-      >
+      <InputLabelMUI>{label}</InputLabelMUI>
+      <SelectMUI label={label} data-testid={'select'} {...rest}>
         {selectItems}
       </SelectMUI>
     </FormControlMUI>
