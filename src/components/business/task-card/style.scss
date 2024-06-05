@@ -36,18 +36,25 @@
 
     li {
       overflow-wrap: anywhere;
-      font-style: italic;
-    }
 
-    li:first-child {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      align-items: center;
-      font-style: normal;
+      .task-card__description {
+        font-style: italic;
+      }
+
+      &:first-child {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        align-items: center;
+
+        .task-card__point,
+        .task-card__description {
+          opacity: 0.5;
+          font-style: normal;
+        }
+      }
 
       div {
-        opacity: 0.5;
         font-size: 16px;
       }
 
@@ -61,7 +68,6 @@
   &__point {
     font-size: 20px;
     font-weight: bold;
-    font-style: normal;
   }
 
   &__status {
@@ -154,7 +160,6 @@
   .task-card {
     &__status {
       margin-top: 5px;
-      margin-bottom: 15px;
     }
 
     &__info {
@@ -163,7 +168,7 @@
     }
 
     &__image {
-      margin: 0;
+      margin: 15px 0 0;
       align-self: center;
     }
 

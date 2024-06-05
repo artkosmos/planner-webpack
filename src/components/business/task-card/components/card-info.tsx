@@ -37,17 +37,19 @@ export const CardInfo = ({ className, task, t, dateFormat }: Props) => {
       <li>
         <div>
           <span className={'task-card__point'}>{t('id')}: </span>
-          {task.id}
+          <span className={'task-card__description'}>{task.id}</span>
         </div>
         {task.important && <StarIcon width={30} height={30} />}
       </li>
       <li>
         <span className={'task-card__point'}>{t('name')}:&nbsp;&nbsp;</span>
-        {task.title}
+        <span className={'task-card__description'}>{task.title}</span>
       </li>
       <li>
         <span className={'task-card__point'}>{t('date')}:&nbsp;&nbsp;</span>
-        {dayjs(task.date).format(dateFormat)}
+        <span className={'task-card__description'}>
+          {dayjs(task.date).format(dateFormat)}
+        </span>
       </li>
       <li>
         <span className={'task-card__status'}>
