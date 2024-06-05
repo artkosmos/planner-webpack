@@ -55,6 +55,7 @@ export const Header = () => {
       { value: 'actual', label: `${t('table_filter.actual')}` },
       { value: 'expired', label: `${t('table_filter.expired')}` },
       { value: 'today', label: `${t('table_filter.today')}` },
+      { value: 'done', label: `${t('table_filter.done')}` },
       { value: 'important', label: `${t('table_filter.important')}` },
     ];
   }, [t]);
