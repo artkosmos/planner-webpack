@@ -26,7 +26,7 @@ export const getTaskCreateConfig = (
       datePickerMode: isDarkTheme ? 'dark' : 'light',
     },
     checkboxImportant: {
-      label: t('create_form_config.checkbox_label'),
+      label: t('create_form_config.checkbox-important_label'),
     },
     cancelButtonTitle: t('create_form_config.cancel_button'),
     confirmButtonTitle: t('create_form_config.add_button'),

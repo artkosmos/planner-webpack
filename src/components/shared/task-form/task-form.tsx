@@ -131,12 +131,14 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
           labelText={config.checkboxImportant.label}
           className={'task-form__checkbox-important'}
         />
-        <ControlledCheckbox
-          name={'isDone'}
-          control={control}
-          labelText={config.checkboxIsDone.label}
-          className={'task-form__checkbox-done'}
-        />
+        {config.checkboxIsDone && (
+          <ControlledCheckbox
+            name={'isDone'}
+            control={control}
+            labelText={config.checkboxIsDone.label}
+            className={'task-form__checkbox-done'}
+          />
+        )}
       </div>
       <div className={'task-form__button-container'}>
         <ButtonOutlined
