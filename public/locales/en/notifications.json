@@ -1,0 +1,4 @@
+{
+  "todayTask": "You have {{number}} tasks that expire today",
+  "expiredTask": "You have {{number}} tasks that have already expired"
+}

@@ -94,10 +94,6 @@ const slice = createSlice({
       sortBy: '' as string,
       filterBy: '' as string,
     },
-    notification: {
-      expiredTasks: null as ITask[],
-      todayTasks: null as ITask[],
-    },
   },
   reducers: {
     setSearch: (state, action: PayloadAction<string>) => {
