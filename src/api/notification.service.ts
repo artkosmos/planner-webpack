@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { ITask } from '@/common/types';
+import { ITask, TaskStatus } from '@/common/types';
 
 const notificationService = (() => {
   const timeoutDelay = 400;
@@ -21,11 +21,17 @@ const notificationService = (() => {
           const today = dayjs(new Date());
 
           for (const task of list) {
-            const taskDate = dayjs(new Date(task.date));
-            if (taskDate.isBefore(today, 'day')) {
-              expiredTasks.push(task);
-            } else if (taskDate.isSame(today, 'day')) {
+            const taskDate = dayjs(task.date);
+            const taskIsDone = task.status === TaskStatus.DONE;
+
+            if (taskIsDone) {
+              continue;
+            }
+
+            if (taskDate.isSame(today, 'day')) {
               todayTasks.push(task);
+            } else if (taskDate.isBefore(today, 'day')) {
+              expiredTasks.push(task);
             }
           }
           resolve({ expiredTasks, todayTasks });
