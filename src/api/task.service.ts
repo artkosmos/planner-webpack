@@ -62,7 +62,7 @@ const taskService = (() => {
 
     if (task.isDone) {
       status = TaskStatus.DONE;
-    } else if (taskDate.isBefore(dayjs(referenceDate), 'day')) {
+    } else if (taskDate.isBefore(dayjs(referenceDate))) {
       status = TaskStatus.EXPIRED;
     } else if (taskDate.isSame(dayjs(referenceDate), 'day')) {
       status = TaskStatus.TODAY;

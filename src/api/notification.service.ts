@@ -28,10 +28,10 @@ const notificationService = (() => {
               continue;
             }
 
-            if (taskDate.isSame(today, 'day')) {
-              todayTasks.push(task);
-            } else if (taskDate.isBefore(today, 'day')) {
+            if (taskDate.isBefore(today)) {
               expiredTasks.push(task);
+            } else if (taskDate.isSame(today, 'day')) {
+              todayTasks.push(task);
             }
           }
           resolve({ expiredTasks, todayTasks });
