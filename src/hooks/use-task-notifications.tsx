@@ -21,8 +21,20 @@ export const useTaskNotifications = () => {
         .getExpiredAndTodayTasks()
         .then(data => {
           const { todayTasks, expiredTasks } = data;
-          toast.warn(t('todayTask', { number: todayTasks.length }));
-          toast.error(t('expiredTask', { number: expiredTasks.length }));
+          const numberOfTodayTasks = todayTasks.length;
+          const numberOfExpiredTasks = expiredTasks.length;
+          toast.warn(
+            t('todayTask', {
+              count: numberOfTodayTasks,
+              number: numberOfTodayTasks,
+            }),
+          );
+          toast.error(
+            t('expiredTask', {
+              count: numberOfExpiredTasks,
+              number: numberOfExpiredTasks,
+            }),
+          );
 
           localStorage.setItem('lastNotification', today.toISOString());
         })

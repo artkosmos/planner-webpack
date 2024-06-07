@@ -1,4 +1,6 @@
 {
-  "todayTask": "You have {{number}} tasks that expire today",
-  "expiredTask": "You have {{number}} tasks that have already expired"
+  "todayTask_one": "You have {{number}} task that expires today",
+  "todayTask_other": "You have {{number}} tasks that expire today",
+  "expiredTask_one": "You have {{number}} task that has already expired",
+  "expiredTask_other": "You have {{number}} tasks that have already expired"
 }
