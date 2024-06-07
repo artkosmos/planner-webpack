@@ -4,6 +4,7 @@
   "table_column_3": "Date",
   "dialog_title": "Create task",
   "no_data": "No available data",
+  "search_placeholder": "Search",
   "create_form_config": {
     "name_label": "Task name",
     "date_label": "Pick date and time",
@@ -12,6 +13,6 @@
     "date_validation": "Enter valid date",
     "name_validation": "Name is required",
     "image_button_text": "Photo",
-    "checkbox_label": "Mark as important"
+    "checkbox-important_label": "Mark as important"
   }
 }

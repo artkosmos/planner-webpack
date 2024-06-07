@@ -13,8 +13,8 @@ import { createAppAsyncThunk } from '@/utils/pretyped-async-thunk';
 
 const getTaskList = createAppAsyncThunk(
   'main/getTaskList',
-  async ({ search, sortBy }: IGetTaskListArgs) => {
-    return await taskService.getTaskList({ search, sortBy });
+  async ({ search, sortBy, filterBy }: IGetTaskListArgs) => {
+    return await taskService.getTaskList({ search, sortBy, filterBy });
   },
 );
 
@@ -67,6 +67,7 @@ const updateTask = createAppAsyncThunk(
     }
   },
 );
+
 export const setTheme = createAppAsyncThunk(
   'main/setTheme',
   async (isDark: boolean, { rejectWithValue }) => {
@@ -91,6 +92,7 @@ const slice = createSlice({
     listSort: {
       search: '' as string,
       sortBy: '' as string,
+      filterBy: '' as string,
     },
   },
   reducers: {
@@ -99,6 +101,9 @@ const slice = createSlice({
     },
     setSort: (state, action: PayloadAction<string>) => {
       state.listSort.sortBy = action.payload;
+    },
+    setFilter: (state, action: PayloadAction<string>) => {
+      state.listSort.filterBy = action.payload;
     },
     setIsAppInitialized: (state, action: PayloadAction<boolean>) => {
       state.isInitialized = action.payload;
@@ -118,6 +123,7 @@ const slice = createSlice({
       .addCase(createTask.fulfilled, state => {
         state.listSort.sortBy = '';
         state.listSort.search = '';
+        state.listSort.filterBy = '';
       })
       .addCase(getTask.rejected, (state, action) => {
         state.error = action.payload;

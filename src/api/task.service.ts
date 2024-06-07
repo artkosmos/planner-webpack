@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
+
 import { IGetTaskListArgs } from '@/backend';
-import { ITask } from '@/common/types';
+import { ITask, TaskStatus } from '@/common/types';
 
 const taskService = (() => {
   const timeoutDelay = 400;
@@ -14,58 +16,88 @@ const taskService = (() => {
     localStorage.setItem(localStorageKey, JSON.stringify(list));
   };
 
-  const getTask = (id: string) => {
-    return new Promise<ITask>((resolve, reject) => {
-      setTimeout(() => {
-        const list = getListFromLS();
-        const task = list?.find(item => item.id === id);
-        if (task) {
-          resolve(task);
-        } else {
-          reject(new Error("Specified task wasn't found"));
-        }
-      }, timeoutDelay);
-    });
+  const searchTasks = (list: ITask[], search: string) => {
+    return list.filter(task => task.title.includes(search));
+  };
+
+  const sortTasks = (list: ITask[], sortBy: string) => {
+    switch (sortBy) {
+      case 'date_first':
+        list.sort((a, b) => a.date.localeCompare(b.date));
+        return list;
+      case 'date_latest':
+        list.sort((a, b) => b.date.localeCompare(a.date));
+        return list;
+      case 'name_a-z':
+        list.sort((a, b) => a.title.localeCompare(b.title));
+        return list;
+      case 'name_z-a':
+        list.sort((a, b) => b.title.localeCompare(a.title));
+        return list;
+      default:
+        return list;
+    }
+  };
+
+  const filterTask = (list: ITask[], filterBy: string) => {
+    switch (filterBy) {
+      case 'actual':
+        return list.filter(task => task.status === TaskStatus.ACTUAL);
+      case 'expired':
+        return list.filter(task => task.status === TaskStatus.EXPIRED);
+      case 'today':
+        return list.filter(task => task.status === TaskStatus.TODAY);
+      case 'done':
+        return list.filter(task => task.status === TaskStatus.DONE);
+      case 'important':
+        return list.filter(task => task.important);
+      default:
+        return list;
+    }
+  };
+
+  const setStatusForTask = (task: ITask, referenceDate: Date) => {
+    const taskDate = dayjs(task.date);
+    let status = TaskStatus.ACTUAL;
+
+    if (task.isDone) {
+      status = TaskStatus.DONE;
+    } else if (taskDate.isBefore(dayjs(referenceDate))) {
+      status = TaskStatus.EXPIRED;
+    } else if (taskDate.isSame(dayjs(referenceDate), 'day')) {
+      status = TaskStatus.TODAY;
+    }
+
+    return { ...task, status };
+  };
+
+  const setStatus = (input: ITask | ITask[]) => {
+    const today = new Date();
+    if (Array.isArray(input)) {
+      return input.map(task => setStatusForTask(task, today));
+    } else {
+      return setStatusForTask(input, today);
+    }
   };
 
   const getTaskList = (args: IGetTaskListArgs) => {
     return new Promise<ITask[]>(resolve => {
       setTimeout(() => {
         let list = getListFromLS();
+        list = setStatus(list) as ITask[];
+        setListToLS(list);
+
         if (list) {
           if (args.search) {
-            list = list.filter(task => task.title.includes(args.search));
+            list = searchTasks(list, args.search);
+          }
+          if (args.sortBy) {
+            list = sortTasks(list, args.sortBy);
+          }
+          if (args.filterBy) {
+            list = filterTask(list, args.filterBy);
           }
 
-          if (args.sortBy) {
-            switch (args.sortBy) {
-              case 'date_latest':
-                list.sort(
-                  (a, b) =>
-                    new Date(b.date).getTime() - new Date(a.date).getTime(),
-                );
-                break;
-              case 'date_first':
-                list.sort(
-                  (a, b) =>
-                    new Date(a.date).getTime() - new Date(b.date).getTime(),
-                );
-                break;
-              case 'name_a-z':
-                list.sort((a, b) => a.title.localeCompare(b.title));
-                break;
-              case 'name_z-a':
-                list.sort((a, b) => b.title.localeCompare(a.title));
-                break;
-              case 'importance':
-                list.sort(
-                  (a, b) => (a.important ? -1 : 1) - (b.important ? -1 : 1),
-                );
-                break;
-              default:
-                break;
-            }
-          }
           resolve(list);
         } else {
           resolve([]);
@@ -74,10 +106,25 @@ const taskService = (() => {
     });
   };
 
-  const createTask = ({ id, title, date, image, important }: ITask) => {
+  const getTask = (id: string) => {
+    return new Promise<ITask>((resolve, reject) => {
+      setTimeout(() => {
+        const list = getListFromLS();
+        const task = list?.find(item => item.id === id);
+        if (task) {
+          const taskWithStatus = setStatus(task) as ITask;
+          resolve(taskWithStatus);
+        } else {
+          reject(new Error("Specified task wasn't found"));
+        }
+      }, timeoutDelay);
+    });
+  };
+
+  const createTask = ({ id, title, date, image, important, isDone }: ITask) => {
     return new Promise<string>(resolve => {
       setTimeout(() => {
-        const newTask = { id, title, date, image, important };
+        const newTask = { id, title, date, image, important, isDone };
         const list = getListFromLS();
         if (list) {
           list.unshift(newTask);
@@ -106,13 +153,21 @@ const taskService = (() => {
     });
   };
 
-  const updateTask = ({ id, title, date, image, important }: ITask) => {
+  const updateTask = ({
+    id,
+    title,
+    date,
+    image,
+    important,
+    status,
+    isDone,
+  }: ITask) => {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         const list = getListFromLS();
         const index = list?.findIndex((item: ITask) => item.id === id);
         if (index !== -1) {
-          list[index] = { id, title, date, image, important };
+          list[index] = { id, title, date, image, important, status, isDone };
           setListToLS(list);
           resolve('Task was updated successfully');
         } else {

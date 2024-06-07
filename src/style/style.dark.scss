@@ -149,6 +149,10 @@
         background-color: $background-dark-2;
         color: $title-text-dark;
 
+        &[data-status='done'] {
+          background-color: rgba($background-dark-2, 0.3);
+        }
+
         @media (hover: hover) {
           &:hover {
             background-color: color.adjust(#000, $lightness: 15%);

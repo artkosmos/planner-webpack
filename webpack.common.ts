@@ -24,7 +24,7 @@ export default (() => {
           exclude: [/node_modules/],
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.s?css$/i,
           use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
         },
         {

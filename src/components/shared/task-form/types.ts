@@ -1,4 +1,5 @@
 import type { ITask } from '@/common/types';
+import { TaskStatus } from '@/common/types';
 import {
   AvailablePickerLocales,
   AvailablePickerMode,
@@ -19,6 +20,8 @@ export interface EditTaskFormFields {
   date: string;
   image?: string | null;
   important: boolean;
+  isDone: boolean;
+  status: TaskStatus;
 }
 
 export interface ITaskFormConfig {
@@ -37,7 +40,10 @@ export interface ITaskFormConfig {
     dateFormat?: string;
     datePickerMode?: AvailablePickerMode;
   };
-  checkbox: {
+  checkboxImportant: {
+    label?: string;
+  };
+  checkboxIsDone?: {
     label?: string;
   };
   cancelButtonTitle: string;

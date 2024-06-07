@@ -1,5 +1,6 @@
 @use 'sass:color';
 @import '@/style/variables';
+@import '@/style/mixixns';
 
 .table-container {
   width: 100%;
@@ -31,24 +32,45 @@
     }
   }
 
-  .table-header {
-    background-color: $soft-blue;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: $title-text;
-    margin-bottom: 20px;
-
-    .col-1 {
-      margin-left: 3px;
-    }
+  .status {
+    @include status-point;
   }
 
   .table-row {
     background-color: white;
     box-shadow: 0 4px 7px -4px rgb(0 0 0 / 50%);
     margin-bottom: 15px;
+
+    &[data-status='expired'] {
+      .status {
+        background-color: $notification-expired;
+      }
+    }
+
+    &[data-status='today'] {
+      .status {
+        background-color: $notification-today;
+      }
+    }
+
+    &[data-status='actual'] {
+      .status {
+        background-color: $notification-actual;
+      }
+    }
+
+    &[data-status='done'] {
+      background-color: rgb(255 255 255 / 30%);
+
+      .col:not(:first-child, :last-child) {
+        opacity: 0.3;
+        text-decoration: line-through;
+      }
+
+      .status {
+        background-color: $notification-done;
+      }
+    }
   }
 
   .col {
@@ -77,7 +99,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin-right: 10px;
-    max-height: 100%;
   }
 
   .col-3 {
@@ -89,15 +110,6 @@
     flex: 1;
     display: flex;
     justify-content: center;
-  }
-
-  .status {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: green;
-    border-radius: 50%;
-    vertical-align: middle;
   }
 
   @media (hover: hover) {
@@ -128,17 +140,13 @@
 
   @media screen and (width <= 750px) {
     li {
-      padding: 10px 0;
-    }
-
-    .table-header {
-      display: none;
+      padding: 10px 5px 10px 0;
     }
 
     .table-row {
       display: grid;
       grid-template-columns: [column-1] 10% [column-2] 80% [column-3] 10%;
-      grid-template-rows: [line-1] 1fr [line-2] 0.7fr [line-3] 1fr;
+      grid-template-rows: [line-1] 1fr [line-2] 0.8fr [line-3] 0.15fr [line-4] 1fr;
     }
 
     .status {
@@ -154,10 +162,14 @@
       grid-area: line-1 / column-2 / line-3 / column-3;
       margin-right: 0;
       font-weight: 600;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      white-space: normal;
     }
 
     .col-3 {
-      grid-area: line-3 / column-2 / auto / column-3;
+      grid-area: line-4 / column-2 / auto / column-3;
     }
 
     .col-4 {
@@ -170,7 +182,7 @@
     }
 
     .col-5 {
-      grid-area: line-3 / column-3 / auto / auto;
+      grid-area: line-4 / column-3 / auto / auto;
 
       svg {
         width: 20px;

@@ -25,8 +25,11 @@ export const getTaskUpdateConfig = (
       dateFormat: dateFormats[language],
       datePickerMode: isDarkTheme ? 'dark' : 'light',
     },
-    checkbox: {
-      label: t('edit_form_config.checkbox_label'),
+    checkboxImportant: {
+      label: t('edit_form_config.checkbox-important_label'),
+    },
+    checkboxIsDone: {
+      label: t('edit_form_config.checkbox-done_label'),
     },
     cancelButtonTitle: t('edit_form_config.cancel_button'),
     confirmButtonTitle: t('edit_form_config.edit_button'),

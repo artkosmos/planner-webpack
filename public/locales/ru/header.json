@@ -3,12 +3,19 @@
   "select_label": "Язык",
   "en": "Английский",
   "ru": "Русский",
-  "search_placeholder": "Поиск задачи",
   "sort_select_label": "Сортировать по",
+  "filter_select_label": "Фильтровать по",
   "table_sort": {
     "date": "Дата",
     "name": "Имя",
-    "important": "Важность",
+    "none": "Ничего"
+  },
+  "table_filter": {
+    "actual": "Актуальные",
+    "expired": "Просроченные",
+    "today": "Сегодняшние",
+    "done": "Выполненные",
+    "important": "Важные",
     "none": "Ничего"
   }
 }

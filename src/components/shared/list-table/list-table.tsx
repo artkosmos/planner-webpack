@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import clsx from 'clsx';
 
@@ -23,13 +22,12 @@ export const ListTable = ({
   onRowClick,
   dateFormat,
 }: Props) => {
-  const { t } = useTranslation('home');
-
   const taskList = useMemo(() => {
     return list.map(task => {
       return (
         <TableBodyRow
           data-testid={`table-row-${task.id}`}
+          data-status={task.status}
           onClick={() => onRowClick(task.id)}
           key={task.id}
           task={task}
@@ -44,7 +42,6 @@ export const ListTable = ({
     return {
       container: clsx('table-container', className),
       table: clsx('table', 'table_dark'),
-      tableHeader: 'table-header',
       col1: 'col col-1',
       col2: 'col col-2',
       col3: 'col col-3',
@@ -57,13 +54,6 @@ export const ListTable = ({
   return (
     <div className={classNames.container}>
       <ul className={classNames.table}>
-        <li className={classNames.tableHeader}>
-          <div className={classNames.col1}></div>
-          <div className={classNames.col2}>{t('table_column_2')}</div>
-          <div className={classNames.col3}>{t('table_column_3')}</div>
-          <div className={classNames.col4}></div>
-          <div className={classNames.col5}></div>
-        </li>
         <div className={classNames.tableList}>{taskList}</div>
       </ul>
     </div>

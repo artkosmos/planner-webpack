@@ -34,15 +34,11 @@ export const TableBodyRow = ({
 
   return (
     <li className="table-row" {...rest}>
-      <div className="col col-1" data-label="Status">
+      <div className="col col-1">
         <span className="status"></span>
       </div>
-      <div className="col col-2" data-label="Title">
-        {task.title}
-      </div>
-      <div className="col col-3" data-label="Date">
-        {dayjs(task.date).format(dateFormat)}
-      </div>
+      <div className="col col-2">{task.title}</div>
+      <div className="col col-3">{dayjs(task.date).format(dateFormat)}</div>
       <div className="col col-4">
         {task.important && <StarIcon className={'table-star-icon'} />}
       </div>

@@ -41,6 +41,8 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       date: task.date,
       image: task.image,
       important: task.important,
+      status: task.status,
+      isDone: task.isDone,
     },
   });
 
@@ -67,10 +69,18 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
       }
       case EditFormButtons.CONFIRM: {
         if (data) {
-          const { title, date, image, important } = data;
+          const { title, date, image, important, status, isDone } = data;
           onAction({
             name,
-            model: { date, title, image, important, id: task.id },
+            model: {
+              date,
+              title,
+              image,
+              important,
+              status,
+              isDone,
+              id: task.id,
+            },
           });
           break;
         }
@@ -114,12 +124,22 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         theme={config.dateField.datePickerMode}
         locale={config.dateField.locale}
       />
-      <ControlledCheckbox
-        name={'important'}
-        control={control}
-        labelText={config.checkbox.label}
-        className={'task-form__checkbox'}
-      />
+      <div className={'task-form__checkbox-block'}>
+        <ControlledCheckbox
+          name={'important'}
+          control={control}
+          labelText={config.checkboxImportant.label}
+          className={'task-form__checkbox-important'}
+        />
+        {config.checkboxIsDone && (
+          <ControlledCheckbox
+            name={'isDone'}
+            control={control}
+            labelText={config.checkboxIsDone.label}
+            className={'task-form__checkbox-done'}
+          />
+        )}
+      </div>
       <div className={'task-form__button-container'}>
         <ButtonOutlined
           onClick={() => buttonActionHandler({ name: EditFormButtons.CANCEL })}
