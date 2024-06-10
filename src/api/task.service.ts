@@ -49,6 +49,8 @@ const taskService = (() => {
         return list.filter(task => task.status === TaskStatus.TODAY);
       case 'done':
         return list.filter(task => task.status === TaskStatus.DONE);
+      case 'not_done':
+        return list.filter(task => task.status !== TaskStatus.DONE);
       case 'important':
         return list.filter(task => task.important);
       default:

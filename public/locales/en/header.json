@@ -15,6 +15,7 @@
     "expired": "Expired",
     "today": "Today",
     "done": "Completed",
+    "not_done": "Not completed",
     "important": "Important",
     "none": "None"
   }
