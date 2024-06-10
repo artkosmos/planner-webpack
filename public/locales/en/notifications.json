@@ -1,6 +1,9 @@
 {
   "todayTask_one": "You have {{number}} task that expires today",
   "todayTask_other": "You have {{number}} tasks that expire today",
+  "todayTask_zero": "You have no tasks that expire today",
   "expiredTask_one": "You have {{number}} task that has already expired",
-  "expiredTask_other": "You have {{number}} tasks that have already expired"
+  "expiredTask_other": "You have {{number}} tasks that have already expired",
+  "expiredTask_zero": "You have no tasks that have already expired",
+  "request_error": "An error occurred while loading data"
 }

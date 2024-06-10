@@ -23,23 +23,40 @@ export const useTaskNotifications = () => {
           const { todayTasks, expiredTasks } = data;
           const numberOfTodayTasks = todayTasks.length;
           const numberOfExpiredTasks = expiredTasks.length;
-          toast.warn(
-            t('todayTask', {
-              count: numberOfTodayTasks,
-              number: numberOfTodayTasks,
-            }),
-          );
-          toast.error(
-            t('expiredTask', {
-              count: numberOfExpiredTasks,
-              number: numberOfExpiredTasks,
-            }),
-          );
+          if (numberOfTodayTasks === 0) {
+            toast.success(
+              t('todayTask', {
+                count: numberOfTodayTasks,
+              }),
+            );
+          } else {
+            toast.warn(
+              t('todayTask', {
+                count: numberOfTodayTasks,
+                number: numberOfTodayTasks,
+              }),
+            );
+          }
+
+          if (numberOfExpiredTasks === 0) {
+            toast.success(
+              t('expiredTask', {
+                count: numberOfExpiredTasks,
+              }),
+            );
+          } else {
+            toast.error(
+              t('expiredTask', {
+                count: numberOfExpiredTasks,
+                number: numberOfExpiredTasks,
+              }),
+            );
+          }
 
           localStorage.setItem('lastNotification', today.toISOString());
         })
         .catch(() => {
-          toast.error('Ошибка при загрузке задач');
+          toast.error(t('request_error'));
         });
     }
   }, []);
