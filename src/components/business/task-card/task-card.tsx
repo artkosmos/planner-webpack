@@ -5,7 +5,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import clsx from 'clsx';
 
-import { appThunk } from '@/api';
 import { CardInfo } from '@/components/business/task-card/components';
 import { Card } from '@/components/shared/card';
 import { Dialog } from '@/components/shared/dialog';
@@ -17,7 +16,7 @@ import {
   TaskForm,
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { tasksThunks, useAppDispatch, useAppSelector } from '@/store';
 
 import { getTaskUpdateConfig } from './form-config';
 
@@ -34,13 +33,13 @@ export const TaskCard = ({ className }: Props) => {
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation('task');
 
-  const currentTask = useAppSelector(state => state.main.currentTask);
-  const isLoading = useAppSelector(state => state.main.isLoading);
-  const error = useAppSelector(state => state.main.error);
-  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+  const currentTask = useAppSelector(state => state.tasks.currentTask);
+  const isLoading = useAppSelector(state => state.tasks.isLoading);
+  const error = useAppSelector(state => state.tasks.error);
+  const isDarkTheme = useAppSelector(state => state.app.darkTheme);
 
   useEffect(() => {
-    dispatch(appThunk.getTask(id));
+    dispatch(tasksThunks.getTask(id));
   }, []);
 
   const formConfig = useMemo(
@@ -55,7 +54,7 @@ export const TaskCard = ({ className }: Props) => {
         break;
       }
       case EditFormButtons.CONFIRM: {
-        dispatch(appThunk.updateTask(model));
+        dispatch(tasksThunks.updateTask(model));
         setOpenEditDialog(false);
         break;
       }

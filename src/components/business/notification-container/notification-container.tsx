@@ -1,14 +1,14 @@
 import { Slide, ToastContainer } from 'react-toastify';
 
-type Props = {
-  isDarkTheme?: boolean;
-};
+import { useAppSelector } from '@/store';
 
-export const CustomToastContainer = ({ isDarkTheme }: Props) => {
+export const NotificationContainer = () => {
+  const isDarkTheme = useAppSelector(state => state.app.darkTheme);
+
   return (
     <ToastContainer
       position={'bottom-right'}
-      autoClose={5000}
+      autoClose={6000}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick

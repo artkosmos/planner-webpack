@@ -1,2 +1,2 @@
-export * from './main-slice';
+export * from '../store/task-slice';
 export { default } from './task.service';

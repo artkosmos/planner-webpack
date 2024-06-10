@@ -1,10 +1,4 @@
-import {
-  createSlice,
-  isFulfilled,
-  isPending,
-  isRejected,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import taskService from '@/api';
 import { IGetTaskListArgs } from '@/backend';
@@ -12,14 +6,14 @@ import { ITask } from '@/common/types';
 import { createAppAsyncThunk } from '@/utils/pretyped-async-thunk';
 
 const getTaskList = createAppAsyncThunk(
-  'main/getTaskList',
+  'tasks/getTaskList',
   async ({ search, sortBy, filterBy }: IGetTaskListArgs) => {
     return await taskService.getTaskList({ search, sortBy, filterBy });
   },
 );
 
 const getTask = createAppAsyncThunk(
-  'main/getTask',
+  'tasks/getTask',
   async (id: string, { rejectWithValue }) => {
     try {
       return await taskService.getTask(id);
@@ -30,7 +24,7 @@ const getTask = createAppAsyncThunk(
 );
 
 const createTask = createAppAsyncThunk(
-  'main/createTask',
+  'tasks/createTask',
   async (data: ITask, { dispatch }) => {
     const response = await taskService.createTask(data);
     if (response) {
@@ -40,12 +34,12 @@ const createTask = createAppAsyncThunk(
 );
 
 const deleteTask = createAppAsyncThunk(
-  'main/deleteTask',
+  'tasks/deleteTask',
   async (id: string, { rejectWithValue, dispatch, getState }) => {
     try {
       const response = await taskService.deleteTask(id);
       if (response) {
-        const { sortBy, search } = getState().main.listSort;
+        const { sortBy, search } = getState().tasks.listSort;
         return dispatch(getTaskList({ sortBy, search }));
       }
     } catch (error) {
@@ -55,7 +49,7 @@ const deleteTask = createAppAsyncThunk(
 );
 
 const updateTask = createAppAsyncThunk(
-  'main/updateTask',
+  'tasks/updateTask',
   async (task: ITask, { rejectWithValue, dispatch }) => {
     try {
       const response = await taskService.updateTask(task);
@@ -68,27 +62,13 @@ const updateTask = createAppAsyncThunk(
   },
 );
 
-export const setTheme = createAppAsyncThunk(
-  'main/setTheme',
-  async (isDark: boolean, { rejectWithValue }) => {
-    try {
-      localStorage.setItem('darkTheme', `${isDark}`);
-      return isDark;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
-
-const slice = createSlice({
-  name: 'main',
+const tasksSlice = createSlice({
+  name: 'tasks',
   initialState: {
     list: null as ITask[],
     currentTask: null as ITask | null,
     error: null as null | string,
-    isLoading: false as boolean,
-    isInitialized: false as boolean,
-    darkTheme: false as boolean,
+    isLoading: true as boolean,
     listSort: {
       search: '' as string,
       sortBy: '' as string,
@@ -105,54 +85,71 @@ const slice = createSlice({
     setFilter: (state, action: PayloadAction<string>) => {
       state.listSort.filterBy = action.payload;
     },
-    setIsAppInitialized: (state, action: PayloadAction<boolean>) => {
-      state.isInitialized = action.payload;
-    },
   },
   extraReducers: builder => {
     builder
-      .addCase(setTheme.fulfilled, (state, action) => {
-        state.darkTheme = action.payload;
+      .addCase(getTaskList.pending, state => {
+        state.isLoading = true;
       })
       .addCase(getTaskList.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.list = action.payload;
       })
+      .addCase(getTaskList.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(getTask.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(getTask.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.currentTask = action.payload;
       })
+      .addCase(getTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(createTask.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(createTask.fulfilled, state => {
+        state.isLoading = false;
         state.listSort.sortBy = '';
         state.listSort.search = '';
         state.listSort.filterBy = '';
       })
-      .addCase(getTask.rejected, (state, action) => {
-        state.error = action.payload;
+      .addCase(createTask.rejected, state => {
+        state.isLoading = false;
       })
-      .addCase(deleteTask.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(updateTask.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addMatcher(isPending, state => {
+      .addCase(deleteTask.pending, state => {
         state.isLoading = true;
       })
-      .addMatcher(isRejected, state => {
+      .addCase(deleteTask.fulfilled, state => {
         state.isLoading = false;
       })
-      .addMatcher(isFulfilled, state => {
+      .addCase(deleteTask.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateTask.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(updateTask.fulfilled, state => {
+        state.isLoading = false;
+      })
+      .addCase(updateTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const mainSlice = slice.reducer;
-export const appActions = slice.actions;
-export const appThunk = {
+export const tasksReducer = tasksSlice.reducer;
+export const tasksActions = tasksSlice.actions;
+export const tasksThunks = {
   createTask,
   deleteTask,
   updateTask,
   getTask,
   getTaskList,
-  setTheme,
 };

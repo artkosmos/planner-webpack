@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { mainSlice } from '@/api';
+import { appReducer } from '@/store/app-slice';
+import { tasksReducer } from '@/store/task-slice';
 
 const rootReducer = combineReducers({
-  main: mainSlice,
+  app: appReducer,
+  tasks: tasksReducer,
 });
 
 export const setupStore = (

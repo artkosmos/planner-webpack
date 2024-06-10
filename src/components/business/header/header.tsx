@@ -5,12 +5,11 @@ import { SelectChangeEvent } from '@mui/material';
 
 import clsx from 'clsx';
 
-import { appActions } from '@/api';
 import { Select, type SelectItem } from '@/components/shared/select';
 import { SwitchTheme } from '@/components/shared/switch-theme';
 import { availableLanguages } from '@/constants/languages';
 import { useDarkTheme } from '@/hooks/use-dark-theme';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { tasksActions, useAppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
 
@@ -28,9 +27,9 @@ export const Header = () => {
     i18n.changeLanguage(appInitLng);
   }, []);
 
-  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
-  const sortBy = useAppSelector(state => state.main.listSort.sortBy);
-  const filterBy = useAppSelector(state => state.main.listSort.filterBy);
+  const isDarkTheme = useAppSelector(state => state.app.darkTheme);
+  const sortBy = useAppSelector(state => state.tasks.listSort.sortBy);
+  const filterBy = useAppSelector(state => state.tasks.listSort.filterBy);
 
   const languageItems: SelectItem[] = useMemo(() => {
     return [
@@ -72,12 +71,12 @@ export const Header = () => {
 
   const sortHandler = (event: SelectChangeEvent) => {
     const selectValue = event.target.value;
-    dispatch(appActions.setSort(selectValue));
+    dispatch(tasksActions.setSort(selectValue));
   };
 
   const filterHandler = (event: SelectChangeEvent) => {
     const selectValue = event.target.value;
-    dispatch(appActions.setFilter(selectValue));
+    dispatch(tasksActions.setFilter(selectValue));
   };
 
   const classNames = useMemo(() => {

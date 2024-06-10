@@ -5,7 +5,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { v4 as uuid } from 'uuid';
 
-import { appActions, appThunk } from '@/api';
 import { ITask } from '@/common/types';
 import { Dialog } from '@/components/shared/dialog';
 import { InfoTitle } from '@/components/shared/info-title';
@@ -19,7 +18,7 @@ import {
 } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 import { TASK } from '@/routes';
-import { useAppDispatch, useAppSelector } from '@/store';
+import { tasksThunks, useAppDispatch, useAppSelector } from '@/store';
 import { debouncedSearch } from '@/utils/debounced-search';
 
 import { getTaskCreateConfig } from './form-config';
@@ -41,19 +40,16 @@ export const ListCreator = () => {
   const { t, i18n } = useTranslation('home');
   const navigate = useNavigate();
 
-  const list = useAppSelector(state => state.main.list);
-  const isLoading = useAppSelector(state => state.main.isLoading);
-  const error = useAppSelector(state => state.main.error);
-  const isAppInitialized = useAppSelector(state => state.main.isInitialized);
-  const isDarkTheme = useAppSelector(state => state.main.darkTheme);
+  const list = useAppSelector(state => state.tasks.list);
+  const isLoading = useAppSelector(state => state.tasks.isLoading);
+  const error = useAppSelector(state => state.tasks.error);
+  const isDarkTheme = useAppSelector(state => state.app.darkTheme);
   const { search, sortBy, filterBy } = useAppSelector(
-    state => state.main.listSort,
+    state => state.tasks.listSort,
   );
 
   useEffect(() => {
-    dispatch(appThunk.getTaskList({ search, sortBy, filterBy })).finally(() =>
-      dispatch(appActions.setIsAppInitialized(true)),
-    );
+    dispatch(tasksThunks.getTaskList({ search, sortBy, filterBy }));
   }, [search, sortBy, filterBy, dispatch]);
 
   const formConfig = useMemo(
@@ -76,7 +72,7 @@ export const ListCreator = () => {
         const isDone = model.isDone;
         const id = uuid().slice(0, idLength);
         dispatch(
-          appThunk.createTask({ date, title, image, id, important, isDone }),
+          tasksThunks.createTask({ date, title, image, id, important, isDone }),
         );
         setOpenEditDialog(false);
         break;
@@ -85,7 +81,7 @@ export const ListCreator = () => {
   };
 
   const deleteListHandler = (taskId: string) => {
-    dispatch(appThunk.deleteTask(taskId));
+    dispatch(tasksThunks.deleteTask(taskId));
   };
 
   const navigateHandler = (taskId: string) => {
@@ -115,7 +111,6 @@ export const ListCreator = () => {
           className={'add-task-block__button'}
           title={t('create_button')}
           onClick={() => setOpenEditDialog(true)}
-          disabled={!isAppInitialized}
         />
       </div>
       <SearchInput
@@ -123,7 +118,7 @@ export const ListCreator = () => {
         className={'list-creator__search'}
         onChange={searchHandler}
       />
-      {isLoading || !isAppInitialized ? (
+      {isLoading ? (
         <CircularProgress
           className={'list-creator__loader'}
           data-testid={'loader'}
