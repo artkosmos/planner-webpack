@@ -5,11 +5,16 @@
 .dark {
   background-color: $background-dark;
 
+  .MuiButton-root.Mui-disabled {
+    background-color: #424546;
+    color: #6a6c6d;
+  }
+
   .header {
     background-color: $background-dark-2;
 
     &__title {
-      color: $title-text-dark;
+      color: $text-dark;
     }
 
     .MuiInputLabel-root {
@@ -28,7 +33,7 @@
   .MuiPaper-root.MuiMenu-paper {
     ul {
       background-color: $input-dark-background;
-      color: $title-text-dark;
+      color: $text-dark;
 
       .Mui-selected {
         background-color: color.adjust($background-dark, $lightness: 20%);
@@ -52,7 +57,7 @@
 
   .search-input {
     .MuiInputBase-root {
-      color: $title-text-dark;
+      color: $text-dark;
 
       &::before {
         border-bottom-color: $grey-2;
@@ -80,25 +85,25 @@
     }
 
     &__label {
-      color: $title-text-dark;
+      color: $text-dark;
     }
 
     &__label-error {
-      color: $error-text;
+      color: $error-text-dark;
     }
   }
 
   .datepicker {
     color-scheme: dark;
     background-color: $input-dark-background;
-    color: $title-text-dark;
+    color: $text-dark;
 
     &__button {
-      color: $title-text-dark !important;
+      color: $text-dark !important;
       border-color: $input-dark-background;
 
       &_error {
-        color: $error-text !important;
+        color: $error-text-dark !important;
         border-color: #934242;
       }
     }
@@ -118,7 +123,7 @@
 
   .dialog {
     .dialog-mui-title {
-      color: $title-text-dark;
+      color: $text-dark;
       background-color: $soft-dark;
       border-bottom-color: #f5f5f533;
     }
@@ -134,23 +139,23 @@
 
   .file-input__delete-icon {
     path {
-      fill: $title-text-dark;
+      fill: $text-dark;
     }
   }
 
   .table {
     &_dark {
       .table-header {
-        color: $title-text-dark;
+        color: $text-dark;
         background-color: $soft-dark-2;
       }
 
       .table-row {
         background-color: $background-dark-2;
-        color: $title-text-dark;
+        color: $text-dark;
 
         &[data-status='done'] {
-          background-color: rgba($background-dark-2, 0.3);
+          background-color: rgba($background-dark-2, 0.2);
         }
 
         @media (hover: hover) {
@@ -164,7 +169,7 @@
 
   .table-delete-icon_dark {
     path {
-      fill: $title-text-dark;
+      fill: $text-dark;
     }
   }
 
@@ -178,35 +183,45 @@
     }
 
     &__label {
-      color: $title-text-dark;
+      color: $text-dark;
     }
   }
 
   .list-creator__loader {
-    color: #8fc9f7;
+    color: $title-text-dark;
   }
 
   .task-card {
     background-color: $soft-dark !important;
 
     &__title {
-      color: #8fc9f7;
+      color: $title-text-dark;
     }
 
-    &__list {
-      li {
-        color: $title-text-dark;
-      }
+    &__point {
+      color: $title-text-dark;
+    }
+
+    &__description {
+      color: $text-dark;
+    }
+
+    &__status {
+      color: $text-dark;
+    }
+
+    &__image {
+      box-shadow: 0 0 7px 0 rgb(0 0 0 / 85%);
     }
 
     &__loader {
-      color: #8fc9f7;
+      color: $title-text-dark;
     }
   }
 
   .task-description {
     &__back-button {
-      color: #8fc9f7 !important;
+      color: $title-text-dark !important;
     }
   }
 }

@@ -60,10 +60,10 @@
     }
 
     &[data-status='done'] {
-      background-color: rgb(255 255 255 / 30%);
+      background-color: rgb(255 255 255 / 20%);
 
       .col:not(:first-child, :last-child) {
-        opacity: 0.3;
+        opacity: 0.2;
         text-decoration: line-through;
       }
 

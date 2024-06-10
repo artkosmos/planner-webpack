@@ -34,7 +34,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
     handleSubmit,
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<EditTaskFormFields>({
     defaultValues: {
       title: task.title,
@@ -145,7 +145,11 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
           onClick={() => buttonActionHandler({ name: EditFormButtons.CANCEL })}
           title={config.cancelButtonTitle}
         />
-        <ButtonPrimary type={'submit'} title={config.confirmButtonTitle} />
+        <ButtonPrimary
+          type={'submit'}
+          title={config.confirmButtonTitle}
+          disabled={!isDirty}
+        />
       </div>
     </form>
   );

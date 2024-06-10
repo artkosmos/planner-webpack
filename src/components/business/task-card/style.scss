@@ -37,10 +37,6 @@
     li {
       overflow-wrap: anywhere;
 
-      .task-card__description {
-        font-style: italic;
-      }
-
       &:first-child {
         display: flex;
         gap: 10px;
@@ -68,6 +64,7 @@
   &__point {
     font-size: 20px;
     font-weight: bold;
+    color: $title-text;
   }
 
   &__status {
@@ -119,11 +116,8 @@
     max-height: 200px;
     margin: 8px 15px 0 20px;
     border-radius: 8px;
-    box-shadow:
-      -10px 0 20px -10px #000,
-      10px 2px 13px -10px #000,
-      5px 5px 15px 5px rgb(0 0 0 / 0%);
     transition: transform 0.15s linear;
+    box-shadow: 0 0 7px 0 rgb(0 0 0 / 50%);
   }
 
   &__image-dialog {
