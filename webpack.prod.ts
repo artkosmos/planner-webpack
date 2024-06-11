@@ -5,6 +5,7 @@ import common from './webpack.common';
 import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 
 interface prodEnvVariables {
   analyzer: boolean;
@@ -46,8 +47,10 @@ export default (env: prodEnvVariables) => {
         algorithm: 'gzip',
         test: /\.(js|css|html)$/,
       }),
+      new CopyPlugin({ patterns: [{ from: 'public', to: 'public' }] }),
     ],
   });
+
   if (isAnalyzerEnabled) {
     prodConfig.plugins.push(
       new BundleAnalyzerPlugin({
