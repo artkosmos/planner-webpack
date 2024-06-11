@@ -8,9 +8,19 @@ import {
 import { FilledInput } from '@/components/shared/filled-input';
 import { FilledInputProps } from '@/components/shared/filled-input/filled-input';
 
+interface ValidationRule {
+  value: boolean | number;
+  message: string;
+}
+
+interface Validation {
+  required?: ValidationRule;
+  maxLength?: ValidationRule;
+}
+
 type Props<T extends FieldValues> = {
   regExp?: string;
-  validationMessage?: string;
+  validation?: Validation;
 } & UseControllerProps<T> &
   Omit<FilledInputProps, 'onChange' | 'value' | 'variant'>;
 
@@ -19,7 +29,7 @@ export const ControlledFilledInput = <T extends FieldValues>({
   control,
   ref,
   regExp,
-  validationMessage,
+  validation,
   ...rest
 }: Props<T>) => {
   const {
@@ -27,14 +37,23 @@ export const ControlledFilledInput = <T extends FieldValues>({
   } = useController({
     name,
     control,
-    rules: { required: validationMessage },
+    rules: {
+      required: {
+        value: validation?.required.value as boolean,
+        message: validation?.required.message,
+      },
+      maxLength: {
+        value: validation?.maxLength.value as number,
+        message: validation?.maxLength.message,
+      },
+    },
   });
 
   const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const currentValue = event.currentTarget.value;
-    const validation = new RegExp(regExp);
+    const format = new RegExp(regExp);
 
-    if (!validation.test(currentValue) && currentValue.length) {
+    if (!format.test(currentValue) && currentValue.length) {
       return;
     }
     onChange(currentValue);

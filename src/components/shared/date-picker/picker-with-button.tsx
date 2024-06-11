@@ -73,7 +73,6 @@ export const PickerWithButtonField = <T extends FieldValues>(
         className={classNames.datepicker}
         theme={currentTheme}
         closeOnSelect={false}
-        disablePast
       />
     </LocalizationProvider>
   );

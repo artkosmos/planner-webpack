@@ -118,7 +118,7 @@ export const ListCreator = () => {
         className={'list-creator__search'}
         onChange={searchHandler}
       />
-      {isLoading ? (
+      {isLoading || !list ? (
         <CircularProgress
           className={'list-creator__loader'}
           data-testid={'loader'}

@@ -30,7 +30,16 @@ export interface ITaskFormConfig {
   };
   nameField: {
     label?: string;
-    validationMsg?: string;
+    validation?: {
+      required?: {
+        value: boolean;
+        message: string;
+      };
+      maxLength?: {
+        value: number;
+        message: string;
+      };
+    };
     formatRegExp?: string;
   };
   dateField: {

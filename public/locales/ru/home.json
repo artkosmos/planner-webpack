@@ -12,6 +12,7 @@
     "cancel_button": "Отмена",
     "date_validation": "Введите корректную дату",
     "name_validation": "Название обязательно",
+    "max_length_validation": "Максимальная длина 300 символов",
     "image_button_text": "Фото",
     "checkbox-important_label": "Пометить как важное"
   }

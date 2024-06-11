@@ -15,7 +15,16 @@ export const getTaskUpdateConfig = (
     },
     nameField: {
       label: t('edit_form_config.name_label'),
-      validationMsg: t('edit_form_config.name_validation'),
+      validation: {
+        required: {
+          value: true,
+          message: t('edit_form_config.name_validation'),
+        },
+        maxLength: {
+          value: 300,
+          message: t('edit_form_config.max_length_validation'),
+        },
+      },
       formatRegExp: '[a-z0-9а-я\\s]+$',
     },
     dateField: {

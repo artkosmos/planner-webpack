@@ -111,7 +111,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
         label={errors.title ? errors.title.message : config.nameField.label}
         error={!!errors.title}
         regExp={config.nameField.formatRegExp}
-        validationMessage={config.nameField.validationMsg}
+        validation={config.nameField.validation}
         autoFocus
       />
       <PickerWithButtonField

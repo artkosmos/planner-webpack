@@ -21,6 +21,7 @@
     "cancel_button": "Cancel",
     "date_validation": "Enter valid date",
     "name_validation": "Name cannot be empty",
+    "max_length_validation": "Maximum length is 300 characters",
     "checkbox-important_label": "Mark as important",
     "checkbox-done_label": "Completed"
   }
