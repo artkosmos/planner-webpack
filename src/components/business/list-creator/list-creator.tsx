@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { v4 as uuid } from 'uuid';
+import { nanoid } from 'nanoid';
 
 import { ITask } from '@/common/types';
 import { Dialog } from '@/components/shared/dialog';
@@ -64,8 +64,7 @@ export const ListCreator = () => {
         break;
       }
       case EditFormButtons.CONFIRM: {
-        const idLength = 8;
-        const id = uuid().slice(0, idLength);
+        const id = nanoid();
         dispatch(tasksThunks.createTask({ t, task: { ...model, id } }));
         setOpenEditDialog(false);
         break;
