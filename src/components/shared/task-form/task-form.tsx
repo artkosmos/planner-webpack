@@ -58,7 +58,7 @@ export const TaskForm = ({ task, onAction, config }: Props) => {
   }, []);
 
   const fileClearHandler = () => {
-    setValue('image', null);
+    setValue('image', null, { shouldDirty: true });
   };
 
   const buttonActionHandler = ({ name, data }: IButtonAction) => {
