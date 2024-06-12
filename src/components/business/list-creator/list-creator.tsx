@@ -65,15 +65,8 @@ export const ListCreator = () => {
       }
       case EditFormButtons.CONFIRM: {
         const idLength = 8;
-        const date = model.date;
-        const title = model.title;
-        const image = model.image;
-        const important = model.important;
-        const isDone = model.isDone;
         const id = uuid().slice(0, idLength);
-        dispatch(
-          tasksThunks.createTask({ date, title, image, id, important, isDone }),
-        );
+        dispatch(tasksThunks.createTask({ t, task: { ...model, id } }));
         setOpenEditDialog(false);
         break;
       }
@@ -81,7 +74,7 @@ export const ListCreator = () => {
   };
 
   const deleteListHandler = (taskId: string) => {
-    dispatch(tasksThunks.deleteTask(taskId));
+    dispatch(tasksThunks.deleteTask({ t, id: taskId }));
   };
 
   const navigateHandler = (taskId: string) => {

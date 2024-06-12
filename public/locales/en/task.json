@@ -24,5 +24,9 @@
     "max_length_validation": "Maximum length is 300 characters",
     "checkbox-important_label": "Mark as important",
     "checkbox-done_label": "Completed"
+  },
+  "notifications": {
+    "update_success": "Task updated successfully",
+    "update_error": "An error occurred while updating"
   }
 }

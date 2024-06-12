@@ -15,5 +15,11 @@
     "max_length_validation": "Максимальная длина 300 символов",
     "image_button_text": "Фото",
     "checkbox-important_label": "Пометить как важное"
+  },
+  "notifications": {
+    "create_success": "Задача создана успешно",
+    "create_error": "Произошла ошибка при создании",
+    "delete_success": "Задача удалена успешно",
+    "delete_error": "Произошла ошибка при удалении"
   }
 }

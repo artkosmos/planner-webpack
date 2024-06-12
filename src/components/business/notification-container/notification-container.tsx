@@ -8,8 +8,8 @@ export const NotificationContainer = () => {
   return (
     <ToastContainer
       position={'bottom-right'}
-      autoClose={6000}
-      hideProgressBar={false}
+      autoClose={1000}
+      hideProgressBar={true}
       newestOnTop={false}
       closeOnClick
       rtl={false}

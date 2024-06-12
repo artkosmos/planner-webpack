@@ -7,6 +7,11 @@ import { TFunction } from 'i18next';
 import notificationService from '@/api/notification.service';
 import { createAppAsyncThunk } from '@/utils/pretyped-async-thunk';
 
+const notificationSettings = {
+  autoClose: 6000,
+  hideProgressBar: false,
+};
+
 export const setTheme = createAppAsyncThunk(
   'app/setTheme',
   async (isDark: boolean, { rejectWithValue }) => {
@@ -42,6 +47,7 @@ export const getNotifications = createAppAsyncThunk(
               t('todayTask', {
                 count: numberOfTodayTasks,
               }),
+              notificationSettings,
             );
           } else {
             toast.warn(
@@ -49,6 +55,7 @@ export const getNotifications = createAppAsyncThunk(
                 count: numberOfTodayTasks,
                 number: numberOfTodayTasks,
               }),
+              notificationSettings,
             );
           }
 
@@ -57,6 +64,7 @@ export const getNotifications = createAppAsyncThunk(
               t('expiredTask', {
                 count: numberOfExpiredTasks,
               }),
+              notificationSettings,
             );
           } else {
             toast.error(
@@ -64,6 +72,7 @@ export const getNotifications = createAppAsyncThunk(
                 count: numberOfExpiredTasks,
                 number: numberOfExpiredTasks,
               }),
+              notificationSettings,
             );
           }
 
@@ -71,7 +80,7 @@ export const getNotifications = createAppAsyncThunk(
         }
       }
     } catch (err) {
-      toast.error(t('request_error'));
+      toast.error(t('request_error'), notificationSettings);
       return rejectWithValue(err);
     }
   },

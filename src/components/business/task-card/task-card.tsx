@@ -54,7 +54,7 @@ export const TaskCard = ({ className }: Props) => {
         break;
       }
       case EditFormButtons.CONFIRM: {
-        dispatch(tasksThunks.updateTask(model));
+        dispatch(tasksThunks.updateTask({ t, task: model }));
         setOpenEditDialog(false);
         break;
       }

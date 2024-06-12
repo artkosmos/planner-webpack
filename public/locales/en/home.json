@@ -15,5 +15,11 @@
     "max_length_validation": "Maximum length is 300 characters",
     "image_button_text": "Photo",
     "checkbox-important_label": "Mark as important"
+  },
+  "notifications": {
+    "create_success": "Task created successfully",
+    "create_error": "An error occurred while creating",
+    "delete_success": "Task deleted successfully",
+    "delete_error": "An error occurred while deleting"
   }
 }

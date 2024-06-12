@@ -24,5 +24,9 @@
     "max_length_validation": "Максимальная длина 300 символов",
     "checkbox-important_label": "Пометить как важное",
     "checkbox-done_label": "Выполнено"
+  },
+  "notifications": {
+    "update_success": "Задача обновлена успешно",
+    "update_error": "Произошла ошибка при обновлении"
   }
 }
