@@ -3,7 +3,7 @@ import { TaskStatus } from '@/common/types';
 import {
   AvailablePickerLocales,
   AvailablePickerMode,
-} from '@/components/shared/date-picker/types';
+} from '@/components/shared/controlled-date-picker/types';
 
 export enum EditFormButtons {
   CANCEL = 'cancel',

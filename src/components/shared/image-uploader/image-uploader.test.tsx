@@ -63,6 +63,7 @@ describe('testing of image uploader component', () => {
     await userEvent.upload(uploadInput, file);
     const imagePreview = (await findByRole('img')) as HTMLImageElement;
 
+    expect(imagePreview).toBeInTheDocument();
     expect(imagePreview.alt).toBe('image preview');
   });
 });

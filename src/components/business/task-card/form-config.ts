@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 
-import { AvailablePickerLocales } from '@/components/shared/date-picker/types';
+import { AvailablePickerLocales } from '@/components/shared/controlled-date-picker/types';
 import { ITaskFormConfig } from '@/components/shared/task-form';
 import { dateFormats } from '@/constants/date-formats';
 
