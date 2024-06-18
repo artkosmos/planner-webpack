@@ -50,7 +50,7 @@ export const ListCreator = () => {
 
   useEffect(() => {
     dispatch(tasksThunks.getTaskList({ search, sortBy, filterBy }));
-  }, [search, sortBy, filterBy, dispatch]);
+  }, [search, sortBy, filterBy]);
 
   const formConfig = useMemo(
     () => getTaskCreateConfig(t, i18n.language, isDarkTheme),
@@ -105,11 +105,14 @@ export const ListCreator = () => {
           onClick={() => setOpenEditDialog(true)}
         />
       </div>
-      <SearchInput
-        label={t('search_placeholder')}
-        className={'list-creator__search'}
-        onChange={searchHandler}
-      />
+      {list && list.length > 0 && (
+        <SearchInput
+          label={t('search_placeholder')}
+          className={'list-creator__search'}
+          onChange={searchHandler}
+          disabled={isLoading}
+        />
+      )}
       {isLoading || !list ? (
         <CircularProgress
           className={'list-creator__loader'}
