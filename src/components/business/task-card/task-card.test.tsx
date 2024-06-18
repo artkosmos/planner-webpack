@@ -1,4 +1,5 @@
 import * as router from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { act, fireEvent, waitFor, within } from '@testing-library/react';
 
 import { renderWithProviders } from '@/__mocks__/redux-jest-helper';
@@ -8,6 +9,13 @@ import { ITask } from '@/common/types';
 import { TaskCard } from '@/components/business/task-card';
 
 import '@testing-library/jest-dom';
+
+jest.mock('react-toastify', () => ({
+  toast: {
+    success: jest.fn(),
+    error: jest.fn(),
+  },
+}));
 
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
@@ -184,6 +192,7 @@ describe('testing of task-card component', () => {
     expect(updatedCard).not.toContainElement(starIcon);
     expect(isImportantField).not.toBeChecked();
     expect(isDoneField).not.toBeChecked();
+    expect(toast.success).toHaveBeenCalledWith('Task updated successfully');
   });
 
   test('dialog should be closed if a cancel button was clicked', async () => {
@@ -226,6 +235,9 @@ describe('testing of task-card component', () => {
     const error = await findByTestId('info-title');
 
     expect(error).toHaveTextContent("Specified task wasn't found");
+    expect(toast.error).toHaveBeenCalledWith(
+      'An error occurred while updating',
+    );
   });
 
   test("should appear message if a task wasn't found due to wrong id", async () => {
