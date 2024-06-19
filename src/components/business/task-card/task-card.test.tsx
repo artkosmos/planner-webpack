@@ -2,10 +2,12 @@ import * as router from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { act, fireEvent, waitFor, within } from '@testing-library/react';
 
+import dayjs from 'dayjs';
+
 import { renderWithProviders } from '@/__mocks__/redux-jest-helper';
 import { mockedTaskList } from '@/__mocks__/task-list';
 import taskService from '@/api';
-import { ITask } from '@/common/types';
+import { ITask, TaskStatus } from '@/common/types';
 import { TaskCard } from '@/components/business/task-card';
 
 import '@testing-library/jest-dom';
@@ -23,10 +25,8 @@ jest.mock('react-router', () => ({
 }));
 
 describe('testing of task-card component', () => {
-  const localStorageGetItem = jest.spyOn(Storage.prototype, 'getItem');
   const mockedUseParams = jest.spyOn(router, 'useParams');
   const mockedGetTask = jest.spyOn(taskService, 'getTask');
-  localStorageGetItem.mockReturnValue(JSON.stringify(mockedTaskList));
   mockedUseParams.mockReturnValue({ id: mockedTaskList[3].id });
 
   test('should display loader while fetching task data', () => {
@@ -38,6 +38,7 @@ describe('testing of task-card component', () => {
   });
 
   test('should render card with its title and task details', async () => {
+    mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
     const { findByTestId, getByText } = renderWithProviders(<TaskCard />);
 
     const card = await findByTestId('card');
@@ -55,6 +56,7 @@ describe('testing of task-card component', () => {
   });
 
   test('should appear image pop up', async () => {
+    mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
     const { findByTestId } = renderWithProviders(<TaskCard />);
 
     const card = await findByTestId('card');
@@ -70,6 +72,7 @@ describe('testing of task-card component', () => {
   });
 
   test('should display a star icon if task marked as important', async () => {
+    mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
     const { findByTestId } = renderWithProviders(<TaskCard />);
 
     const card = await findByTestId('card');
@@ -128,20 +131,19 @@ describe('testing of task-card component', () => {
     const updatedTask: ITask = {
       id: '72e14782',
       title: 'important date',
-      date: '2023-12-20T19:30',
-      image: null,
+      date: '2018-02-20T15:06',
+      image: 'img.png',
       important: false,
       isDone: false,
+      status: TaskStatus.EXPIRED,
     };
 
-    const updatedTaskList = mockedTaskList.map(task =>
-      task.id === updatedTask.id ? { ...task, ...updatedTask } : task,
-    );
+    const mockedUpdateTask = jest.spyOn(taskService, 'updateTask');
+    mockedUpdateTask.mockResolvedValueOnce('Task was updated successfully');
 
-    localStorageGetItem
-      .mockReturnValueOnce(JSON.stringify(mockedTaskList))
-      .mockReturnValueOnce(JSON.stringify(mockedTaskList))
-      .mockReturnValueOnce(JSON.stringify(updatedTaskList));
+    mockedGetTask
+      .mockResolvedValueOnce(mockedTaskList[3])
+      .mockResolvedValueOnce(updatedTask);
 
     const { findByTestId, getByTestId, getByText, getByRole, getByLabelText } =
       renderWithProviders(<TaskCard />);
@@ -170,32 +172,38 @@ describe('testing of task-card component', () => {
     expect(isDoneField).toBeChecked();
 
     fireEvent.change(nameField, { target: { value: updatedTask.title } });
-    fireEvent.change(dateFieldButton, {
-      target: { value: updatedTask.date },
-    });
+    await act(() => fireEvent.click(dateFieldButton));
+    const dayList = document.querySelector(
+      '.MuiDayCalendar-root',
+    ) as HTMLElement;
+    const dayToChoose = within(dayList).getByText('20');
+    fireEvent.click(dayToChoose);
+    const pickerOkButton = getByRole('button', { name: 'OK' });
+    fireEvent.click(pickerOkButton);
     fireEvent.click(isDoneField);
     fireEvent.click(isImportantField);
     await act(() => fireEvent.click(confirmButton));
-    const loader = getByTestId('loader');
-
-    expect(loader).toBeInTheDocument();
-    await waitFor(() => expect(loader).not.toBeInTheDocument(), {
-      timeout: 1200,
-    });
-
     const updatedCard = await findByTestId('card');
     const updatedStatus = within(updatedCard).getByText('Task was expired');
 
-    expect(updatedCard).toHaveTextContent('12/20/2023 07:30 PM');
+    expect(mockedUpdateTask).toHaveBeenCalledWith({
+      id: '72e14782',
+      title: 'important date',
+      date: dayjs(updatedTask.date).toDate(),
+      image: 'img.png',
+      important: false,
+      isDone: false,
+      status: TaskStatus.DONE,
+    });
+    expect(updatedCard).toHaveTextContent('02/20/2018 03:06 PM');
     expect(updatedCard).toHaveTextContent('72e14782');
     expect(updatedCard).toContainElement(updatedStatus);
     expect(updatedCard).not.toContainElement(starIcon);
-    expect(isImportantField).not.toBeChecked();
-    expect(isDoneField).not.toBeChecked();
     expect(toast.success).toHaveBeenCalledWith('Task updated successfully');
   });
 
   test('dialog should be closed if a cancel button was clicked', async () => {
+    mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
     const { findByTestId, getByText, getByTestId } = renderWithProviders(
       <TaskCard />,
     );
@@ -216,10 +224,12 @@ describe('testing of task-card component', () => {
     await waitFor(() => expect(dialog).not.toBeInTheDocument());
   });
 
-  test("should appears an error if update task wasn't successful", async () => {
+  test("should appears an error if updating of task wasn't successful", async () => {
     jest
       .spyOn(taskService, 'updateTask')
       .mockRejectedValueOnce(new Error("Specified task wasn't found"));
+
+    mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
 
     const { findByText, getByRole, findByTestId } = renderWithProviders(
       <TaskCard />,
