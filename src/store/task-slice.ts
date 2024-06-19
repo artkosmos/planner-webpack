@@ -50,7 +50,7 @@ const deleteTask = createAppAsyncThunk<void, { t: TFunction; id: string }>(
         return;
       }
     } catch (error) {
-      toast.error(t('notifications.delete_success'));
+      toast.error(t('notifications.delete_error'));
       return rejectWithValue(error.message);
     }
   },
