@@ -31,6 +31,7 @@ export const DatePicker = (
             actions: ['cancel', 'accept'],
           },
         }}
+        views={['year', 'month', 'day', 'hours', 'minutes']}
         {...props}
         open={open}
         onClose={() => setOpen(false)}
