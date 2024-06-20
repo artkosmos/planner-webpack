@@ -75,13 +75,12 @@ export const getNotifications = createAppAsyncThunk(
               notificationSettings,
             );
           }
-
-          localStorage.setItem('lastNotification', today.toISOString());
         }
       }
     } catch (err) {
-      toast.error(t('request_error'), notificationSettings);
       return rejectWithValue(err);
+    } finally {
+      localStorage.setItem('lastNotification', today.toISOString());
     }
   },
 );
