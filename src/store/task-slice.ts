@@ -96,6 +96,9 @@ const tasksSlice = createSlice({
     setFilter: (state, action: PayloadAction<string>) => {
       state.listSort.filterBy = action.payload;
     },
+    clearError: state => {
+      state.error = null;
+    },
   },
   extraReducers: builder => {
     builder
