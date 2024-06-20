@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import dayjs from 'dayjs';
 
-import { renderWithProviders } from '@/__mocks__/redux-jest-helper';
+import { renderWithRedux } from '@/__mocks__/redux-jest';
 import { mockedTaskList } from '@/__mocks__/task-list';
 import taskService from '@/api';
 import { ITask } from '@/common/types';
@@ -39,7 +39,7 @@ describe('testing of list creator component', () => {
   test('should appear info title if list is empty', async () => {
     mockedGetTaskList.mockResolvedValueOnce([]);
 
-    const { queryByRole, findByTestId } = renderWithProviders(<ListCreator />);
+    const { queryByRole, findByTestId } = renderWithRedux(<ListCreator />);
 
     const infoTitle = await findByTestId('info-title');
     const table = queryByRole('table');
@@ -51,9 +51,7 @@ describe('testing of list creator component', () => {
   test('should appear table with tasks if list is not empty', async () => {
     mockedGetTaskList.mockResolvedValueOnce(mockedTaskList);
 
-    const { findAllByTestId, queryByTestId } = renderWithProviders(
-      <ListCreator />,
-    );
+    const { findAllByTestId, queryByTestId } = renderWithRedux(<ListCreator />);
 
     const tasks = await findAllByTestId(/table-row-/);
     const info = queryByTestId('info-title');
@@ -65,8 +63,9 @@ describe('testing of list creator component', () => {
   test('displays add button and loader during init fetch, then search input and tasks', async () => {
     mockedGetTaskList.mockResolvedValueOnce(mockedTaskList);
 
-    const { findAllByTestId, getByTestId, findByLabelText } =
-      renderWithProviders(<ListCreator />);
+    const { findAllByTestId, getByTestId, findByLabelText } = renderWithRedux(
+      <ListCreator />,
+    );
 
     const addButton = getByTestId('primary-button');
     const loader = getByTestId('loader');
@@ -107,7 +106,7 @@ describe('testing of list creator component', () => {
       getByText,
       findByTestId,
       findByText,
-    } = renderWithProviders(<ListCreator />);
+    } = renderWithRedux(<ListCreator />);
 
     const addButton = getByText('Add task');
     const noDataTitle = await findByText('No available data');
@@ -194,7 +193,7 @@ describe('testing of list creator component', () => {
       .mockResolvedValueOnce(mockedTaskList)
       .mockResolvedValueOnce(mockedTaskList.slice(1));
 
-    const { findAllByTestId } = renderWithProviders(<ListCreator />);
+    const { findAllByTestId } = renderWithRedux(<ListCreator />);
 
     const tasks = await findAllByTestId(/table-row-/);
 
@@ -222,7 +221,7 @@ describe('testing of list creator component', () => {
 
     mockedGetTaskList.mockResolvedValueOnce(mockedTaskList);
 
-    const { findByTestId } = renderWithProviders(<ListCreator />);
+    const { findByTestId } = renderWithRedux(<ListCreator />);
 
     const taskToDelete = await findByTestId(
       `table-row-${mockedTaskList[0].id}`,
@@ -242,7 +241,7 @@ describe('testing of list creator component', () => {
   test('should trigger navigate if task row is clicked', async () => {
     mockedGetTaskList.mockResolvedValueOnce(mockedTaskList);
 
-    const { findAllByTestId } = renderWithProviders(<ListCreator />);
+    const { findAllByTestId } = renderWithRedux(<ListCreator />);
 
     const tasks = await findAllByTestId(/table-row/);
     const taskToClick = tasks[2];
@@ -256,8 +255,9 @@ describe('testing of list creator component', () => {
       .mockResolvedValueOnce(mockedTaskList)
       .mockResolvedValueOnce([mockedTaskList[1]]);
 
-    const { findAllByTestId, findByLabelText, getByTestId } =
-      renderWithProviders(<ListCreator />);
+    const { findAllByTestId, findByLabelText, getByTestId } = renderWithRedux(
+      <ListCreator />,
+    );
 
     const searchInput = await findByLabelText('Search');
     const tasks = await findAllByTestId(/table-row/);
@@ -278,7 +278,7 @@ describe('testing of list creator component', () => {
   });
 
   test('dialog should be closed if a cancel button was clicked', async () => {
-    const { getByTestId, getByText } = renderWithProviders(<ListCreator />);
+    const { getByTestId, getByText } = renderWithRedux(<ListCreator />);
 
     const addButton = getByText('Add task');
     await act(() => fireEvent.click(addButton));

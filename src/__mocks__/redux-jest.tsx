@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
 import type { RenderOptions } from '@testing-library/react';
 import { render } from '@testing-library/react';
 
@@ -12,21 +11,16 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   initialRouterPath?: string[];
 }
 
-export function renderWithProviders(
+export function renderWithRedux(
   ui: React.ReactElement,
   {
     preloadedState = {},
     store = setupStore(preloadedState),
-    initialRouterPath,
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) {
   function Wrapper({ children }: PropsWithChildren): JSX.Element {
-    return (
-      <MemoryRouter initialEntries={initialRouterPath}>
-        <Provider store={store}>{children}</Provider>
-      </MemoryRouter>
-    );
+    return <Provider store={store}>{children}</Provider>;
   }
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };

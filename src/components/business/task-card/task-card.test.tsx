@@ -4,7 +4,7 @@ import { act, fireEvent, waitFor, within } from '@testing-library/react';
 
 import dayjs from 'dayjs';
 
-import { renderWithProviders } from '@/__mocks__/redux-jest-helper';
+import { renderWithRedux } from '@/__mocks__/redux-jest';
 import { mockedTaskList } from '@/__mocks__/task-list';
 import taskService from '@/api';
 import { ITask, TaskStatus } from '@/common/types';
@@ -30,7 +30,7 @@ describe('testing of task-card component', () => {
   mockedUseParams.mockReturnValue({ id: mockedTaskList[3].id });
 
   test('should display loader while fetching task data', () => {
-    const { getByTestId } = renderWithProviders(<TaskCard />);
+    const { getByTestId } = renderWithRedux(<TaskCard />);
 
     const loader = getByTestId('loader');
 
@@ -39,7 +39,7 @@ describe('testing of task-card component', () => {
 
   test('should render card with its title and task details', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
-    const { findByTestId, getByText } = renderWithProviders(<TaskCard />);
+    const { findByTestId, getByText } = renderWithRedux(<TaskCard />);
 
     const card = await findByTestId('card');
     const cardTitle = getByText(/general information/i);
@@ -57,7 +57,7 @@ describe('testing of task-card component', () => {
 
   test('should appear image pop up', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
-    const { findByTestId } = renderWithProviders(<TaskCard />);
+    const { findByTestId } = renderWithRedux(<TaskCard />);
 
     const card = await findByTestId('card');
     const taskImage = within(card).getByRole('img') as HTMLImageElement;
@@ -73,7 +73,7 @@ describe('testing of task-card component', () => {
 
   test('should display a star icon if task marked as important', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
-    const { findByTestId } = renderWithProviders(<TaskCard />);
+    const { findByTestId } = renderWithRedux(<TaskCard />);
 
     const card = await findByTestId('card');
     const starIcon = within(card).getByTestId('star-icon');
@@ -83,7 +83,7 @@ describe('testing of task-card component', () => {
 
   test('displays the correct status for done tasks', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
-    const { findByTestId } = renderWithProviders(<TaskCard />);
+    const { findByTestId } = renderWithRedux(<TaskCard />);
 
     const card = await findByTestId('card');
     const status = within(card).getByText('Task is done');
@@ -93,7 +93,7 @@ describe('testing of task-card component', () => {
 
   test('displays the correct status for expired tasks', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[4]);
-    const { findByText } = renderWithProviders(<TaskCard />);
+    const { findByText } = renderWithRedux(<TaskCard />);
 
     const status = await findByText('Task was expired');
 
@@ -102,7 +102,7 @@ describe('testing of task-card component', () => {
 
   test('displays the correct status for today tasks', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[2]);
-    const { findByText } = renderWithProviders(<TaskCard />);
+    const { findByText } = renderWithRedux(<TaskCard />);
 
     const status = await findByText('Task expires today');
 
@@ -111,7 +111,7 @@ describe('testing of task-card component', () => {
 
   test('displays the correct status for wrong status', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[1]);
-    const { findByText } = renderWithProviders(<TaskCard />);
+    const { findByText } = renderWithRedux(<TaskCard />);
 
     const status = await findByText('Status is unknown');
 
@@ -120,7 +120,7 @@ describe('testing of task-card component', () => {
 
   test('displays the correct status for actual tasks', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[0]);
-    const { findByText } = renderWithProviders(<TaskCard />);
+    const { findByText } = renderWithRedux(<TaskCard />);
 
     const status = await findByText('Task is actual');
 
@@ -146,7 +146,7 @@ describe('testing of task-card component', () => {
       .mockResolvedValueOnce(updatedTask);
 
     const { findByTestId, getByTestId, getByText, getByRole, getByLabelText } =
-      renderWithProviders(<TaskCard />);
+      renderWithRedux(<TaskCard />);
 
     const card = await findByTestId('card');
     const starIcon = within(card).queryByTestId('star-icon');
@@ -204,7 +204,7 @@ describe('testing of task-card component', () => {
 
   test('dialog should be closed if a cancel button was clicked', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
-    const { findByTestId, getByText, getByTestId } = renderWithProviders(
+    const { findByTestId, getByText, getByTestId } = renderWithRedux(
       <TaskCard />,
     );
 
@@ -231,7 +231,7 @@ describe('testing of task-card component', () => {
 
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
 
-    const { findByText, getByRole, findByTestId } = renderWithProviders(
+    const { findByText, getByRole, findByTestId } = renderWithRedux(
       <TaskCard />,
     );
 
@@ -253,7 +253,7 @@ describe('testing of task-card component', () => {
   test("should appear message if a task wasn't found due to wrong id", async () => {
     mockedUseParams.mockReturnValueOnce({ id: 'wrong id' });
 
-    const { queryByTestId, findByTestId } = renderWithProviders(<TaskCard />);
+    const { queryByTestId, findByTestId } = renderWithRedux(<TaskCard />);
 
     const infoMessage = await findByTestId('info-title');
     const card = queryByTestId('card');

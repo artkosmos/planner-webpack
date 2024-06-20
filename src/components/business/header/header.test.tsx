@@ -1,6 +1,6 @@
 import { act, fireEvent, within } from '@testing-library/react';
 
-import { renderWithProviders } from '@/__mocks__/redux-jest-helper';
+import { renderWithReduxAndRouter } from '@/__mocks__/redux-router-jest';
 import { Header } from '@/components/business/header/header';
 import { tasksActions } from '@/store';
 
@@ -9,7 +9,7 @@ import '@/__mocks__/match-media-jest';
 
 describe('testing of header component', () => {
   test('should render with app name and select with default language', () => {
-    const { getByText, getByTestId, getByLabelText } = renderWithProviders(
+    const { getByText, getByTestId, getByLabelText } = renderWithReduxAndRouter(
       <Header />,
     );
 
@@ -29,7 +29,9 @@ describe('testing of header component', () => {
   test('select should contain only supported languages', () => {
     const numberOfAppLanguages = 2;
 
-    const { getAllByRole, getByLabelText } = renderWithProviders(<Header />);
+    const { getAllByRole, getByLabelText } = renderWithReduxAndRouter(
+      <Header />,
+    );
 
     const langSelect = getByLabelText('Language');
     fireEvent.mouseDown(langSelect);
@@ -41,7 +43,7 @@ describe('testing of header component', () => {
   });
 
   test('should change app theme', async () => {
-    const { getByTestId } = renderWithProviders(<Header />);
+    const { getByTestId } = renderWithReduxAndRouter(<Header />);
 
     const header = getByTestId('header');
     const switchTheme = within(header).getByRole('checkbox');
@@ -59,7 +61,7 @@ describe('testing of header component', () => {
   test('should apply sorting to table', async () => {
     const mockedSortThunk = jest.spyOn(tasksActions, 'setSort');
 
-    const { getByLabelText, getByRole, store } = renderWithProviders(
+    const { getByLabelText, getByRole, store } = renderWithReduxAndRouter(
       <Header />,
     );
 
@@ -76,7 +78,7 @@ describe('testing of header component', () => {
   test('should apply filter to table', async () => {
     const mockedFilterThunk = jest.spyOn(tasksActions, 'setFilter');
 
-    const { getByLabelText, getByRole, store } = renderWithProviders(
+    const { getByLabelText, getByRole, store } = renderWithReduxAndRouter(
       <Header />,
     );
 
@@ -91,7 +93,7 @@ describe('testing of header component', () => {
   });
 
   test('should change app language', async () => {
-    const { getByRole, getByLabelText } = renderWithProviders(<Header />);
+    const { getByRole, getByLabelText } = renderWithReduxAndRouter(<Header />);
 
     const langSelect = getByLabelText('Language');
     fireEvent.mouseDown(langSelect);
