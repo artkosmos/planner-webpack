@@ -1,5 +1,6 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 
+import { renderWithRedux } from '@/__mocks__/redux-jest';
 import { TaskCard } from '@/components/business/task-card';
 import TaskDescription from '@/components/page/task-description/task-description';
 
@@ -17,7 +18,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('testing of task page', () => {
   test('should render nested content', () => {
-    const { getByTestId } = render(<TaskDescription />);
+    const { getByTestId } = renderWithRedux(<TaskDescription />);
 
     const homeButton = getByTestId('back-button');
 
@@ -27,7 +28,7 @@ describe('testing of task page', () => {
   });
 
   test('should trigger navigate if home button is clicked', () => {
-    const { getByTestId } = render(<TaskDescription />);
+    const { getByTestId } = renderWithRedux(<TaskDescription />);
 
     const homeButton = getByTestId('back-button');
 
