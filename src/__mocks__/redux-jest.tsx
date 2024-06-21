@@ -8,7 +8,6 @@ import { type AppStore, type RootState, setupStore } from '@/store';
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
   store?: AppStore;
-  initialRouterPath?: string[];
 }
 
 export function renderWithRedux(

@@ -1,8 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
 
-import { router } from '@/routes';
+import { App } from '@/app';
 import { setupStore } from '@/store';
 
 import './style/style.scss';
@@ -17,6 +16,6 @@ const container = createRoot(rootElement);
 
 container.render(
   <Provider store={setupStore()}>
-    <RouterProvider router={router} />
+    <App />
   </Provider>,
 );
