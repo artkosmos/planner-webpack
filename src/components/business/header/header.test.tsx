@@ -92,6 +92,20 @@ describe('testing of header component', () => {
     expect(store.getState().tasks.listSort.filterBy).toBe('important');
   });
 
+  test('should render without filter and sorting due to location', async () => {
+    await act(async () => {
+      const { queryByLabelText } = renderWithReduxAndRouter(<Header />, {
+        initialRouterPath: ['/tasks/some_task_id'],
+      });
+
+      const filterSelect = queryByLabelText('Filter by');
+      const sortSelect = queryByLabelText('Sort by');
+
+      expect(filterSelect).not.toBeInTheDocument();
+      expect(sortSelect).not.toBeInTheDocument();
+    });
+  });
+
   test('should change app language', async () => {
     const { getByRole, getByLabelText } = renderWithReduxAndRouter(<Header />);
 
