@@ -2,7 +2,7 @@ import { Slide, ToastContainer } from 'react-toastify';
 
 import { useAppSelector } from '@/store';
 
-export const NotificationContainer = () => {
+export const Notification = () => {
   const isDarkTheme = useAppSelector(state => state.app.darkTheme);
 
   return (

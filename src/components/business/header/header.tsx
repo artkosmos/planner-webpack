@@ -122,7 +122,6 @@ export const Header = () => {
             className={classNames.selectFilter}
             onChange={filterHandler}
             value={filterBy}
-            data-testid={'select-filter'}
           />
           <Select
             items={sortItems}
@@ -130,7 +129,6 @@ export const Header = () => {
             className={classNames.selectSort}
             onChange={sortHandler}
             value={sortBy}
-            data-testid={'select-sort'}
           />
         </div>
       )}
@@ -142,7 +140,6 @@ export const Header = () => {
           items={languageItems}
           onChange={handleLanguageSelect}
           value={i18n.language}
-          data-testid={'select-lang'}
         />
       </div>
     </header>

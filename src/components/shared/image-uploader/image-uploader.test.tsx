@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import * as compressImageModule from '@/utils/compress-image';
@@ -56,6 +56,18 @@ describe('testing of image uploader component', () => {
     expect(clearInput).toHaveBeenCalled();
   });
 
+  test('should trigger file input click on button click', async () => {
+    const onInputClick = jest.spyOn(HTMLLabelElement.prototype, 'click');
+
+    const { getByTestId } = render(<ImageUploader />);
+
+    const uploadButton = getByTestId('primary-button');
+
+    await act(() => fireEvent.click(uploadButton));
+
+    expect(onInputClick).toHaveBeenCalled();
+  });
+
   test('should display image preview when image is uploaded', async () => {
     const { findByRole, getByTestId } = render(<ImageUploader />);
 
@@ -63,6 +75,7 @@ describe('testing of image uploader component', () => {
     await userEvent.upload(uploadInput, file);
     const imagePreview = (await findByRole('img')) as HTMLImageElement;
 
+    expect(imagePreview).toBeInTheDocument();
     expect(imagePreview.alt).toBe('image preview');
   });
 });

@@ -50,7 +50,7 @@ const deleteTask = createAppAsyncThunk<void, { t: TFunction; id: string }>(
         return;
       }
     } catch (error) {
-      toast.error(t('notifications.delete_success'));
+      toast.error(t('notifications.delete_error'));
       return rejectWithValue(error.message);
     }
   },
@@ -96,6 +96,9 @@ const tasksSlice = createSlice({
     setFilter: (state, action: PayloadAction<string>) => {
       state.listSort.filterBy = action.payload;
     },
+    clearError: state => {
+      state.error = null;
+    },
   },
   extraReducers: builder => {
     builder
@@ -105,9 +108,6 @@ const tasksSlice = createSlice({
       .addCase(getTaskList.fulfilled, (state, action) => {
         state.isLoading = false;
         state.list = action.payload;
-      })
-      .addCase(getTaskList.rejected, state => {
-        state.isLoading = false;
       })
       .addCase(getTask.pending, state => {
         state.isLoading = true;
@@ -128,9 +128,6 @@ const tasksSlice = createSlice({
         state.listSort.sortBy = '';
         state.listSort.search = '';
         state.listSort.filterBy = '';
-      })
-      .addCase(createTask.rejected, state => {
-        state.isLoading = false;
       })
       .addCase(deleteTask.pending, state => {
         state.isLoading = true;

@@ -86,10 +86,11 @@ const taskService = (() => {
     return new Promise<ITask[]>(resolve => {
       setTimeout(() => {
         let list = getListFromLS();
-        list = setStatus(list) as ITask[];
-        setListToLS(list);
 
         if (list) {
+          list = setStatus(list) as ITask[];
+          setListToLS(list);
+
           if (args.search) {
             list = searchTasks(list, args.search);
           }
@@ -144,7 +145,7 @@ const taskService = (() => {
       setTimeout(() => {
         const list = getListFromLS();
         const index = list?.findIndex(item => item.id === id);
-        if (index !== -1) {
+        if (index !== undefined && index !== -1) {
           list.splice(index, 1);
           setListToLS(list);
           resolve('Task was deleted successfully');
@@ -168,7 +169,7 @@ const taskService = (() => {
       setTimeout(() => {
         const list = getListFromLS();
         const index = list?.findIndex((item: ITask) => item.id === id);
-        if (index !== -1) {
+        if (index !== undefined && index !== -1) {
           list[index] = { id, title, date, image, important, status, isDone };
           setListToLS(list);
           resolve('Task was updated successfully');

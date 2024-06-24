@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import FormControlMUI from '@mui/material/FormControl';
 import InputLabelMUI from '@mui/material/InputLabel';
 import MenuItemMUI from '@mui/material/MenuItem';
@@ -11,6 +12,8 @@ export type SelectItem = {
 type Props = { items: SelectItem[] } & SelectProps;
 
 export const Select = ({ className, label, items, ...rest }: Props) => {
+  const id = useId();
+
   const selectItems = items.map((item, index) => (
     <MenuItemMUI key={index} value={item.value}>
       {item.label}
@@ -19,8 +22,13 @@ export const Select = ({ className, label, items, ...rest }: Props) => {
 
   return (
     <FormControlMUI className={className} size={'small'}>
-      <InputLabelMUI>{label}</InputLabelMUI>
-      <SelectMUI label={label} data-testid={'select'} {...rest}>
+      <InputLabelMUI id={`select-label-${id}`}>{label}</InputLabelMUI>
+      <SelectMUI
+        labelId={`select-label-${id}`}
+        label={label}
+        data-testid={'select'}
+        {...rest}
+      >
         {selectItems}
       </SelectMUI>
     </FormControlMUI>

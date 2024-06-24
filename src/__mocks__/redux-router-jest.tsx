@@ -12,20 +12,22 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   initialRouterPath?: string[];
 }
 
-export function renderWithProviders(
+export function renderWithReduxAndRouter(
   ui: React.ReactElement,
   {
     preloadedState = {},
     store = setupStore(preloadedState),
-    initialRouterPath,
+    initialRouterPath = ['/'],
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) {
   function Wrapper({ children }: PropsWithChildren): JSX.Element {
     return (
-      <MemoryRouter initialEntries={initialRouterPath}>
-        <Provider store={store}>{children}</Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={initialRouterPath}>
+          {children}
+        </MemoryRouter>
+      </Provider>
     );
   }
 

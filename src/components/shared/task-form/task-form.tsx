@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 
 import type { ITask } from '@/common/types';
 import { ControlledCheckbox } from '@/components/shared/controlled-checkbox';
+import { PickerWithButtonField } from '@/components/shared/controlled-date-picker';
 import { ControlledFilledInput } from '@/components/shared/controlled-filled-input';
 import { ControlledImageUploader } from '@/components/shared/controlled-image-uploader';
-import { PickerWithButtonField } from '@/components/shared/date-picker';
 import { ButtonOutlined } from '@/components/shared/outlined-button';
 import { ButtonPrimary } from '@/components/shared/primary-button';
 

@@ -48,6 +48,7 @@ export const ButtonField = (
       onClick={() => setOpen?.((prev: boolean) => !prev)}
       color={error ? 'error' : 'primary'}
       endIcon={<CalendarMonthIcon />}
+      data-testid={'datepicker-button'}
     >
       {label}
     </Button>

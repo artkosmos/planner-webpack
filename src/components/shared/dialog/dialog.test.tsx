@@ -32,7 +32,7 @@ describe('testing of dialog component', () => {
     expect(content).not.toBeInTheDocument();
   });
 
-  test('should call close callback if Esc is pressed', () => {
+  test('should call close callback on Esc if onClose is passed', () => {
     const onClose = jest.fn();
     render(
       <Dialog isOpen={true} onClose={onClose}>
