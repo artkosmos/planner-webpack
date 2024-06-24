@@ -14,13 +14,9 @@ const notificationSettings = {
 
 export const setTheme = createAppAsyncThunk(
   'app/setTheme',
-  async (isDark: boolean, { rejectWithValue }) => {
-    try {
-      localStorage.setItem('darkTheme', `${isDark}`);
-      return isDark;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+  async (isDark: boolean) => {
+    localStorage.setItem('darkTheme', `${isDark}`);
+    return isDark;
   },
 );
 
@@ -37,6 +33,7 @@ export const getNotifications = createAppAsyncThunk(
         !dayjs(lastNotificationTime).isSame(today, 'day')
       ) {
         const response = await notificationService.getExpiredAndTodayTasks();
+
         if (response) {
           const { todayTasks, expiredTasks } = response;
           const numberOfTodayTasks = todayTasks.length;

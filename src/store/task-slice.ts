@@ -109,9 +109,6 @@ const tasksSlice = createSlice({
         state.isLoading = false;
         state.list = action.payload;
       })
-      .addCase(getTaskList.rejected, state => {
-        state.isLoading = false;
-      })
       .addCase(getTask.pending, state => {
         state.isLoading = true;
       })
@@ -131,9 +128,6 @@ const tasksSlice = createSlice({
         state.listSort.sortBy = '';
         state.listSort.search = '';
         state.listSort.filterBy = '';
-      })
-      .addCase(createTask.rejected, state => {
-        state.isLoading = false;
       })
       .addCase(deleteTask.pending, state => {
         state.isLoading = true;

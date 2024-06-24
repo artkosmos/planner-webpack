@@ -55,7 +55,7 @@ describe('testing of task-card component', () => {
     expect(card).toHaveTextContent('02/04/2018 03:06 PM');
   });
 
-  test('should appear image pop up', async () => {
+  test('should open and close image dialog', async () => {
     mockedGetTask.mockResolvedValueOnce(mockedTaskList[3]);
     const { findByTestId } = renderWithRedux(<TaskCard />);
 
@@ -64,11 +64,23 @@ describe('testing of task-card component', () => {
 
     expect(taskImage.alt).toBe('task image');
 
-    fireEvent.click(taskImage);
-    const imagePopUp = await findByTestId('dialog');
-    const nestedImage = within(imagePopUp).getByRole('img') as HTMLImageElement;
+    await act(() => fireEvent.click(taskImage));
+    const imageDialog = await findByTestId('dialog');
+    const dialogBackDrop = document.querySelector(
+      '.MuiBackdrop-root',
+    ) as HTMLElement;
+    const nestedImage = within(imageDialog).getByRole(
+      'img',
+    ) as HTMLImageElement;
 
-    expect(imagePopUp).toContainElement(nestedImage);
+    expect(imageDialog).toContainElement(nestedImage);
+
+    await act(() => fireEvent.click(dialogBackDrop));
+
+    await waitFor(() => {
+      expect(imageDialog).not.toBeVisible();
+      expect(nestedImage).not.toBeVisible();
+    });
   });
 
   test('should display a star icon if task marked as important', async () => {
@@ -110,7 +122,10 @@ describe('testing of task-card component', () => {
   });
 
   test('displays the correct status for wrong status', async () => {
-    mockedGetTask.mockResolvedValueOnce(mockedTaskList[1]);
+    mockedGetTask.mockResolvedValueOnce({
+      ...mockedTaskList[1],
+      status: undefined,
+    });
     const { findByText } = renderWithRedux(<TaskCard />);
 
     const status = await findByText('Status is unknown');

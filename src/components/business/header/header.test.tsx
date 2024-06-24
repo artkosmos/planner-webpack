@@ -92,6 +92,19 @@ describe('testing of header component', () => {
     expect(store.getState().tasks.listSort.filterBy).toBe('important');
   });
 
+  test('click on burger menu should assign appropriate classes', async () => {
+    const { getByTestId } = renderWithReduxAndRouter(<Header />);
+
+    const header = getByTestId('header');
+    const burger = header.querySelector('.header__burger') as HTMLElement;
+    await act(() => fireEvent.click(burger));
+    const burgerList = header.querySelector('.header__burger-list');
+
+    expect(header).toContainElement(burger);
+    expect(burger).toHaveClass('header__burger_active');
+    expect(burgerList).toHaveClass('header__burger-list_active');
+  });
+
   test('should render without filter and sorting due to location', async () => {
     await act(async () => {
       const { queryByLabelText } = renderWithReduxAndRouter(<Header />, {

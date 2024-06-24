@@ -11,6 +11,7 @@
     "linters": "eslint --fix src/**/*.{tsx,ts,jsx,js} && stylelint --fix src/**/*.{scss,css}",
     "prepare": "husky",
     "test": "jest",
+    "test-coverage": "jest --coverage",
     "deploy": "gh-pages -d dist"
   },
   "author": "Artem",

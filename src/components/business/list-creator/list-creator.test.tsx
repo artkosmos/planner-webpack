@@ -221,7 +221,7 @@ describe('testing of list creator component', () => {
 
     mockedGetTaskList.mockResolvedValueOnce(mockedTaskList);
 
-    const { findByTestId } = renderWithRedux(<ListCreator />);
+    const { findByTestId, queryByTestId } = renderWithRedux(<ListCreator />);
 
     const taskToDelete = await findByTestId(
       `table-row-${mockedTaskList[0].id}`,
@@ -231,6 +231,7 @@ describe('testing of list creator component', () => {
     const error = await findByTestId('info-title');
 
     expect(error).toHaveTextContent("Specified task wasn't found");
+    expect(queryByTestId('loader')).not.toBeInTheDocument();
     await waitFor(() =>
       expect(toast.error).toHaveBeenCalledWith(
         'An error occurred while deleting',

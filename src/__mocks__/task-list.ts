@@ -18,6 +18,7 @@ export const mockedTaskList: ITask[] = [
     image: null,
     important: false,
     isDone: true,
+    status: TaskStatus.DONE,
   },
   {
     id: '151deb35',

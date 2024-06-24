@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { formConfig } from '@/__mocks__/form-config';
@@ -93,7 +93,7 @@ describe('testing of task form component', () => {
           id: '37dd67fd',
           title: 'swimming',
           important: true,
-          image: null,
+          image: 'img.png',
           isDone: false,
         },
         name: 'confirm',
@@ -127,6 +127,18 @@ describe('testing of task form component', () => {
     });
 
     expect(confirmButton).toBeDisabled();
+  });
+
+  test('should clear file input on delete icon', async () => {
+    const { getByTestId } = render(
+      <TaskForm task={actualTask} onAction={onAction} config={formConfig} />,
+    );
+
+    const imageFieldClearIcon = getByTestId('delete-icon');
+    await act(() => fireEvent.click(imageFieldClearIcon));
+    const imageField = getByTestId('task-image') as HTMLInputElement;
+
+    expect(imageField).toHaveValue('');
   });
 
   test('should show errors for invalid fields', async () => {
