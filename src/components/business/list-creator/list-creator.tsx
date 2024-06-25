@@ -92,7 +92,7 @@ export const ListCreator = () => {
   };
 
   if (error) {
-    return <InfoTitle title={error} />;
+    return <InfoTitle title={t('error')} />;
   }
 
   return (

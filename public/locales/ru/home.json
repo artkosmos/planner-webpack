@@ -4,6 +4,7 @@
   "table_column_3": "Дата",
   "dialog_title": "Создать задачу",
   "no_data": "Нет доступных даннных",
+  "error": "Задача не была найдена",
   "search_placeholder": "Поиск",
   "create_form_config": {
     "name_label": "Описание",

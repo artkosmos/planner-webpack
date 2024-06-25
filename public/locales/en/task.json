@@ -3,6 +3,7 @@
   "id": "Id",
   "name": "Name",
   "date": "Date",
+  "error": "Specified task wasn't found",
   "status": {
     "expired": "Task was expired",
     "today": "Task expires today",

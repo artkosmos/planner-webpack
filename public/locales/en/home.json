@@ -4,6 +4,7 @@
   "table_column_3": "Date",
   "dialog_title": "Create task",
   "no_data": "No available data",
+  "error": "Specified task wasn't found",
   "search_placeholder": "Search",
   "create_form_config": {
     "name_label": "Task name",
