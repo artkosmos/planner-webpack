@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -36,6 +36,7 @@ const emptyTaskModel: ITask = {
 
 export const ListCreator = () => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
+  const isSearching = useRef<boolean>(false);
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation('home');
   const navigate = useNavigate();
@@ -49,7 +50,11 @@ export const ListCreator = () => {
   );
 
   useEffect(() => {
-    dispatch(tasksThunks.getTaskList({ search, sortBy, filterBy }));
+    dispatch(tasksThunks.getTaskList({ search, sortBy, filterBy })).then(() => {
+      if (!search) {
+        isSearching.current = false;
+      }
+    });
   }, [search, sortBy, filterBy]);
 
   const formConfig = useMemo(
@@ -83,6 +88,7 @@ export const ListCreator = () => {
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     debouncedSearch(inputValue, dispatch);
+    isSearching.current = true;
   };
 
   if (error) {
@@ -105,12 +111,11 @@ export const ListCreator = () => {
           onClick={() => setOpenEditDialog(true)}
         />
       </div>
-      {list && list.length > 0 && (
+      {((list && list.length > 0) || isSearching.current) && (
         <SearchInput
           label={t('search_placeholder')}
           className={'list-creator__search'}
           onChange={searchHandler}
-          disabled={isLoading}
         />
       )}
       {isLoading || !list ? (
