@@ -47,7 +47,7 @@ export default (env: prodEnvVariables) => {
         algorithm: 'gzip',
         test: /\.(js|css|html)$/,
       }),
-      new CopyPlugin({ patterns: [{ from: 'public', to: 'public' }] }),
+      new CopyPlugin({ patterns: [{ from: 'public/locales', to: 'locales' }] }),
     ],
   });
 
