@@ -96,7 +96,7 @@
   }
 
   &__edit-button {
-    align-self: end;
+    align-self: flex-end;
   }
 
   &__loader {
@@ -150,7 +150,7 @@
   }
 }
 
-@media screen and (width <= 650px) {
+@media screen and (max-width: 650px) {
   .task-card {
     &__status {
       margin-top: 5px;
@@ -200,7 +200,7 @@
   }
 }
 
-@media screen and (width <= 500px) {
+@media screen and (max-width: 500px) {
   .task-card {
     &__info {
       padding: 0;

@@ -25,7 +25,7 @@
     margin-bottom: 15px !important;
   }
 
-  @media screen and (width <= 600px) {
+  @media screen and (max-width: 600px) {
     .add-task-block {
       margin-bottom: 10px;
     }

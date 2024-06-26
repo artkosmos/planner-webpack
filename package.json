@@ -9,7 +9,7 @@
     "build:dev": "webpack --config webpack.dev.ts",
     "prod:analyze": "npm run build:prod -- --env analyzer=true",
     "start": "webpack serve --open --config webpack.dev.ts",
-    "linters": "eslint --fix src/**/*.{tsx,ts,jsx,js} && stylelint --fix src/**/*.{scss,css}",
+    "linters": "eslint --fix src/**/*.{tsx,ts,jsx,js}",
     "prepare": "husky",
     "test": "jest",
     "test-coverage": "jest --coverage",

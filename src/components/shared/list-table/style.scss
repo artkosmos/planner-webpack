@@ -132,13 +132,13 @@
     }
   }
 
-  @media screen and (width <= 875px) {
+  @media screen and (max-width: 875px) {
     .col-2 {
       flex: 6;
     }
   }
 
-  @media screen and (width <= 750px) {
+  @media screen and (max-width: 750px) {
     li {
       padding: 10px 5px 10px 0;
     }
