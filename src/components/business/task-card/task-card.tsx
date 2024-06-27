@@ -81,8 +81,12 @@ export const TaskCard = ({ className }: Props) => {
     );
   }
 
-  if (!currentTask || error) {
+  if (error) {
     return <InfoTitle title={t('error')} />;
+  }
+
+  if (!currentTask) {
+    return null;
   }
 
   return (
