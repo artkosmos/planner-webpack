@@ -3,7 +3,6 @@
 .header {
   display: flex;
   justify-content: space-between;
-  gap: 50px;
   align-items: center;
   padding: 0 50px;
   height: 65px;
@@ -13,26 +12,30 @@
   &__settings {
     display: flex;
     flex: 1 1 max-content;
-    gap: 30px;
     align-items: center;
     justify-content: flex-end;
   }
 
-  &__lang-select {
+  &__lang-select.MuiFormControl-root {
     width: 150px;
+    margin-left: 30px;
   }
 
   &__table-sort {
     display: flex;
     flex: 1 1 max-content;
-    gap: 50px;
     align-items: center;
     justify-content: center;
+    margin-right: 50px;
   }
 
-  &__sort-select,
-  &__filter-select {
+  &__sort-select {
     width: 180px;
+  }
+
+  &__filter-select.MuiFormControl-root {
+    width: 180px;
+    margin-right: 50px;
   }
 
   &__title {
@@ -42,6 +45,7 @@
     font-size: 23px;
     font-weight: bold;
     color: $title-text;
+    margin-right: 45px;
   }
 
   &__burger {
@@ -143,22 +147,25 @@
   }
 }
 
-@media screen and (max-width: 1060px) {
+@media screen and (max-width: 1040px) {
   .header {
-    gap: 10px 90px;
     height: min-content;
     padding: 10px 30px;
     flex-wrap: wrap;
 
+    &__title {
+      margin-right: 90px;
+    }
+
     &__table-sort {
       order: 3;
+      margin-top: 10px;
     }
   }
 }
 
 @media screen and (max-width: 600px) {
   .header {
-    gap: 5px 40px;
     padding: 10px 20px;
 
     &__burger {
@@ -172,22 +179,31 @@
       right: 15px;
       top: 80px;
       z-index: 3;
-      gap: 35px;
       transition: opacity 0.3s ease;
     }
 
-    &__lang-select {
+    &__lang-select.MuiFormControl-root {
       width: 180px;
+      margin-top: 35px;
     }
 
     &__table-sort {
       display: none;
       position: absolute;
       flex-direction: column;
-      gap: 27px;
       right: 15px;
       top: 215px;
       z-index: 3;
+      margin: 0;
+    }
+
+    &__filter-select.MuiFormControl-root {
+      margin-bottom: 27px;
+      margin-right: 0;
+    }
+
+    &__title {
+      margin-right: 30px;
     }
   }
 

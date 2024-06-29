@@ -14,7 +14,6 @@
   &__title {
     display: flex;
     justify-content: center;
-    gap: 20px;
     font-weight: bold;
     letter-spacing: 1px;
     margin: 20px 0;
@@ -29,24 +28,27 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     list-style-type: none;
     margin: 0;
     padding: 0;
 
     li {
       overflow-wrap: anywhere;
+      margin-bottom: 10px;
 
       &:first-child {
         display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         align-items: center;
 
         .task-card__point,
         .task-card__description {
           opacity: 0.5;
           font-style: normal;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
         }
       }
 
@@ -70,12 +72,12 @@
   &__status {
     display: flex;
     align-items: center;
-    gap: 10px;
     font-size: 16px;
     margin-top: 15px;
 
     &-point {
       @include status-point;
+      margin-right: 10px;
 
       &[data-status='expired'] {
         background-color: $notification-expired;
@@ -132,7 +134,7 @@
       max-height: 550px;
     }
 
-    .MuiDialogContent-root {
+    .dialog-mui-content.css-ypiqx9-MuiDialogContent-root {
       border-radius: 0;
       padding: 0 !important;
     }
@@ -169,11 +171,11 @@
     &__list {
       li {
         font-size: 18px;
+        margin-bottom: 7px;
       }
 
       li:first-child {
-        margin-bottom: 0;
-        gap: 5px;
+        margin-bottom: 7px;
 
         svg {
           scale: 0.7;
@@ -189,7 +191,6 @@
       font-size: 22px;
       align-items: center;
       width: 100%;
-      gap: 10px;
       text-align: center;
       margin: 0 auto 20px;
     }
@@ -204,6 +205,24 @@
   .task-card {
     &__info {
       padding: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .task-card {
+    &__title {
+      font-size: 20px;
+    }
+
+    &__list {
+      li {
+        font-size: 16px;
+      }
+    }
+
+    &__point {
+      font-size: 16px;
     }
   }
 }
