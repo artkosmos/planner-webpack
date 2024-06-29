@@ -1,11 +1,15 @@
 @import '@/style/variables';
 
 .dialog {
+  .MuiDialog-container {
+    padding: 0 10px;
+  }
+
   .MuiPaper-root {
     background-color: transparent;
     border-radius: 15px;
     overflow: visible;
-    width: 95%;
+    width: 100%;
     margin: 0;
   }
 
@@ -23,12 +27,15 @@
     flex-direction: column;
     background-color: $background;
     border-radius: 0 0 10px 10px;
-    padding-top: 20px !important;
+  }
+
+  .MuiPaper-root .dialog-mui-content {
+    padding-top: 15px;
   }
 
   @media screen and (max-width: 600px) {
-    .dialog-mui-content {
-      padding: 10px !important;
+    .MuiPaper-root .dialog-mui-content {
+      padding: 10px;
     }
 
     .dialog-mui-title {
