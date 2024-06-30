@@ -30,6 +30,7 @@ export const Header = () => {
   const isDarkTheme = useAppSelector(state => state.app.darkTheme);
   const sortBy = useAppSelector(state => state.tasks.listSort.sortBy);
   const filterBy = useAppSelector(state => state.tasks.listSort.filterBy);
+  const list = useAppSelector(state => state.tasks.list);
 
   const languageItems: SelectItem[] = useMemo(() => {
     return [
@@ -122,6 +123,7 @@ export const Header = () => {
             className={classNames.selectFilter}
             onChange={filterHandler}
             value={filterBy}
+            disabled={!list || list.length < 1}
           />
           <Select
             items={sortItems}
@@ -129,6 +131,7 @@ export const Header = () => {
             className={classNames.selectSort}
             onChange={sortHandler}
             value={sortBy}
+            disabled={!list || list.length < 1}
           />
         </div>
       )}

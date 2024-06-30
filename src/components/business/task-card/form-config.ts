@@ -25,7 +25,7 @@ export const getTaskUpdateConfig = (
           message: t('edit_form_config.max_length_validation'),
         },
       },
-      formatRegExp: '[a-z0-9а-я\\s]+$',
+      formatRegExp: '^[a-zA-Z0-9а-яА-Я\\s]+$',
     },
     dateField: {
       label: t('edit_form_config.date_label'),

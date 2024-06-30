@@ -53,6 +53,12 @@
     &.Mui-focused .MuiOutlinedInput-notchedOutline {
       border-width: 1px;
     }
+
+    &.Mui-disabled {
+      .MuiOutlinedInput-notchedOutline {
+        border-color: $grey-1;
+      }
+    }
   }
 
   .search-input {

@@ -72,21 +72,17 @@ export const TaskCard = ({ className }: Props) => {
     };
   }, []);
 
-  if (isLoading) {
+  if (error) {
+    return <InfoTitle title={t('error')} />;
+  }
+
+  if (isLoading || !currentTask) {
     return (
       <CircularProgress
         data-testid={'loader'}
         className={'task-card__loader'}
       />
     );
-  }
-
-  if (error) {
-    return <InfoTitle title={t('error')} />;
-  }
-
-  if (!currentTask) {
-    return null;
   }
 
   return (

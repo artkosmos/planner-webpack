@@ -8,10 +8,7 @@ const notificationService = (() => {
 
   const getListFromLS = () => {
     const storedList = localStorage.getItem(localStorageKey);
-    if (!storedList) {
-      return null;
-    }
-    return JSON.parse(storedList) as ITask[];
+    return JSON.parse(storedList ? storedList : null) as ITask[];
   };
 
   const getExpiredAndTodayTasks = () => {

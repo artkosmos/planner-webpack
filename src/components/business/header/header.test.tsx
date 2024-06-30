@@ -1,5 +1,6 @@
 import { act, fireEvent, within } from '@testing-library/react';
 
+import { preloadedState } from '@/__mocks__/preloaded-state';
 import { renderWithReduxAndRouter } from '@/__mocks__/redux-router-jest';
 import { Header } from '@/components/business/header/header';
 import { tasksActions } from '@/store';
@@ -63,6 +64,7 @@ describe('testing of header component', () => {
 
     const { getByLabelText, getByRole, store } = renderWithReduxAndRouter(
       <Header />,
+      { preloadedState },
     );
 
     const sortSelect = getByLabelText('Sort by');
@@ -80,6 +82,7 @@ describe('testing of header component', () => {
 
     const { getByLabelText, getByRole, store } = renderWithReduxAndRouter(
       <Header />,
+      { preloadedState },
     );
 
     const filterSelect = getByLabelText('Filter by');

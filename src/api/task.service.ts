@@ -9,10 +9,7 @@ const taskService = (() => {
 
   const getListFromLS = () => {
     const storedList = localStorage.getItem(localStorageKey);
-    if (!storedList) {
-      return null;
-    }
-    return JSON.parse(storedList) as ITask[];
+    return JSON.parse(storedList ? storedList : null) as ITask[];
   };
 
   const setListToLS = (list: ITask[]) => {

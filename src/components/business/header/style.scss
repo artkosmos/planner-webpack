@@ -29,13 +29,21 @@
     margin-right: 50px;
   }
 
-  &__sort-select {
+  &__sort-select.MuiFormControl-root {
     width: 180px;
+
+    .Mui-disabled {
+      cursor: not-allowed;
+    }
   }
 
   &__filter-select.MuiFormControl-root {
     width: 180px;
     margin-right: 50px;
+
+    .Mui-disabled {
+      cursor: not-allowed;
+    }
   }
 
   &__title {
