@@ -5,7 +5,6 @@ import { clsx } from 'clsx';
 import { CoverIcon } from '@/assets/icons/cover-icon';
 import { DeleteIcon } from '@/assets/icons/delete-icon';
 import { ButtonPrimary } from '@/components/shared/primary-button';
-import { compress } from '@/utils/compress-image';
 
 import './style.scss';
 
@@ -27,10 +26,10 @@ export const ImageUploader = (props: ImageUploaderProps) => {
   );
 
   const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    const imageCompressQuality = 0.6;
+    // const imageCompressQuality = 0.6;
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
-      const compressedFile = await compress(file, imageCompressQuality);
+      // const compressedFile = await compress(file, imageCompressQuality);
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -39,7 +38,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         onChange(imageUrl);
       };
 
-      reader.readAsDataURL(compressedFile);
+      reader.readAsDataURL(file);
     }
   };
 
