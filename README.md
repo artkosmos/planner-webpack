@@ -1,1 +1,1 @@
-Deploy netlify: https://statuesque-lolly-afb36e.netlify.app
+Deploy netlify: https://webpack-planner.netlify.app
