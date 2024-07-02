@@ -123,7 +123,7 @@ export const Header = () => {
             className={classNames.selectFilter}
             onChange={filterHandler}
             value={filterBy}
-            disabled={!list || list.length < 1}
+            disabled={(!list || list.length < 1) && !filterBy}
           />
           <Select
             items={sortItems}
