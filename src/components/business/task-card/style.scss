@@ -78,6 +78,7 @@
 
     &-point {
       @include status-point;
+
       margin-right: 10px;
 
       &[data-status='expired'] {
